@@ -20,4 +20,12 @@ def get_service() -> str:
     services = DB.all(Service)
     return jsonify({u.__dict__ for u in services})
 
-@app.route('/Appointment', methods=[''])
+@app.route('/Appointment', methods=['POST'], strict_slashes = False)
+def get_appointment() -> str:
+    """
+    """
+    data = request.get_json()
+    appointment = Appointment(appointment_id=data['appointment_id'],
+                               date_time=data['date_time'],
+                                 customer_id=['customer_id'],
+                                   service_id=['service_id'],)

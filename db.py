@@ -53,6 +53,7 @@ class DB:
             raise NoResultFound
         return user
     
+    
     def all(self, obj: dict) -> List:
         """
         """
