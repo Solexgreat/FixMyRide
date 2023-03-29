@@ -15,6 +15,7 @@ from models import Base
 class DB:
     """DB class
     """
+    listOfCls = [User, Appointment, Service, Repair, Revenue]
 
     def __init__(self) -> None:
         """Initialize a new DB instance
@@ -53,12 +54,26 @@ class DB:
             raise NoResultFound
         return user
     
+    def add_appiontment(self, date_time: str,customer_id: str, 
+                        service_id: str) -> Appointment:
+        """Return list of Obj
+        """
+        appointment = Appointment(date_time=date_time,
+                                customer_id=customer_id,
+                                service_id=service_id,)
+        self._session.add(appointment)
+        self._session.commit() 
+        return appointment
     
-    def all(self, obj: dict) -> List:
+    def add_repair(self, date_time: str,customer_id: str, 
+                        service_id: str, mechanic_id: str) -> Repair:
+        """Return list of Obj
         """
-        """
-        all_user = self._session.query(obj).all()
-        
-        return all_user
+        repairs = Repair(date_time=date_time,
+                                customer_id=customer_id,
+                                service_id=service_id, mechanic_id=mechanic_id)
+        self._session.add(repairs)
+        self._session.commit() 
+        return repairs
 
     
