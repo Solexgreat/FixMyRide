@@ -7,6 +7,7 @@ from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 from models import User, Appointment, Service, Repair, Revenue
+from typing import List
 
 from models import Base
 
@@ -51,3 +52,12 @@ class DB:
         if user is None:
             raise NoResultFound
         return user
+    
+    def all(self, obj: dict) -> List:
+        """
+        """
+        all_user = self._session.query(obj).all()
+        
+        return all_user
+
+    
