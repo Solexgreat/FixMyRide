@@ -11,6 +11,7 @@ class User(Base):
     name = Column(String(255), nullable=False)
     email = Column(String(255), nullable=False)
     password = Column(String(255), nullable=False)
+    session = Column(String(225))
     role = Column(String(50), nullable=False)
 
 class Service(Base):
@@ -18,7 +19,9 @@ class Service(Base):
 
     service_id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
+    category = Column(String(255), nullable=False)
     price = Column(Float, nullable=False)
+    
 
 class Appointment(Base):
     __tablename__ = 'appointment'
