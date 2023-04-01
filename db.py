@@ -139,8 +139,23 @@ class DB:
         self._session.commit() 
         return revenue
     
-    def add_service(self, name: str, ) -> dict:
+    def add_service(self, name: str, price: int, category: str) -> dict:
         """Return dict of services
         """
-        services = self._session.query(Service).all()
-        return [s.__dict__ for s in services]
+        services = Service(name=name, price=price, category=category)
+        self._session.add(services)
+        self._session.commit()
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """
+        """
+        try:
+            user = self.find_user(user_id=user_id)
+            for i, j in kwargs.items():
+                if hasattr(user, i):
+                    setattr(user, i, j)
+                else:
+                    raise ValueError(f"{i} is not a valid attribute of User")
+        except NoResultFound:
+            return (f"Invalid user_id")
+        return None

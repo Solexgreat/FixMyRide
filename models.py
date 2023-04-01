@@ -12,6 +12,7 @@ class User(Base):
     email = Column(String(255), nullable=False)
     password = Column(String(255), nullable=False)
     session = Column(String(225))
+    reset_token = Column(String(225))
     role = Column(String(50), nullable=False)
 
 class Service(Base):

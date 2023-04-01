@@ -26,5 +26,3 @@ def register_user() -> str:
     except ValueError:
         return jsonify({"message":
                         "email already registered"}), 400
-
-@app.route('/users/login', methods=[''])
