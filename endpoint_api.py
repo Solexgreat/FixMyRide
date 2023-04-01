@@ -236,3 +236,15 @@ def profile() -> str:
         return jsonify({"email": user.email}), 200
     abort(403)
 
+@app.route('/reset_password', methods=['POST'], strict_slashes=False)
+def get_reset_password_token() -> str:
+    """POST /reset_password
+        :Return
+        -status 403 if email is invalid
+    """
+    email = request.form.get(email) #request.get_json()
+    reset_token = AUTH.get_reset_password_token(email)
+    if reset_token:
+        return jsonify({"email": email, "reset_token": reset_token}), 200
+    else:
+        abort(403)
