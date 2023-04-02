@@ -115,10 +115,10 @@ def create_repairs() -> str:
             customer_id = data.get('customer_id')
             service_id = data.get('service_id')
             mechanic_id = data.get('mechanic_id')
-            repair = DB.add_repair(date_time=date_time,
-                            customer_id=customer_id, 
-                            service_id=service_id, 
-                            mechanic_id=mechanic_id)
+            repair = DB.add_repair(date_time,
+                            customer_id, 
+                            service_id, 
+                            mechanic_id)
             return jsonify({"message": "Repair Created"}), 200
         except Exception as e:
             err_msg = "can't create appointment: {}".format(e)
