@@ -154,10 +154,10 @@ def create_revenue() ->str:
             total_appointment = data.get('total_appointment')
             total_repairs = data.get('total_repairs')
             total_revenue = data.get('total_revenue')
-            revenue = DB.add_revenue(date_time=date_time,
-                            total_appointment=total_appointment, 
-                            total_repairs=total_repairs, 
-                            total_revenue=total_revenue)
+            revenue = AUTH.add_revenue(date_time,
+                            total_appointment, 
+                            total_repairs, 
+                            total_revenue)
             return jsonify({"message": "Revenure Created"}), 200
         except Exception as e:
             err_msg = "can't create appointment: {}".format(e)
@@ -268,4 +268,3 @@ def update_password() -> str:
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
-
