@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Sign Up</title>
+
+    <link rel="stylesheet" href="styles/admin-sign-up.css" />
+  </head>
+  <body>
+    <section class="container">
+      <!-- Image -->
+      <div class="image">
+        <h2>FixMyRide</h2>
+        <h3><a href="index.html">Home</a></h3>
+      </div>
+
+      <div class="sign-up-form">
+        <h3>Sign up</h3>
+
+        <div class="button">
+          <button class="admin">Admin</button>
+          <button class="customer">
+            <a href="customer-sign-up.html">Customer</a>
+          </button>
+        </div>
+
+        <form action="" class="form">
+          <div class="form-contents">
+            <input
+              type="text"
+              name="first name"
+              id="first name"
+              placeholder="First Name"
+              required
+            />
+            <input
+              type="text"
+              name="last name"
+              id="last name"
+              placeholder="Last Name"
+              required
+            />
+            <input
+              type="tel"
+              name="mobile no"
+              id="mobile no"
+              placeholder="Mobile Number"
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Email Address"
+              required
+            />
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Password"
+              required
+            />
+
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Confirm Password"
+              required
+            />
+
+            <div class="confirm-pwd">
+              <input type="checkbox" name="confirm-pwd" id="confirm-pwd" />
+              <label for="remember-me">Confirm Password</label>
+            </div>
+          </div>
+
+          <div class="register">
+            <button class="reg">Register</button>
+          </div>
+          <p class="option">
+            Already have an account?
+            <span><a href="admin-sign-in.html">Sign in</a></span>
+          </p>
+        </form>
+      </div>
+    </section>
+  </body>
+</html>
