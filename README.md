@@ -1,6 +1,8 @@
 # ALX Portfolio Project 
+
 **Description Of The Project**
 Fix_My_Ride is website application that allows client/customer to book mechanic appointment.
+
 **Learning Objective**
 Understanding the principles of web development: Building a booking website requires a solid understanding of HTML, CSS, and JavaScript, as well as web development frameworks like Flask
 Backend development: To build a booking website with financials, we would need to develop a robust backend that can store and manage user data, appointment schedules, and financial transactions.
