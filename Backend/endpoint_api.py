@@ -196,8 +196,8 @@ def login() -> str:
     """Validate the Login info
        and create a login session
     """
-    email = request.get_json()
-    password = request.get_json()
+    email = request.form.get(email)
+    password = request.form.get(password)
 
     user = AUTH.valid_loggin(email, password)
     if user:
