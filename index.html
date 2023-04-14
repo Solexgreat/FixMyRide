@@ -20,9 +20,9 @@
 
             <ul>
               <li><a href="#">Home</a></li>
-              <li><a href="#">About Us</a></li>
+              <li><a href="about.html">About Us</a></li>
               <li><a href="#">Services</a></li>
-              <li><a href="#">Contact Us</a></li>
+              <li><a href="#contact">Contact Us</a></li>
             </ul>
 
             <div class="right-nav">
@@ -56,7 +56,7 @@
             If you are palnning to fix your car anytime soon you can trust us to
             always deliver.
           </p>
-          <button type="button" class="appointment">Book an Appointment</button>
+          <button type="button" class="appointment"><a href="#appointment">Book an Appointment</a></button>
         </div>
 
         <div class="right-section">
@@ -65,37 +65,35 @@
       </section>
 
       <!-- Appointment Section -->
-      <section class="appointment-section">
-        <form>
-          <div class="appointment-container">
-            <div class="date">
-              <label for="date">Scheduled Date</label>
-              <input type="date" name="date" id="date" />
-            </div>
-
-            <div class="time">
-              <label for="time of appointment">Time of Appointment</label>
-              <input type="time" name="time of appointment" id="time" />
-            </div>
-
-            <div class="type">
-              <label for="type of car">Type of Car</label>
-              <input type="text" name="type of car" id="type" placeholder="SUV" />
-            </div>
-
-            <div class="model">
-              <label for="model of car">Model of Car</label>
-              <input
-                type="text"
-                name="model of car"
-                id="model"
-                placeholder="Toyota Camry"
-              />
-            </div>
-
-            <button type="submit" class="book">Book an Appointment</button>
+      <section class="appointment-section" id="appointment">
+        <div class="appointment-container">
+          <div class="date">
+            <label for="date">Scheduled Date</label>
+            <input type="date" name="date" id="date" />
           </div>
-        </form>
+
+          <div class="time">
+            <label for="time of appointment">Time of Appointment</label>
+            <input type="time" name="time of appointment" id="time" />
+          </div>
+
+          <div class="type">
+            <label for="type of car">Type of Car</label>
+            <input type="text" name="type of car" id="type" placeholder="SUV" />
+          </div>
+
+          <div class="model">
+            <label for="model of car">Model of Car</label>
+            <input
+              type="text"
+              name="model of car"
+              id="model"
+              placeholder="Toyota Camry"
+            />
+          </div>
+
+          <button type="submit" class="book">Book an Appointment</button>
+        </div>
       </section>
 
       <!-- Why FixMyRide -->
@@ -206,7 +204,7 @@
       </section>
 
       <!-- Footer Section -->
-      <section class="footer">
+      <section class="footer" id="contact">
         <footer>
           <div class="footer-container">
             <div class="footer-left">
@@ -225,10 +223,10 @@
                 <h3>Sitemap</h3>
 
                 <ul>
-                  <li>Home</li>
-                  <li>About Us</li>
-                  <li>Services</li>
-                  <li>Contact Us</li>
+                  <li><a href="#">Home</a></li>
+                  <li><a href="about.html">About Us</a></li>
+                  <li><a href="#">Services</a></li>
+                  <li><a href="#">Contact Us</a></li>
                 </ul>
               </div>
 
@@ -248,7 +246,7 @@
               <h3>Contact</h3>
               <p><span>Address:</span>104 Walter Cresent, VI, Lagos</p>
               <p><span>Phone:</span>+234 904 601 4085</p>
-              <p><span>Email:</span>hello@fixmyride.gmail.com</p>
+              <p><span>Email:</span>hello@fixmyride.com</p>
             </div>
 
             <!-- <div class="copyright">
