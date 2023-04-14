@@ -11,14 +11,24 @@ a {
   text-decoration: none;
 }
 
+:root {
+  --yellow: rgb(253, 253, 7);
+  --black: #000;
+  --saturatedblue: rgb(36, 193, 245);
+  --white: #fff;
+  --yellowgreen: rgb(131, 248, 13);
+  --lightgray: rgb(177, 175, 175);
+  --darkblue: hsl(240, 70%, 45%);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Poppins", sans-serif;
   background-color: rgb(240, 236, 236);
 }
-
-/* main {
-  background-color: rgb(206, 155, 206);
-} */
 
 /* Navigation Styling */
 header {
@@ -34,7 +44,7 @@ nav {
 }
 
 .logo h2 {
-  color: yellow;
+  color: var(--yellow);
   font-family: "Poppins", sans-serif;
   font-weight: 900;
 }
@@ -47,12 +57,12 @@ nav ul li {
 }
 
 nav ul li a {
-  color: rgb(29, 28, 28);
+  color: var(--black);
 }
 
 nav ul li a:active,
 nav ul li a:hover {
-  color: rgb(253, 253, 7);
+  color: var(--yellow);
   transition: 0.3s;
 }
 
@@ -69,19 +79,19 @@ button {
 
 .btn-sign-up,
 .btn-sign-in {
-  background-color: rgb(36, 193, 245);
-  color: #fff;
+  background-color: var(--saturatedblue);
+  color: var(--white);
 }
 
 .btn-sign-up a,
 .btn-sign-in a {
-  color: #fff;
+  color: var(--white);
 }
 
 .btn-sign-in:hover,
 .btn-sign-up:hover {
-  background-color: rgb(131, 248, 13);
-  color: #000;
+  background-color: var(--yellowgreen);
+  color: var(--black);
 }
 /* End of Navigation Styling */
 
@@ -108,15 +118,19 @@ button {
 }
 
 .appointment {
-  background-color: rgb(248, 248, 15);
-  color: #000;
+  background-color: var(--yellow);
+  color: var(--black);
   border: none;
   border-radius: 1.5rem;
+} 
+
+.appointment a {
+  color: var(--black);
 }
 
 .appointment:hover {
   background-color: #ff6347;
-  color: #fff;
+  color: var(--white);
 }
 
 .right-section img {
@@ -133,7 +147,7 @@ button {
 }
 
 .appointment-container {
-  background-color: #fff;
+  background-color: var(--white);
   display: flex;
   margin-top: -4rem;
   padding: 3rem;
@@ -169,8 +183,13 @@ label {
 }
 
 .book {
-  background-color: rgb(36, 193, 245);
-  color: #fff;
+  background-color: var(--saturatedblue);
+  color: var(--white);
+}
+
+.book:hover {
+  background-color: var(--yellow);
+  color: var(--black);
 }
 
 /* End of Appointment Styling */
@@ -195,7 +214,7 @@ label {
 .container3 {
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: var(--white);
   width: 20%;
   margin: 2rem;
   padding: 2rem;
@@ -217,7 +236,7 @@ label {
 .container2 p,
 .container3 p {
   font-size: 0.8rem;
-  color: rgb(177, 175, 175);
+  color: var(--lightgray);
   line-height: 1.3rem;
   text-align: center;
   justify-content: center;
@@ -258,7 +277,7 @@ label {
 .review4 {
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background-color: var(--white);
   width: 20%;
   margin: 1rem;
   padding: 2rem;
@@ -308,7 +327,7 @@ label {
 }
 
 .newsletter-container {
-  background-color: rgb(245, 245, 206);
+  background-color: rgb(240, 240, 163);
   display: flex;
   flex-direction: column;
   padding: 3rem;
@@ -326,12 +345,12 @@ label {
 }
 
 .newsletter-container h6 {
-  color: rgb(177, 175, 175);
+  color: var(--lightgray);
 }
 
 #email {
   padding: 0.9rem 0.7rem;
-  background-color: #fff;
+  background-color: var(--white);
   border: none;
   width: 40%;
   margin-top: 2rem;
@@ -339,8 +358,8 @@ label {
 }
 
 .btn-subscribe {
-  background-color: rgb(36, 193, 245);
-  color: #fff;
+  background-color: var(--saturatedblue);
+  color: var(--white);
   border-radius: 0.4rem;
 }
 /* End of Newsletter Styling */
@@ -348,8 +367,8 @@ label {
 /* Footer Styling */
 footer {
   display: flex;
-  background-color: hsl(240, 70%, 45%);
-  color: #fff;
+  background-color: var(--darkblue);
+  color: var(--white);
 }
 
 .footer-container {
@@ -362,6 +381,7 @@ footer {
   margin-top: 1rem;
   font-size: 0.8rem;
   width: 65%;
+  line-height: 1.2rem;
   /* color: rgb(177, 175, 175); */
 }
 
@@ -381,8 +401,11 @@ footer {
 
 .footer-links ul li {
   font-size: 0.8rem;
-  /* color: rgb(177, 175, 175); */
   margin-bottom: 1rem;
+}
+
+.footer-links ul li a {
+  color: var(--white);
 }
 
 .footer-right {
@@ -401,7 +424,7 @@ footer {
 }
 
 span {
-  color: yellowgreen;
+  color: var(--yellowgreen);
   padding-right: 0.3rem;
 }
 
