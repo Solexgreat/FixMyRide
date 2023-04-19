@@ -27,7 +27,8 @@ def register_user() -> str:
         try:
             email = data['email']
             password = data['password']
-            user = AUTH.register_user(email, password)
+            name = data['firstname']
+            user = AUTH.register_user(email, password, name)
             return jsonify({"message": "appointment suseccfully create"}), 201
         except Exception:
             error_msg = "User already exist"
@@ -64,4 +65,4 @@ def Create_appointment() -> str:
             return jsonify({"message": "appointment suseccfully create"}), 201
         except Exception as e:
             error_msg = "can't create appointment: {}".format(e)
-    return (f"{error_msg}") 400
+    return (f"{error_msg}"), 400
