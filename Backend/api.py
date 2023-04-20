@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import Flask, jsonify, request, abort, redirect
+from flask import Flask, jsonify, request, abort, redirect, render_template
 from db import DB
 from auth import AUTH
 from models import User, Appointment, Service, Repair, Revenue
@@ -35,11 +35,10 @@ def register_user() -> str:
             
             if user:
                 if user.role == 'mechanic':
-                    redirect_url = '/mechanic'
+                    return render_template('mechanic.html')
                 
                 if user.role == 'costumer':
-                    redirect_url ='/costumer'
-            return jsonify({"message": "registered"}), 200
+                    return render_template('costumer.html')
         except Exception:
             error_msg = "User already exist"
     return (f"{error_msg}"), 400
