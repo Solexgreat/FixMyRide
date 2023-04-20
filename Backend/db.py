@@ -6,16 +6,16 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
-from models import User, Appointment, Service, Repair, Revenue
+from models import User, Appointment, Service, Repair, Revenue, Role, UserRoles
 from typing import List
 from datetime import datetime
 from models import Base
+from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
 
 
 class DB:
     """DB class
     """
-    listOfCls = [User, Appointment, Service, Repair, Revenue]
 
     def __init__(self) -> None:
         """Initialize a new DB instance

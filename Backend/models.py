@@ -6,6 +6,8 @@ from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMix
 
 Base = declarative_base()
 
+ 
+
 class Role(Base, RoleMixin):
     __tablename__ = 'roles'
 
@@ -13,12 +15,12 @@ class Role(Base, RoleMixin):
     name = Column(String(80), nullable=False)
     description = Column(String(255))
 
-class User_roles(Base):
+class UserRoles(Base):
     __tablename__ = 'User_roles'
 
     user_roles_id = Column(Integer, primary_key=True)
-    user_id = Column('user.id', Integer, ForeignKey('User.user_id'))
-    role_id = Column('role_id', Integer, ForeignKey('Role.role_id'))
+    
+    role_id = 
 
 class User(Base, UserMixin):
     __tablename__ = 'user'
