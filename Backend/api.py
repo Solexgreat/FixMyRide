@@ -14,7 +14,7 @@ def register_user() -> str:
     data = None
     error_msg = None
     try:
-        data = request.get_json()
+        data = request.form
     except Exception as e:
         data = None
     if not data:
@@ -23,13 +23,23 @@ def register_user() -> str:
         error_msg = 'email is missing'
     if not error_msg and data.get('password') == "":
         error_msg = 'password is messing'
+    if not error_msg and data.get('role') == "":
+        error_msg = 'role is messing'
     if error_msg is None:
         try:
-            email = data['email']
-            password = data['password']
-            name = data['firstname']
-            user = AUTH.register_user(email, password, name)
-            return jsonify({"message": "appointment suseccfully create"}), 201
+            email = data.get('email')
+            password = data.get('password')
+            name = data.get('name')
+            role = data.get('role')
+            user = AUTH.register_user(email, password, name, role)
+            
+            if user:
+                if user.role == 'mechanic':
+                    redirect_url = '/mechanic'
+                
+                if user.role == 'costumer':
+                    redirect_url ='/costumer'
+            return jsonify({"message": "registered"}), 200
         except Exception:
             error_msg = "User already exist"
     return (f"{error_msg}"), 400

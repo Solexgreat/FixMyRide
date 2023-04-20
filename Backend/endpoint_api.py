@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, abort, redirect
+from flask import Flask, jsonify, request, abort, redirect, render_template
 from models import User, Service, Appointment, Repair, Revenue
 from db import DB
 from auth import AUTH
@@ -14,8 +14,6 @@ def get_users() -> str:
     """
 
     return jsonify(DB.get_users()), 200
-
-
 
 @app.route('/service', methods=['GET'], strict_slashes=False)
 def get_service() -> str:
@@ -35,8 +33,6 @@ def get_repairs() -> str:
     """Return json of all repairs
     """
     return jsonify(DB.get_all_repairs())
-
-
 
 @app.route('/repairs', methods=['POST'], strict_slashes = False)
 def create_repairs() -> str:

@@ -65,10 +65,10 @@ class DB:
 
         return [r.__dict__ for r in revenues]
     
-    def add_user(self, email: str, hashed_password: str, name: str, role) -> User:
+    def add_user(self, email: str, hashed_password: str, name: str, role: str) -> User:
         """Add User to session
         """
-        user = User(email=email, password=hashed_password, name=name)
+        user = User(email=email, password=hashed_password, name=name, role=role)
         self._session.add(user)
         self._session.commit()
         return user

@@ -15,14 +15,8 @@ class Role(Base, RoleMixin):
     name = Column(String(80), nullable=False)
     description = Column(String(255))
 
-class UserRoles(Base):
-    __tablename__ = 'User_roles'
 
-    user_roles_id = Column(Integer, primary_key=True)
-    
-    role_id = 
-
-class User(Base, UserMixin):
+class User(Base):
     __tablename__ = 'user'
 
     user_id = Column(Integer, primary_key=True)
@@ -31,9 +25,7 @@ class User(Base, UserMixin):
     password = Column(String(255), nullable=False)
     session = Column(String(225))
     reset_token = Column(String(225))
-    active = Column(Boolean())
-    confirm = Column(DateTime())
-    roles = relationship('Role', secondary='User', backref='users')
+    roles = Column(String, nullable=False)
 
 class Service(Base):
     __tablename__ = 'service'
