@@ -85,6 +85,27 @@ class DB:
             raise NoResultFound
         return user
     
+    def get_user_id(self, **kwargs) -> int:
+        """To get the user_id """
+        try:
+            user = self.find_user(**kwargs)
+            user_id = user.user_id
+        except Exception as e:
+            return e
+        return user_id
+    
+    def get_service_id(self, **kwargs) -> int:
+        """ """
+        try:
+            service = self._session.query(Service).filter_by(**kwargs).first()
+            service_id = service.service_id
+        except TypeError:
+            return InvalidRequestError
+        if service_id is None:
+            return NoResultFound
+        return service_id
+        
+    
     def add_appiontment(self, date_time: datetime, customer_id: int, service_id: int) -> Appointment:
         """Return list of Obj
         """

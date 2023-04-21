@@ -102,7 +102,7 @@ def create_revenue() ->str:
             return jsonify({"message": "Revenure Created"}), 200
         except Exception as e:
             err_msg = "can't create appointment: {}".format(e)
-    return (f"{err_msg}")
+    return jsonify({'err_msg': err_msg})
 
 @app.route('/service', methods=['POST'], strict_slashes=False)
 def create_service() ->str:
@@ -143,6 +143,13 @@ def login() -> str:
     user = AUTH.valid_loggin(email, password)
     if user:
         session_id = AUTH.create_session(email)
+        if user:
+            if user.role == 'mechanic':
+                redirect_url = '/mechanic.html'
+            
+            if user.role == 'costumer':
+                render_url = '/costumer.html'
+
         response = jsonify({"email": email,
                             "message": "logged in"})
         response.set_cookie("session_id", session_id)

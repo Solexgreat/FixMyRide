@@ -35,7 +35,6 @@ class Service(Base):
     category = Column(String(255), nullable=False)
     price = Column(Float, nullable=False)
     
-
 class Appointment(Base):
     __tablename__ = 'appointment'
 

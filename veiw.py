@@ -18,6 +18,12 @@ user_datastore = SQLAlchemyUserDatastore(db, User, Role)
 
 security = Security(app, db.user_datastore)
 
+@app.route('/ihome')
+def regsiter():
+    """render index template
+    """
+    return render_template('index.html')
+
 @app.route('/signup')
 def regsiter():
     """render signup template

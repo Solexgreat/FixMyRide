@@ -29,7 +29,7 @@ def register_user() -> str:
         try:
             email = data.get('email')
             password = data.get('password')
-            name = data.get('name')
+            name = data.get('firstname')
             role = data.get('role')
             user = AUTH.register_user(email, password, name, role)
             
@@ -41,7 +41,7 @@ def register_user() -> str:
                     return render_template('costumer.html')
         except Exception:
             error_msg = "User already exist"
-    return (f"{error_msg}"), 400
+    return jsonify ({'error_msg': error_msg}), 400
 
 @app.route('/appointments', methods=['POST'], strict_slashes = False)
 def Create_appointment() -> str:
@@ -75,3 +75,9 @@ def Create_appointment() -> str:
         except Exception as e:
             error_msg = "can't create appointment: {}".format(e)
     return (f"{error_msg}"), 400
+
+@app.route('/appointments/history', methods=['GET'], strict_slashes=False)
+def appointment_history() -> str:
+    """Render the appointment history page"""
+    appointments = DB.get_all_appointment()
+    return render_template('appointments.html', appointments=appointments)
