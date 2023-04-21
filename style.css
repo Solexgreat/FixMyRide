@@ -5,6 +5,7 @@
   padding: 0;
   box-sizing: border-box;
   list-style: none;
+  box-sizing: border-box;
 }
 
 a {
@@ -36,11 +37,32 @@ header {
   height: 10vh;
 }
 
+.hamburger-menu {
+  display: none;
+  cursor: pointer;
+}
+
+.hamburger-menu .bar {
+  width: 25px;
+  height: 3px;
+  margin: 5px;
+  background-color: #333;
+  transition: all 0.3s ease-in-out;
+  display: block;
+}
+
 nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0 4rem;
+  padding: 1.5rem 4rem;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 70%;
 }
 
 .logo h2 {
@@ -93,6 +115,7 @@ button {
   background-color: var(--yellowgreen);
   color: var(--black);
 }
+
 /* End of Navigation Styling */
 
 /* Hero Section Styling */
@@ -122,7 +145,7 @@ button {
   color: var(--black);
   border: none;
   border-radius: 1.5rem;
-} 
+}
 
 .appointment a {
   color: var(--black);
@@ -140,6 +163,18 @@ button {
 /* End of Hero Styling */
 
 /* Appointment Booking Styling */
+
+form {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
 .appointment-section {
   display: flex;
   justify-content: center;
@@ -159,22 +194,18 @@ button {
 label {
   display: block;
   padding-right: 2rem;
+  font-weight: bold;
+  margin-right: auto;
+  padding-bottom: 0.5rem;
 }
 
-.type,
-.time,
-.model,
-.date {
-  display: inline-block;
-  padding-right: 2rem;
-}
-
-#type,
-#time,
-#model,
-#date {
-  padding: 0.2rem;
-  margin-top: 0.5rem;
+input[type="text"],
+input[type="date"],
+input[type="time"] {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
 }
 
 #type::placeholder,
@@ -185,6 +216,8 @@ label {
 .book {
   background-color: var(--saturatedblue);
   color: var(--white);
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .book:hover {
@@ -196,7 +229,7 @@ label {
 
 /* Why Us Section Styling */
 
-.why-fixmyride h1 {
+.choose {
   text-align: center;
   justify-content: center;
   margin: 2rem;
@@ -204,9 +237,8 @@ label {
 }
 
 .container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 .container1,
@@ -215,8 +247,8 @@ label {
   display: flex;
   flex-direction: column;
   background-color: var(--white);
-  width: 20%;
-  margin: 2rem;
+  width: 60%;
+  margin: auto;
   padding: 2rem;
   border: none;
   border-radius: 0.4rem;
@@ -266,7 +298,8 @@ label {
 }
 
 .review {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   align-items: center;
   justify-content: center;
 }
@@ -278,7 +311,7 @@ label {
   display: flex;
   flex-direction: column;
   background-color: var(--white);
-  width: 20%;
+  width: 90%;
   margin: 1rem;
   padding: 2rem;
   border: none;
@@ -306,35 +339,25 @@ label {
   justify-content: center;
   padding-top: 1rem;
 }
-
-/* .review-detail {
-  display: flex;
-  flex-direction: column;
-}
-
-.pic {
-  width: 20%;
-  border-radius: 50%;
-} */
 /* End of Customer Review */
 
 /* Newsletter Styling */
 .newsletter {
-  display: flex;
   text-align: center;
   justify-content: center;
   margin-bottom: 5rem;
 }
 
 .newsletter-container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 20px;
   background-color: rgb(240, 240, 163);
-  display: flex;
-  flex-direction: column;
   padding: 3rem;
+  margin: auto;
   border: none;
   width: 80%;
   border-radius: 0.8rem;
-  margin-bottom: 1.5rem;
 }
 
 .newsletter-container h1 {
@@ -344,7 +367,7 @@ label {
   margin: 1rem;
 }
 
-.newsletter-container h6 {
+.newsletter-container h5 {
   color: var(--lightgray);
 }
 
@@ -353,8 +376,15 @@ label {
   background-color: var(--white);
   border: none;
   width: 40%;
-  margin-top: 2rem;
   border-radius: 0.7rem;
+}
+
+.subscribe form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
 }
 
 .btn-subscribe {
@@ -364,58 +394,105 @@ label {
 }
 /* End of Newsletter Styling */
 
+/* Bcak to top Styling */
+.back-to-top {
+  display: grid;
+  justify-content: end;
+}
+
+.top {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  column-gap: 5px;
+  align-items: center;
+}
+
+.top li {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.top li a {
+  display: inline-block;
+  padding: 5px;
+  color: #000;
+  text-decoration: none;
+}
+
+.top li a:hover {
+  color: #fff;
+  background-color: #000;
+}
+
+.top li p {
+  margin: 0;
+  font-size: 14px;
+}
+
+
 /* Footer Styling */
 footer {
-  display: flex;
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 50px 50px;
   background-color: var(--darkblue);
   color: var(--white);
 }
 
 .footer-container {
-  display: flex;
-  flex-direction: row;
-  margin: 4rem;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-gap: 20px;
 }
 
 .footer-left p {
   margin-top: 1rem;
-  font-size: 0.8rem;
-  width: 65%;
+  font-size: 1rem;
   line-height: 1.2rem;
-  /* color: rgb(177, 175, 175); */
 }
 
 .footer-center {
-  display: flex;
-  flex-direction: row;
-  text-align: center;
+  position: relative;
 }
 
-.footer-links {
-  margin-right: 6rem;
-}
-.footer-links h3 {
-  font-size: 1.1rem;
+.footer-center h3 {
   margin-bottom: 1rem;
 }
 
-.footer-links ul li {
-  font-size: 0.8rem;
-  margin-bottom: 1rem;
+.footer-center li a {
+  color: var(--white);
+  margin-bottom: 0.5rem;
+  display: inline-block;
 }
 
-.footer-links ul li a {
+.footer-center li a:hover {
+  color: var(--yellow);
+}
+
+.info {
+  position: relative;
+}
+
+.info li {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  margin-bottom: 0.6rem;
+}
+
+.info li span:nth-child(1) {
+  font-size: 20px;
   color: var(--white);
 }
 
-.footer-right {
-  margin-left: 10rem;
-  margin-right: 6rem;
+.info li span {
+  color: var(--white);
 }
 
-.footer-right p {
-  padding-bottom: 1rem;
-  font-size: 0.8rem;
+.info a {
+  color: var(--white);
 }
 
 .footer-right h3 {
@@ -423,16 +500,120 @@ footer {
   font-size: 1.1rem;
 }
 
-span {
-  color: var(--yellowgreen);
-  padding-right: 0.3rem;
+/* Media Query */
+@media (min-width: 992px) {
+  form {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
-/* .link1 {
-  margin-left: -10rem;
-} */
+@media (max-width: 768px) {
+  .nav-list {
+    display: none;
+    margin: auto;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    z-index: 1;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
 
-/* .copyright {
-  display: flex;
-  bottom: 2rem;
-} */
+  .nav-list.show {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu,
+  .right-nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hamburger-menu {
+    display: block;
+    z-index: 100;
+  }
+
+  .hamburger-menu.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .hamburger-menu.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger-menu.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .right-section img {
+    display: none;
+  }
+
+  .appointment-container {
+    width: 80%;
+  }
+
+  input {
+    width: 80%;
+  }
+
+  .appointment-container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 2rem;
+  }
+
+  label {
+    margin-right: auto;
+    padding-top: 0.5rem;
+  }
+
+  .book {
+    margin-top: 1rem;
+    margin-right: auto;
+  }
+
+  .footer-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .left-section h1 {
+    font-size: 1.7rem;
+  }
+
+  .container1,
+  .container2,
+  .container3 {
+    margin-bottom: 2rem;
+  }
+
+  .appointment-container {
+    width: 90%;
+  }
+
+  .why-fixmyride h2 {
+    font-size: 1.2rem;
+  }
+
+  .testimonial h2 {
+    margin: 0.5rem 0;
+    font-size: 1.5rem;
+  }
+
+  .subscribe form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #email {
+    width: 85%;
+  }
+}

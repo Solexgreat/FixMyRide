@@ -14,6 +14,7 @@ a {
   --white: hsl(0, 0%, 100%);
   --lightblue: hsl(195, 73%, 55%);
   --blue: hsl(240, 81%, 58%);
+  --darkblue: hsl(240, 70%, 45%);
   --gray: hsl(0, 4%, 86%);
   --darkgray: rgb(192, 178, 178);
   --yellow: rgb(253, 253, 7);
@@ -227,21 +228,30 @@ p {
 }
 
 @media screen and (max-width: 768px) {
-  .link h2 {
-    font-size: 1.2rem;
-  }
-
-  .avatar {
-    width: 50vw;
-  }
-
   h3 {
     margin-right: 10rem;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    color: var(--blue);
+  }
+
+  body {
+    background-color: var(--white);
+  }
+
+  .container {
+    background-image: none;
+  }
+
+  .login-con {
+    margin: auto;
+  }
+
+  .image {
+    display: none;
   }
 
   .button {
-    width: 75%;
+    width: 80%;
     margin-left: 0;
     padding: 0.4rem 0.2rem;
   }
@@ -266,13 +276,56 @@ p {
   .forgot-pwd label,
   .option,
   span {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
+
+  .option {
+    color: var(--darkblue);
+  }
+
+.back-to-top {
+  display: grid;
+  justify-content: end;
+}
+
+.top {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  column-gap: 5px;
+  align-items: center;
+}
+
+.top li {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.top li a {
+  display: inline-block;
+  padding: 5px;
+  color: #000;
+  text-decoration: none;
+}
+
+.top li a:hover {
+  color: #fff;
+  background-color: #000;
+}
+
+.top li p {
+  margin: 0;
+  font-size: 14px;
+}
 }
 
 @media screen and (max-width: 600px) {
+  .container {
+    background-image: none;
+  }
+
   .login-con {
-    margin-left: 3rem;
+    margin: auto;
   }
 
   .image {
@@ -281,7 +334,7 @@ p {
 
   h3 {
     margin-right: 8rem;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
   }
 
   .button {
@@ -291,7 +344,7 @@ p {
   }
 
   .admin {
-    margin-left: 1.2rem;
+    margin-left: 2rem;
     padding: 0.7rem 1.5rem;
   }
 
@@ -310,11 +363,15 @@ p {
   .forgot-pwd label,
   .option,
   span {
-    font-size: 0.7rem;
+    font-size: 0.9rem;
   }
 
   .pwd {
     margin-left: 7rem;
+  }
+
+  .option {
+    color: var(--darkblue);
   }
 }
 

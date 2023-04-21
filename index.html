@@ -5,7 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FixMyRide</title>
-
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -18,24 +21,28 @@
               <h2>FixMyRide</h2>
             </div>
 
-            <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="about.html">About Us</a></li>
-              <li><a href="#">Services</a></li>
-              <li><a href="#contact">Contact Us</a></li>
-            </ul>
+            <div class="nav-list">
+              <ul class="menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+              </ul>
 
-            <div class="right-nav">
-              <button class="btn-sign-in">
-                <a href="customer-sign-in.html">Sign in</a>
-              </button>
-              <button class="btn-sign-up">
-                <a
-                  href="customer-sign-up.html
-                "
-                  >Sign up</a
-                >
-              </button>
+              <div class="right-nav">
+                <button class="btn-sign-in">
+                  <a href="customer-sign-in.html">Sign in</a>
+                </button>
+                <button class="btn-sign-up">
+                  <a href="customer-sign-up.html">Sign up</a>
+                </button>
+              </div>
+            </div>
+
+            <div class="hamburger-menu">
+              <span class="bar"></span>
+              <span class="bar"></span>
+              <span class="bar"></span>
             </div>
           </nav>
         </div>
@@ -56,7 +63,9 @@
             If you are palnning to fix your car anytime soon you can trust us to
             always deliver.
           </p>
-          <button type="button" class="appointment"><a href="#appointment">Book an Appointment</a></button>
+          <button type="button" class="appointment">
+            <a href="#appointment">Book an Appointment</a>
+          </button>
         </div>
 
         <div class="right-section">
@@ -67,38 +76,40 @@
       <!-- Appointment Section -->
       <section class="appointment-section" id="appointment">
         <div class="appointment-container">
-          <div class="date">
-            <label for="date">Scheduled Date</label>
-            <input type="date" name="date" id="date" />
-          </div>
+          <form action="">
+            <div class="form-field">
+              <label for="date">Scheduled Date</label>
+              <input type="date" name="date" id="date" />
+            </div>
 
-          <div class="time">
-            <label for="time of appointment">Time of Appointment</label>
-            <input type="time" name="time of appointment" id="time" />
-          </div>
+            <div class="form-field">
+              <label for="time">Time of Appointment</label>
+              <input type="time" name="time" id="time" />
+            </div>
 
-          <div class="type">
-            <label for="type of car">Type of Car</label>
-            <input type="text" name="type of car" id="type" placeholder="SUV" />
-          </div>
+            <div class="form-field">
+              <label for="type">Type of Car</label>
+              <input type="text" name="type" id="type" placeholder="SUV" />
+            </div>
 
-          <div class="model">
-            <label for="model of car">Model of Car</label>
-            <input
-              type="text"
-              name="model of car"
-              id="model"
-              placeholder="Toyota Camry"
-            />
-          </div>
+            <div class="form-field">
+              <label for="model">Model of Car</label>
+              <input
+                type="text"
+                name="model"
+                id="model"
+                placeholder="Toyota Camry"
+              />
+            </div>
 
-          <button type="submit" class="book">Book an Appointment</button>
+            <button type="submit" class="book">Book an Appointment</button>
+          </form>
         </div>
       </section>
 
       <!-- Why FixMyRide -->
       <section class="why-fixmyride">
-        <h1>Why Choose FixMyRide?</h1>
+        <h1 class="choose">Why Choose FixMyRide?</h1>
 
         <div class="container">
           <div class="container1">
@@ -140,11 +151,10 @@
               Impressive service i was blown away by the professionalism of
               everyone at the shop. Dropped my car off during my scheduled
               appointment and got it back on the exact delivery date with
-              everything working perfectly.
+              everything working perfectly, I also got a discount on my total cost.
             </p>
             <div class="review-detail">
-              <!-- <img src="images/man.jpg" alt="man" class="pic" /> -->
-              <h4>Amaka Chinwendu</h4>
+              <h4>Amaka Okafor</h4>
             </div>
           </div>
 
@@ -153,7 +163,7 @@
               Great experience!!! Booking the appointment was very easy to do as
               i did it with the convenience of my phone and got my car back in
               perfect condition as they surpasssed my expectations by doing a
-              great job.
+              great job. I will always recommend them.
             </p>
             <h4>Effiong Akpan</h4>
           </div>
@@ -183,11 +193,13 @@
       <!-- Newsletter Section -->
       <section class="newsletter">
         <div class="newsletter-container">
-          <h1>Subscribe to Our newsletter</h1>
-          <h6>
-            Subscribe to our newsletter to get the latest update, news and
-            promotional offer
-          </h6>
+          <div class="text">
+            <h1>Subscribe to Our newsletter</h1>
+            <h5>
+              Subscribe to our newsletter to get the latest update, news and
+              promotional offer
+            </h5>
+          </div>
 
           <div class="subscribe">
             <form action="">
@@ -203,11 +215,22 @@
         </div>
       </section>
 
+      <section>
+        <div class="arrow">
+          <ul class="top">
+            <li>
+              <span><a href="#"><i class="fa-solid fa-arrow-up"></i></a></span>
+              <span><p>Back to top</p></span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
       <!-- Footer Section -->
       <section class="footer" id="contact">
         <footer>
           <div class="footer-container">
-            <div class="footer-left">
+            <div class="sec footer-left">
               <div class="logo">
                 <h2 class="fix">FixMyRide</h2>
               </div>
@@ -218,49 +241,54 @@
               </p>
             </div>
 
-            <div class="footer-center">
-              <div class="footer-links link1">
-                <h3>Sitemap</h3>
+            <div class="sec footer-center">
+              <h3>Sitemap</h3>
 
-                <ul>
-                  <li><a href="#">Home</a></li>
-                  <li><a href="about.html">About Us</a></li>
-                  <li><a href="#">Services</a></li>
-                  <li><a href="#">Contact Us</a></li>
-                </ul>
-              </div>
-
-              <div class="footer-links">
-                <h3>Support</h3>
-
-                <ul>
-                  <li>Live Support</li>
-                  <li>Help</li>
-                  <li>FAQ</li>
-                  <li>Privacy Policy</li>
-                </ul>
-              </div>
+              <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+              </ul>
             </div>
 
-            <div class="footer-right">
-              <h3>Contact</h3>
-              <p><span>Address:</span>104 Walter Cresent, VI, Lagos</p>
-              <p><span>Phone:</span>+234 904 601 4085</p>
-              <p><span>Email:</span>hello@fixmyride.com</p>
+            <div class="sec footer-center">
+              <h3>Support</h3>
+
+              <ul>
+                <li><a href="#">Live Support</a></li>
+                <li><a href="#">Help</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+              </ul>
             </div>
 
-            <!-- <div class="copyright">
-              <p>&#169;2023 FixMyRide All rights reserved.</p>
+            <div class="sec footer-right">
+              <h3>Contact Us</h3>
 
-              <div class="social-icons"></div>
+              <ul class="info">
+                <li>
+                  <span><i class="fa-solid fa-location-dot"></i></span>
+                  <span>104 Walter Cresent, VI, Lagos, Nigeria</span>
+                </li>
 
-              <div class="terms">
-                <p>Terms & Conditions</p>
-              </div>
-            </div> -->
+                <li>
+                  <span><i class="fa-solid fa-phone"></i></span>
+                  <p><a href="tel:+2349046014085">+234 904 601 4085</a></p>
+                </li>
+
+                <li>
+                  <span><i class="fa-solid fa-envelope"></i></span>
+                  <p>
+                    <a href="mailto:hello@fixmyride.com">hello@fixmyride.com</a>
+                  </p>
+                </li>
+              </ul>
+            </div>
           </div>
         </footer>
       </section>
     </main>
+    <script src="index.js"></script>
   </body>
 </html>

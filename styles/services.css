@@ -5,22 +5,17 @@
   padding: 0;
   box-sizing: border-box;
   list-style: none;
+  text-decoration: none;
 }
 
 :root {
-  --darkblue: hsl(240, 100%, 27.3%);
-  --white: hsl(0, 0%, 100%);
-  --lightblue: hsl(195, 48%, 82%);
-  --blue: hsl(240, 96%, 46%);
-  --gray: hsl(0, 0%, 50%);
   --yellow: rgb(253, 253, 7);
+  --black: #000;
+  --saturatedblue: rgb(36, 193, 245);
+  --white: #fff;
   --yellowgreen: rgb(131, 248, 13);
   --lightgray: rgb(177, 175, 175);
-  --black: #000;
-}
-
-a {
-  text-decoration: none;
+  --darkblue: hsl(240, 70%, 45%);
 }
 
 html {
@@ -29,7 +24,7 @@ html {
 
 body {
   font-family: "Poppins", sans-serif;
-  background-color: var(--white);
+  background-color: rgb(255, 255, 255);
 }
 
 /* Navigation Styling */
@@ -68,12 +63,6 @@ nav {
   font-weight: 900;
 }
 
-.logo h2 {
-  color: var(--yellow);
-  font-family: "Poppins", sans-serif;
-  font-weight: 900;
-}
-
 nav ul li {
   display: inline-block;
   text-align: center;
@@ -82,12 +71,12 @@ nav ul li {
 }
 
 nav ul li a {
-  color: rgb(29, 28, 28);
+  color: var(--black);
 }
 
 nav ul li a:active,
 nav ul li a:hover {
-  color: rgb(253, 253, 7);
+  color: var(--yellow);
   transition: 0.3s;
 }
 
@@ -104,7 +93,7 @@ button {
 
 .btn-sign-up,
 .btn-sign-in {
-  background-color: rgb(36, 193, 245);
+  background-color: var(--saturatedblue);
   color: var(--white);
 }
 
@@ -115,133 +104,148 @@ button {
 
 .btn-sign-in:hover,
 .btn-sign-up:hover {
-  background-color: rgb(131, 248, 13);
-  color: #000;
+  background-color: var(--yellowgreen);
+  color: var(--black);
 }
+
 /* End of Navigation Styling */
 
-/* Hero Styling */
-.hero {
-  background-image: url("../images/car-background1.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  width: 100vw;
-  height: 70vh;
+/* Services Overview Styling */
+
+.services-overview {
+  background-color: lightgrey;
+  min-height: 50vh;
 }
 
-.hero-container {
-  width: 100vw;
-  height: 70vh;
-  background: rgba(0, 0, 0, 0.7);
-  align-items: center;
-}
-
-.hero-detail {
+.overview h1 {
   text-align: center;
   justify-content: center;
-  margin: 0 auto;
-  color: var(--white);
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-top: 3rem;
+  padding-top: 3rem;
 }
 
-.hero-detail h3 {
-  margin-top: 10rem;
-  margin-bottom: 1rem;
-  padding-right: 1.5rem;
-  display: inline-flex;
+.overview-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  margin: auto;
+  width: 90%;
+  gap: 20px;
+  padding: 30px 0;
+}
+
+.info {
+  background-color: var(--white);
+  display: flex;
+  padding: 2rem 1rem;
+}
+
+.info h2 {
   text-transform: uppercase;
   font-size: 1rem;
-  cursor: pointer;
-  font-family: "Roboto", sans-serif;
-  font-weight: 100;
+  font-weight: 600;
+  text-align: center;
+}
+/* End Of Service Overview Styling */
+
+/* Services Section Styling */
+
+.services h1 {
+  text-align: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 3rem;
 }
 
-.hero-container h3 a {
-  color: var(--white);
+.service-details {
+  background-color: var(--white);
+  margin: 0.4rem;
+  border: 2px solid var(--lightgray);
+  border-radius: 0.5rem;
+  padding: 1rem;
 }
 
-.color {
-  color: var(--gray);
-}
-
-.hero-detail p {
-  font-size: 1.7rem;
-  font-weight: bold;
-  text-transform: capitalize;
-}
-/* End of Hero Section Styling */
-
-/* Vision and Mission Section Styling */
-.vision-section {
-  background-color: #f5f5f5;
-  padding: 50px 0;
-}
-
-.vision-container {
-  max-width: 1200px;
-  margin: 0 auto;
+.service-details h2 {
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin: 1.5rem 0;
 }
 
 .details {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 50px;
-}
-
-.mission,
-.vision {
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  margin-bottom: 10px;
-  font-size: 24px;
-  color: var(--blue);
-}
-
-/* End of Vision and Mission Section Styling */
-
-/* Team Members Section Styling */
-.paul,
-.solomon,
-.chinwendu {
-  display: flex;
-  flex-direction: column;
-  width: 300px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  width: 90%;
   margin: auto;
 }
 
 .image {
-  width: 300px;
-  height: 300px;
-  margin-top: 3rem;
+  display: flex;
 }
 
-.container {
-  border: 1px solid var(--lightblue);
-  color: var(--darkblue);
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  text-align: center;
-  padding: 1.5rem;
+.image img {
+  width: 50%;
+  height: 30%;
 }
 
-.team-section {
-  padding: 50px;
-  text-align: center;
+.image h3 {
+  color: var(--lightgray);
+  text-align: right;
+  margin-left: 7rem;
 }
 
-.team-container {
+.enquire {
+  background-color: lightgrey;
+  color: #000;
+  padding: 0.3rem 2rem;
+  border: 1px solid var(--yellow);
+  border-radius: 0.3rem;
+}
+/* End of Service Section Styling */
+
+/* Trademark Section Styling */
+.our-trademark {
+  background-color: lightgrey;
+  /* min-height: 60vh; */
+  margin-top: 1rem;
+}
+
+.trademark-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 50px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-.container {
-  text-align: left;
+.our-trademark h1 {
+  text-align: center;
+  justify-content: center;
+  padding-top: 6rem;
+  padding-bottom: 4rem;
+  text-transform: capitalize;
+  font-weight: 400;
+}
+
+.trademark-info {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 4rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.trademark-info img {
+  height: 70%;
+  width: 40%;
+}
+
+.trademark-info h2 {
+  font-size: 1rem;
+  font-weight: 200;
+}
+
+.trademark-info p {
+  font-size: 0.6rem;
+  width: 30%;
 }
 
 /* Bcak to top Styling */
@@ -279,7 +283,6 @@ h1 {
   margin: 0;
   font-size: 14px;
 }
-
 
 /* Footer Styling */
 footer {
@@ -322,26 +325,26 @@ footer {
   color: var(--yellow);
 }
 
-.info {
+.footer-info {
   position: relative;
 }
 
-.info li {
+.footer-info li {
   display: grid;
   grid-template-columns: 30px 1fr;
   margin-bottom: 0.6rem;
 }
 
-.info li span:nth-child(1) {
+.footer-info li span:nth-child(1) {
   font-size: 20px;
   color: var(--white);
 }
 
-.info li span {
+.footer-info li span {
   color: var(--white);
 }
 
-.info a {
+.footer-info a {
   color: var(--white);
 }
 
@@ -350,6 +353,7 @@ footer {
   font-size: 1.1rem;
 }
 
+/* Media Query */
 @media (max-width: 768px) {
   .nav-list {
     display: none;
@@ -395,29 +399,5 @@ footer {
 
   .footer-container {
     grid-template-columns: repeat(1, 1fr);
-  }
-
-  .details {
-    display: block;
-  }
-
-  .mission,
-  .vision {
-    width: 80%;
-    margin: auto;
-  }
-
-  .mission {
-    margin-bottom: 1.5rem;
-  }
-
-  .team-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 576px) {
-  .team-container {
-    grid-template-columns: 1fr;
   }
 }
