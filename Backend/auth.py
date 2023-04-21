@@ -24,7 +24,7 @@ class AUTH:
     def __init__(self) -> None:
         self._db = DB()
 
-    def register_user(self, email: str, password: str) -> User:
+    def register_user(self, email: str, password: str, name: str, role: str) -> User:
         """Find user via there email info
            add_user and return new_user 
         """
@@ -34,7 +34,7 @@ class AUTH:
                raise ValueError (f"{user.name} already exits")
         except:
             hash_pwd = _hash_password(password)
-            new_user = self._db.add_user(email, password)
+            new_user = self._db.add_user(email, password, name, role)
             return new_user
     
     def valid_loggin(self, email, password):

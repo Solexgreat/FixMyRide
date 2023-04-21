@@ -1,8 +1,20 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey
+from sqlalchemy import Boolean, Column, Integer, String, Float, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
+
 
 Base = declarative_base()
+
+ 
+
+class Role(Base, RoleMixin):
+    __tablename__ = 'roles'
+
+    role_id = Column(Integer, primary_key=True)
+    name = Column(String(80), nullable=False)
+    description = Column(String(255))
+
 
 class User(Base):
     __tablename__ = 'user'
@@ -13,7 +25,7 @@ class User(Base):
     password = Column(String(255), nullable=False)
     session = Column(String(225))
     reset_token = Column(String(225))
-    role = Column(String(50), nullable=False)
+    roles = Column(String, nullable=False)
 
 class Service(Base):
     __tablename__ = 'service'
@@ -23,7 +35,6 @@ class Service(Base):
     category = Column(String(255), nullable=False)
     price = Column(Float, nullable=False)
     
-
 class Appointment(Base):
     __tablename__ = 'appointment'
 
