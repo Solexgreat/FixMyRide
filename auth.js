@@ -1,38 +1,63 @@
-const loginForm = document.getElementById('login-form');
-const emailInput = document.getElementById('email');
-const passwordInput = document.getElementById('password');
+function checkLoginStatus() {
+  // Send GET request to backend API endpoint to check if user is authenticated
+  fetch('/api/check_login_status')
+    .then(response => {
+      if (response.ok) {
+        // User is authenticated, set loggedIn to true
+        loggedIn = true;
+      } else {
+        // User is not authenticated, set loggedIn to false
+        loggedIn = false;
+      }
+    })
+    .catch(error => console.error(error));
+}
 
-loginForm.addEventListener('submit', async (event) => {
+const appointmentForm = document.getSelection('#appointment_form')
+appointmentForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  
-  const email = emailInput.value;
-  const password = passwordInput.value;
 
-  const EmailCheck = emailInput.value.trim()
-  if(!EmailCheck || !EmailCheck.include('@')) {
-    alert('Enter a valid email address')
-    return;
-  }
+  const loggedIn = checkLoginStatus();
 
-  const PasswordCheck = passwordInput.value.trim()
-  if(!PasswordCheck) {
-    alert('Enter a valid password')
-    return;
-  }
+  if (!loggedIn) {
+    // Display error alert
+    const errorAlert = document.createElement('div');
+    errorAlert.classList.add('alert', 'alert-danger');
+    errorAlert.textContent = 'You must be logged in/registered to create an appointment.';
 
-  const response = await fetch('/sessions', {
-    method: 'POST',
-    body: JSON.stringify({ email, password }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
+    // Add error alert to form
+    appointmentForm.prepend(errorAlert);
 
-  if (response.ok) {
-    const data = await response.json();
-    alert(data.message);
-    window.location.href = '/index.html';
+    // Display login/register modal
+    $('#login-form').modal('show');
   } else {
-    alert('Invalid email or password');
+    const formData = new FormData(appointmentForm);
+
+    fetch('/appointments', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Display success alert
+      const successAlert = document.createElement('div');
+      successAlert.classList.add('alert', 'alert-success');
+      successAlert.textContent = data.message;
+
+      // Add success alert to form
+      appointmentForm.prepend(successAlert);
+
+      // Reset form fields
+      appointmentForm.reset();
+    })
+    .catch(error => {
+      // Display error alert
+      const errorAlert = document.createElement('div');
+      errorAlert.classList.add('alert', 'alert-danger');
+      errorAlert.textContent = `Error: ${error}`;
+
+      // Add error alert to form
+      appointmentForm.prepend(errorAlert);
+    });
   }
 });

@@ -137,8 +137,8 @@ def login() -> str:
     """Validate the Login info
        and create a login session
     """
-    email = request.form.get(email)
-    password = request.form.get(password)
+    email = request.form.get('email')
+    password = request.form.get('password')
 
     user = AUTH.valid_loggin(email, password)
     if user:
@@ -159,7 +159,7 @@ def login() -> str:
 
 @app.route('/logout', methods=['DELETE'], stirct_slashes=False)
 def logout():
-    """
+    """Logout and destroy session
     """
     session_id = request.cookies.get('session_id')
     user = AUTH.get_user_from_session_id(session_id)
@@ -212,6 +212,19 @@ def update_password() -> str:
         abort(403)
 
     return jsonify({"email": email, "message": "Password updated"}), 200
+
+@app.route('/api/check_login_status', methods=['GET'])
+def check_login_status():
+    # Check if session_id cookie is present
+    session_id = request.cookies.get('session_id')
+    if session_id:
+        # Verify session_id with AUTH class
+        if AUTH.get_user_from_session_id(session_id):
+            return jsonify({'logged_in': True}), 200
+        else:
+            return jsonify({'logged_in': False}), 401
+    else:
+        return jsonify({'logged_in': False}), 401
 
 
 if __name__ == "__main__":
