@@ -12,7 +12,7 @@ AUTH = AUTH()
 
 @app.route('/register', methods=['POST'], strict_slashes=False)
 def register_user() -> str:
-    """Create new users
+    """Creat new user
     """
     data = None
     error_msg = None
@@ -38,19 +38,13 @@ def register_user() -> str:
             
             if user:
                 if user.role == 'mechanic':
-                    redirect_url = '/mechanic.html'
+                    return render_template('mechanic.html')
                 
                 if user.role == 'costumer':
-                    render_url = '/costumer.html'
-
-            response = jsonify({"email": email,
-                                "message": "Registered",
-                                "render_url": render_url})
-            return response
+                    return render_template('costumer.html')
         except Exception:
             error_msg = "User already exist"
-            response = jsonify ({'error_msg': error_msg})
-    return response, 400
+    return jsonify ({'error_msg': error_msg}), 400
 
 @app.route('/appointments', methods=['POST'], strict_slashes = False)
 @login_required

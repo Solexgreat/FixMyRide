@@ -17,18 +17,4 @@ registerForm.addEventListener('submit', async (event) => {
     return;
   }
 
-  const formData = new FormData(registerForm);
-
-  const response = await fetch('/register', {
-    method: 'POST',
-    body: formData
-  });
-
-  if (response.ok) {
-    const data = await response.json();
-    alert(data.message);
-    window.location.href = data.render_url;
-  } else {
-    alert(data.error_msg);
-  }
 });
