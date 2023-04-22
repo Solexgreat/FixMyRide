@@ -1,8 +1,8 @@
-const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 
-loginForm.addEventListener('submit', async (event) => {
+registerForm.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   const EmailCheck = emailInput.value.trim()
@@ -12,14 +12,14 @@ loginForm.addEventListener('submit', async (event) => {
   }
 
   const PasswordCheck = passwordInput.value.trim()
-  if(!PasswordCheck) {
-    alert('Enter a valid password')
+  if(PasswordCheck < 8) {
+    alert('Password must be eight character and Above')
     return;
   }
 
-  const formData = new FormData(loginForm);
+  const formData = new FormData(registerForm);
 
-  const response = await fetch('/sessions', {
+  const response = await fetch('/register', {
     method: 'POST',
     body: formData
   });
@@ -29,6 +29,6 @@ loginForm.addEventListener('submit', async (event) => {
     alert(data.message);
     window.location.href = data.render_url;
   } else {
-    alert('Invalid email or password');
+    alert(data.error_msg);
   }
 });

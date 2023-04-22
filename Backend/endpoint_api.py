@@ -151,7 +151,8 @@ def login() -> str:
                 render_url = '/costumer.html'
 
         response = jsonify({"email": email,
-                            "message": "logged in"})
+                            "message": "logged in",
+                            "render_url": render_url})
         response.set_cookie("session_id", session_id)
         return response
     else:
