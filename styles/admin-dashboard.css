@@ -27,6 +27,16 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+main {
+  display: grid;
+  grid-template-columns: 15% 85%;
+  margin: 0;
+}
+
+.container {
+  margin: 0;
+}
+
 /* Navigation Styling */
 
 header {
@@ -34,6 +44,7 @@ header {
   grid-template-columns: 1fr auto;
   align-items: center;
   padding: 1rem;
+  background-color: var(--white);
 }
 
 nav {
@@ -87,95 +98,112 @@ h2 {
 .fixmyride h4:hover {
   color: var(--yellow);
 }
+/* End of Navigation Section Styling */
 
+/* Side bar Section Styling */
+.side-bar {
+  display: grid;
+  width: 100%;
+  height: 100%;
+}
+
+.side-bar-container {
+  background-color: purple;
+  padding: 1rem;
+  width: 40%;
+}
+
+.side-bar-icons img {
+  margin-bottom: 1rem;
+}
 
 /* Live Activity Section Styling */
 .live-activity {
   height: auto;
   padding: 2rem 0;
-  }
-  
-  h3 {
+}
+
+h3 {
   padding-top: 2rem;
   margin-bottom: 2rem;
   color: var(--lightgray);
-  }
-  
-  .activity {
+}
+
+.activity {
   margin: 0 2rem;
-  }
-  
-  .product-update {
+}
+
+.product-update {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-gap: 2rem;
   align-items: center;
   justify-content: center;
-  }
-  
-  .update {
+}
+
+.update {
   background-color: var(--white);
   padding: 1.5rem;
   border-radius: 0.4rem;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .request {
+}
+
+.request {
   display: flex;
   align-items: center;
-  }
-  
-  .request p {
+}
+
+.request p {
   font-weight: bold;
   padding-left: 1rem;
-  }
-  
-  .graph {
+}
+
+.graph {
   display: flex;
   align-items: center;
   margin-top: 2rem;
-  }
-  
-  .icon {
+}
+
+.icon {
   height: 30%;
   margin-top: auto;
-  }
-  
-  .graph p {
+}
+
+.graph p {
   margin-top: auto;
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
   color: green;
   font-size: 0.8rem;
-  }
+}
 
-  .graph img {
-    margin-top: auto;
-  }
-  
-  .graph h1 {
+.graph img {
+  margin-top: auto;
+}
+
+.graph h1 {
   color: var(--lightgray);
   margin-top: 1rem;
   margin-left: auto;
   font-size: 1.5rem;
-  }
+}
 
 /* Recent Order Section Styling */
- .recent-order {
-    margin: 0 3rem;
+.recent-order {
+  margin: 0 3rem;
 }
 
 .order-header {
-    display: flex;
+  display: flex;
 }
 
 .order-header h3 {
-    margin-top: -2rem;
+  margin-top: -2rem;
 }
 
 .order-header img {
-    margin-left: auto;
-    height: 40%;
-    cursor: pointer;
+  margin-left: auto;
+  height: 40%;
+  cursor: pointer;
 }
 
 .table-container {
@@ -190,7 +218,8 @@ h2 {
   background-color: var(--white);
 }
 
-th, td {
+th,
+td {
   padding: 2rem 1.5rem;
   text-align: left;
   border-bottom: 1px solid #ddd;
@@ -207,57 +236,82 @@ th {
   align-items: center;
   border: 1px solid var(--lightgray);
   height: 30%;
-  padding: .4rem;
- margin-top: 1.5rem;
- color: var(--lightgray);
- border-radius: .3rem;
-} 
+  padding: 0.4rem;
+  margin-top: 1.5rem;
+  color: var(--lightgray);
+  border-radius: 0.3rem;
+}
 
 span {
   color: green;
   margin-left: auto;
 }
 
-.pending, .cancelled, .completed {
+.pending,
+.cancelled,
+.completed {
   text-align: center;
 }
-
-
 
 @media screen and (max-width: 768px) {
   header {
     grid-template-columns: 1fr;
-    justify-items: center;
+    /* justify-items: center; */
   }
-  
+
   .nav-right {
-    margin-top: 1rem;
-    justify-content: center;
+    margin: 1rem auto;
   }
-  
+
   .fixmyride {
     margin-top: 1rem;
   }
 
   .product-update {
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 1rem;
   }
-  
+
   .update {
-  padding: 1rem;
+    padding: 1rem;
   }
-  
+
   .graph h1 {
-  font-size: 1.2rem;
+    font-size: 1.2rem;
   }
 
   .table-container {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
+
+  .order-header img {
+    margin-left: auto;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .nav-right {
+    display: none;
   }
 
- @media only screen and (max-width: 600px) {
+  .side-bar {
+    grid-template-rows: auto;
+    grid-template-columns: auto 1fr;
+    height: auto;
+  }
+
+  .side-bar-container {
+    grid-template-rows: auto;
+    grid-template-columns: auto 1fr;
+    padding: 1rem 0;
+  }
+
+  .side-bar-icons {
+    grid-template-rows: 50px;
+    grid-template-columns: repeat(6, 1fr);
+    grid-column-gap: 10px;
+  }
+
   h3 {
     text-align: center;
   }
@@ -265,12 +319,20 @@ span {
     grid-template-columns: 1fr;
   }
 
-  th, td {
+  .table {
+    overflow-x: auto;
+    display: block;
+  }
+
+  th,
+  td {
     padding: 5px;
   }
 
   .otp {
     flex-direction: column;
     align-items: flex-start;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
   }
-} 
+}
