@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src="login.js"></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Customer Sign in</title>
+    <script type="text/javascript" src="login.js"></script>
     <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -30,7 +30,7 @@
           </button>
         </div>
 
-        <form id="login-form">
+        <form id="login-form" action="http://localhost:5000/sessions" method="POST">
           <input
             type="text"
             name="email"
@@ -50,11 +50,12 @@
             <label for="remember-me">Remember me</label>
             <p class="pwd">Forgot password?</p>
           </div>
+
+          <div class="sign-in">
+            <button class="log-in" type="submit">Log in</button>
+          </div>
         </form>
 
-        <div class="sign-in">
-          <button class="log-in">Log in</button>
-        </div>
         <p class="option">
           Don't have an account?
           <span><a href="customer-sign-up.html">Sign up</a></span>

@@ -19,7 +19,7 @@ loginForm.addEventListener('submit', async (event) => {
 
   const formData = new FormData(loginForm);
 
-  const response = await fetch('/sessions', {
+  const response = await fetch('http://localhost:5000/sessions', {
     method: 'POST',
     body: formData
   });

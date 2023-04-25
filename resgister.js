@@ -2,7 +2,7 @@ const registerForm = document.getElementById('register-form');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 
-registerForm.addEventListener('submit', async (event) => {
+registerForm.addEventListener('click', async (event) => {
   event.preventDefault();
 
   const EmailCheck = emailInput.value.trim()
@@ -17,4 +17,15 @@ registerForm.addEventListener('submit', async (event) => {
     return;
   }
 
+  const formData = new FormData(resgister-form)
+
+  const response = await fetch('http://localhost:5000/register', {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    alert(data.error_msg);
+  }
 });

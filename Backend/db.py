@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
-from models import User, Appointment, Service, Repair, Revenue, Role, UserRoles
+from models import User, Appointment, Service, Repair, Revenue, Role
 from typing import List
 from datetime import datetime
 from models import Base
@@ -129,7 +129,7 @@ class DB:
         self._session.add(revenue)
         self._session.commit()
  
-    def add_repair(self, date_time: datetime(),customer_id: str, 
+    def add_repair(self, date_time: datetime.now(), customer_id: str, 
                         service_id: int, mechanic_id: int) -> Repair:
         """Return list of Obj
         """
@@ -140,17 +140,7 @@ class DB:
         self._session.commit() 
         return repairs
     
-    def add_revenue(self, date_time: datetime(), total_appointment: int, 
-                        total_repair: int, total_revenue: int) -> Repair:
-        """Return list of Obj
-        """
-        revenue = Repair(date_time=date_time, total_appointment=total_appointment, 
-                        total_repair=total_repair, total_revenue=total_revenue)
-        self._session.add(revenue)
-        self._session.commit() 
-        return revenue
-    
-    def add_revenue(self, date_time: datetime(), total_appointment: int, 
+    def add_revenue(self, date_time: datetime.now(), total_appointment: int, 
                         total_repair: int, total_revenue: int) -> Repair:
         """Return list of Obj
         """

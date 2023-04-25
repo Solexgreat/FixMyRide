@@ -23,6 +23,7 @@ const createService = async (name, price, category) => {
   };
 
   try {
+    const listOfService = {'General Service':}
     const newService = await createService('Service Name', 100, 'Category');
     console.log('Service created:', newService);
   } catch (error) {
