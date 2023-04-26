@@ -1,0 +1,619 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&family=Roboto:ital@1&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+:root {
+  --yellow: rgb(253, 253, 7);
+  --black: #000;
+  --saturatedblue: rgb(36, 193, 245);
+  --white: #fff;
+  --yellowgreen: rgb(131, 248, 13);
+  --lightgray: rgb(177, 175, 175);
+  --darkblue: hsl(240, 70%, 45%);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: rgb(240, 236, 236);
+}
+
+/* Navigation Styling */
+header {
+  background-color: rgb(206, 155, 206);
+  height: 10vh;
+}
+
+.hamburger-menu {
+  display: none;
+  cursor: pointer;
+}
+
+.hamburger-menu .bar {
+  width: 25px;
+  height: 3px;
+  margin: 5px;
+  background-color: #333;
+  transition: all 0.3s ease-in-out;
+  display: block;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 4rem;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 70%;
+}
+
+.logo h2 {
+  color: var(--yellow);
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+}
+
+nav ul li {
+  display: inline-block;
+  text-align: center;
+  justify-content: center;
+  padding: 0 0.5rem;
+}
+
+nav ul li a {
+  color: var(--black);
+}
+
+nav ul li a:active,
+nav ul li a:hover {
+  color: var(--yellow);
+  transition: 0.3s;
+}
+
+button {
+  padding: 0.9rem 1.7rem;
+  border: none;
+  border-radius: 1.5rem;
+  transition: 0.4s;
+  font-size: 0.9rem;
+  font-weight: 200;
+  margin: 0.4rem;
+  cursor: pointer;
+}
+
+.btn-sign-up,
+.btn-sign-in {
+  background-color: var(--saturatedblue);
+  color: var(--white);
+}
+
+.btn-sign-up a,
+.btn-sign-in a {
+  color: var(--white);
+}
+
+.btn-sign-in:hover,
+.btn-sign-up:hover {
+  background-color: var(--yellowgreen);
+  color: var(--black);
+}
+
+/* End of Navigation Styling */
+
+/* Hero Section Styling */
+.hero-section {
+  display: flex;
+  background-color: rgb(206, 155, 206);
+}
+
+.left-section {
+  margin: 6rem 4rem;
+}
+
+.left-section h1 {
+  font-family: "Roboto", sans-serif;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.left-section p {
+  font-size: 1rem;
+  margin: 2rem 0;
+  line-height: 1.5rem;
+}
+
+.appointment {
+  background-color: var(--yellow);
+  color: var(--black);
+  border: none;
+  border-radius: 1.5rem;
+}
+
+.appointment a {
+  color: var(--black);
+}
+
+.appointment:hover {
+  background-color: #ff6347;
+  color: var(--white);
+}
+
+.right-section img {
+  width: 220%;
+  height: 80%;
+}
+/* End of Hero Styling */
+
+/* Appointment Booking Styling */
+
+form {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.appointment-section {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.appointment-container {
+  background-color: var(--white);
+  display: flex;
+  margin-top: -4rem;
+  padding: 3rem;
+  border: none;
+  border-radius: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  padding-right: 2rem;
+  font-weight: bold;
+  margin-right: auto;
+  padding-bottom: 0.5rem;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"], 
+select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+#type::placeholder,
+#model::placeholder {
+  padding-left: 1rem;
+}
+
+.book {
+  background-color: var(--saturatedblue);
+  color: var(--white);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.book:hover {
+  background-color: var(--yellow);
+  color: var(--black);
+}
+
+/* End of Appointment Styling */
+
+/* Why Us Section Styling */
+
+.choose {
+  text-align: center;
+  justify-content: center;
+  margin: 2rem;
+  font-family: "Roboto", sans-serif;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.container1,
+.container2,
+.container3 {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  width: 60%;
+  margin: auto;
+  padding: 2rem;
+  border: none;
+  border-radius: 0.4rem;
+  box-shadow: 1px 2px 1px 2px lightgray;
+}
+
+.container1 h2,
+.container2 h2,
+.container3 h2 {
+  font-size: 1rem;
+  text-align: center;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+
+.container1 p,
+.container2 p,
+.container3 p {
+  font-size: 0.8rem;
+  color: var(--lightgray);
+  line-height: 1.3rem;
+  text-align: center;
+  justify-content: center;
+}
+
+.container1 img,
+.container2 img,
+.container3 img {
+  width: 3rem;
+  height: 3rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.5rem;
+}
+/* End of Styling */
+
+/* Customer Review Styling */
+.testimonial {
+  margin: 4rem;
+}
+
+.testimonial h2 {
+  font-family: "Roboto", sans-serif;
+  margin: 1rem 5rem;
+  font-weight: bold;
+}
+
+.review {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: center;
+  justify-content: center;
+}
+
+.review1,
+.review2,
+.review3,
+.review4 {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  width: 90%;
+  margin: 1rem;
+  padding: 2rem;
+  border: none;
+  border-radius: 0.4rem;
+  box-shadow: 1px 2px 1px 2px lightgray;
+}
+
+.review1 p,
+.review2 p,
+.review3 p,
+.review4 p {
+  font-size: 0.8rem;
+  color: rgb(177, 175, 175);
+  line-height: 1.3rem;
+  text-align: center;
+  justify-content: center;
+}
+
+.review1 h4,
+.review2 h4,
+.review3 h4,
+.review4 h4 {
+  font-size: 0.7rem;
+  text-align: center;
+  justify-content: center;
+  padding-top: 1rem;
+}
+/* End of Customer Review */
+
+/* Newsletter Styling */
+.newsletter {
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 5rem;
+}
+
+.newsletter-container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 20px;
+  background-color: rgb(240, 240, 163);
+  padding: 3rem;
+  margin: auto;
+  border: none;
+  width: 80%;
+  border-radius: 0.8rem;
+}
+
+.newsletter-container h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+  margin: 1rem;
+}
+
+.newsletter-container h5 {
+  color: var(--lightgray);
+}
+
+#email {
+  padding: 0.9rem 0.7rem;
+  background-color: var(--white);
+  border: none;
+  width: 40%;
+  border-radius: 0.7rem;
+}
+
+.subscribe form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.btn-subscribe {
+  background-color: var(--saturatedblue);
+  color: var(--white);
+  border-radius: 0.4rem;
+}
+/* End of Newsletter Styling */
+
+/* Bcak to top Styling */
+.back-to-top {
+  display: grid;
+  justify-content: end;
+}
+
+.top {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  column-gap: 5px;
+  align-items: center;
+}
+
+.top li {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.top li a {
+  display: inline-block;
+  padding: 5px;
+  color: #000;
+  text-decoration: none;
+}
+
+.top li a:hover {
+  color: #fff;
+  background-color: #000;
+}
+
+.top li p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Footer Styling */
+footer {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 50px 50px;
+  background-color: var(--darkblue);
+  color: var(--white);
+}
+
+.footer-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  grid-gap: 20px;
+}
+
+.footer-left p {
+  margin-top: 1rem;
+  font-size: 1rem;
+  line-height: 1.2rem;
+}
+
+.footer-center {
+  position: relative;
+}
+
+.footer-center h3 {
+  margin-bottom: 1rem;
+}
+
+.footer-center li a {
+  color: var(--white);
+  margin-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.footer-center li a:hover {
+  color: var(--yellow);
+}
+
+.info {
+  position: relative;
+}
+
+.info li {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  margin-bottom: 0.6rem;
+}
+
+.info li span:nth-child(1) {
+  font-size: 20px;
+  color: var(--white);
+}
+
+.info li span {
+  color: var(--white);
+}
+
+.info a {
+  color: var(--white);
+}
+
+.footer-right h3 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+/* Media Query */
+@media (min-width: 992px) {
+  form {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-list {
+    display: none;
+    margin: auto;
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    z-index: 1;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-list.show {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu,
+  .right-nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hamburger-menu {
+    display: block;
+    z-index: 100;
+  }
+
+  .hamburger-menu.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .hamburger-menu.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger-menu.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  .right-section img {
+    display: none;
+  }
+
+  .appointment-container {
+    width: 80%;
+  }
+
+  input {
+    width: 80%;
+  }
+
+  .appointment-container {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 2rem;
+  }
+
+  label {
+    margin-right: auto;
+    padding-top: 0.5rem;
+  }
+
+  .book {
+    margin-top: 1rem;
+    margin-right: auto;
+  }
+
+  .footer-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .left-section h1 {
+    font-size: 1.7rem;
+  }
+
+  .container1,
+  .container2,
+  .container3 {
+    margin-bottom: 2rem;
+  }
+
+  .appointment-container {
+    width: 90%;
+  }
+
+  .why-fixmyride h2 {
+    font-size: 1.2rem;
+  }
+
+  .testimonial h2 {
+    margin: 0.5rem 0;
+    font-size: 1.5rem;
+  }
+
+  .subscribe form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #email {
+    width: 85%;
+  }
+}

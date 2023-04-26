@@ -8,14 +8,6 @@ Base = declarative_base()
 
  
 
-class Role(Base, RoleMixin):
-    __tablename__ = 'roles'
-
-    role_id = Column(Integer, primary_key=True)
-    name = Column(String(80), nullable=False)
-    description = Column(String(255))
-
-
 class User(Base):
     __tablename__ = 'user'
 
@@ -41,6 +33,7 @@ class Appointment(Base):
     date_time = Column(DateTime, nullable=False)
     customer_id = Column(Integer, ForeignKey('user.user_id'), nullable=False)
     service_id = Column(Integer, ForeignKey('service.service_id'), nullable=False)
+    model = Column(String(50)),
     customer = relationship('User', foreign_keys=[customer_id])
     service = relationship('Service', foreign_keys=[service_id])
 

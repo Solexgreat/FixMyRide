@@ -6,6 +6,7 @@ from auth import AUTH
 
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key_here'
 DB = DB()
 AUTH = AUTH()
 login_manager = LoginManager(app)
@@ -58,42 +59,46 @@ def register_user() -> str:
     return jsonify ({'error_msg': error_msg}), 400
 
 @app.route('/appointments', methods=['POST'], strict_slashes = False)
-@login_required
 def Create_appointment() -> str:
     """POST /appoitments
        Return:
        json obj with status 201
     """
-    data = None
+    data = request.form
     error_msg = None
-    try:
-        data = request.form
-    except Exception as e:
-        data = None
+
+    login_status = check_login_status()
+    if login_status is False:
+        return render_template('sign-in.html')
+   
     if not data:
         error_msg = 'wrong format'
     if not error_msg and data.get('date_time') == "":
         error_msg = 'date is missing'
     if not error_msg and data.get('email') == "":
-        error_msg = 'customer_email is messing'
+        error_msg = 'customer_email is missing'
     if not error_msg and data.get('name') == "":
-        error_msg = 'service_name is messing'
+        error_msg = 'service_name is missing'
+    if not error_msg and data.get('model') == "":
+        error_msg = 'enter model'
+    
     if error_msg is None:
         try:
             date_time = data.get('date_time')
             email = data.get('email')
+            model = data.get('model')
             customer_id = DB.get_user_id(email=email)
             name = data.get('name')
             service_id = DB.get_service_id(name=name)
             DB.add_appiontment(date_time, 
                                 customer_id,
-                                service_id)
+                                service_id, model)
             #return jsonify({"message": "sucessfully created"}), 201
             flash(f'sucessfully created', category='success')
+            return render_template('index.html')
         except Exception as e:
             error_msg = "can't create appointment: {}".format(e)
-            flash(f'error_msg', category='danger')
-    return jsonify({'error_msg': error_msg}), 400
+            flash(f'{error_msg}', category='danger')
 
 @app.route('/appointments/history', methods=['GET'], strict_slashes=False)
 def appointment_history() -> str:
@@ -236,17 +241,15 @@ def login() -> str:
     user = AUTH.valid_loggin(email, password)
     if user:
         session_id = AUTH.create_session(email)
+        response = jsonify({"email": email,
+                            "message": "logged in"})
+        response.set_cookie("session_id", session_id)
         if user:
-            if user.role == 'mechanic':
-                redirect_url = '/mechanic.html'
+            if user.role == 'admin':
+                return render_template('admin-dashboard.html')
             
             if user.role == 'costumer':
-                render_url = '/costumer.html'
-
-        response = jsonify({"email": email,
-                            "message": "logged in",
-                            "render_url": render_url})
-        response.set_cookie("session_id", session_id)
+               return render_template('index.html')
         return response
     else:
         abort(401)
@@ -314,11 +317,11 @@ def check_login_status():
     if session_id:
         # Verify session_id with AUTH class
         if AUTH.get_user_from_session_id(session_id):
-            return jsonify({'logged_in': True}), 200
+            return True
         else:
-            return jsonify({'logged_in': False}), 401
+            return False
     else:
-        return jsonify({'logged_in': False}), 401
+        return False
     
 if __name__ == "__main__":
     app.run(port="5000", debug=True)

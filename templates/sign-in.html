@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src="login.js"></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Sign in</title>
+    <title>Customer Sign in</title>
+    <script type="text/javascript" src="login.js"></script>
     <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
 
-    <link rel="stylesheet" href="styles/admin-sign-in.css" />
+   <link rel="stylesheet" href="/static/styles/customer-sign-in.css" />
+   <link rel="stylesheet" href="{{ url_for('static', filename='styles/customer-sign-in.css') }}"/>
   </head>
   <body>
     <div class="container">
@@ -24,13 +25,17 @@
         <h3>Sign in</h3>
 
         <div class="button">
-          <button class="admin">Admin</button>
-          <button class="customer">
-            <a href="customer-sign-up.html">Customer</a>
+          <button class="customer">Customer</button>
+          <button class="admin">
+            <a href="admin-sign-in.html">Admin</a>
           </button>
         </div>
 
-        <form id="login-form">
+        <form
+          id="login-form"
+          action="http://localhost:5000/sessions"
+          method="POST"
+        >
           <input
             type="text"
             name="email"
@@ -48,18 +53,24 @@
           />
 
           <div class="forgot-pwd">
-            <input type="checkbox" name="remember-me" id="remember-me" />
+            <input
+              type="checkbox"
+              name="remember-me"
+              id="remember-me"
+              autocomplete="on"
+            />
             <label for="remember-me">Remember me</label>
             <p class="pwd">Forgot password?</p>
           </div>
+
+          <div class="sign-in">
+            <button class="log-in" type="submit">Log in</button>
+          </div>
         </form>
 
-        <div class="sign-in">
-          <a href="./admin-dashboard.html"><input type="submit" value="Log In" onclick="login()" class="log-in"></a>
-        </div>
         <p class="option">
           Don't have an account?
-          <span><a href="admin-sign-up.html">Sign up</a></span>
+          <span><a href="customer-sign-up.html">Sign up</a></span>
         </p>
       </div>
     </div>
@@ -68,13 +79,13 @@
       <div class="arrow">
         <ul class="top">
           <li>
-            <span><a href="index.html"><i class="fa-solid fa-arrow-up"></i></a></span>
+            <span
+              ><a href="index.html"><i class="fa-solid fa-arrow-up"></i></a
+            ></span>
             <span><p>Go back Home</p></span>
           </li>
         </ul>
       </div>
     </section>
-
-    <script src="index.js"></script>
   </body>
 </html>
