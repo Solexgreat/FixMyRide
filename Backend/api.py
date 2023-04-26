@@ -1,6 +1,6 @@
 from flask import Flask
-from flask import Flask, jsonify, request, abort, redirect, render_template
-from flask_login import login_required
+from flask import Flask, jsonify, request, abort, redirect, render_template, flash
+from flask_login import login_user, logout_user, login_required, current_user, LoginManager
 from db import DB
 from auth import AUTH
 
@@ -8,6 +8,17 @@ from auth import AUTH
 app = Flask(__name__)
 DB = DB()
 AUTH = AUTH()
+login_manager = LoginManager(app)
+login_manager.login_view = "login"
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    """
+    """
+    user = DB.find_user(user_id=user_id)
+    if user is None:
+        return None
 
 @app.route('/register', methods=['POST'], strict_slashes=False)
 def register_user() -> str:
@@ -34,6 +45,7 @@ def register_user() -> str:
             name = data.get('firstname')
             role = data.get('role')
             user = AUTH.register_user(email, password, name, role)
+            login_user(user)
             
             if user:
                 if user.role == 'mechanic':
@@ -76,9 +88,11 @@ def Create_appointment() -> str:
             DB.add_appiontment(date_time, 
                                 customer_id,
                                 service_id)
-            return jsonify({"message": "sucessfully created"}), 201
+            #return jsonify({"message": "sucessfully created"}), 201
+            flash(f'sucessfully created', category='success')
         except Exception as e:
             error_msg = "can't create appointment: {}".format(e)
+            flash(f'error_msg', category='danger')
     return jsonify({'error_msg': error_msg}), 400
 
 @app.route('/appointments/history', methods=['GET'], strict_slashes=False)
