@@ -105,7 +105,11 @@ nav h3 {
   cursor: pointer;
 }
 
-.fixmyride h4:hover {
+.fixmyride h4 a {
+  color: var(--black);
+}
+
+.fixmyride h4 a:hover {
   color: var(--yellow);
 }
 /* End of Navigation Section Styling */
