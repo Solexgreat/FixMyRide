@@ -36,6 +36,7 @@
             name="email"
             id="email"
             placeholder="Email Address"
+            autocomplete="on"
           />
 
           <input
@@ -43,6 +44,7 @@
             name="password"
             id="password"
             placeholder="Password"
+            autocomplete="on"
           />
 
           <div class="forgot-pwd">
@@ -53,7 +55,7 @@
         </form>
 
         <div class="sign-in">
-          <button class="log-in">Log in</button>
+          <a href="./admin-dashboard.html"><input type="submit" value="Log In" onclick="login()" class="log-in"></a>
         </div>
         <p class="option">
           Don't have an account?
@@ -72,5 +74,7 @@
         </ul>
       </div>
     </section>
+
+    <script src="index.js"></script>
   </body>
 </html>
