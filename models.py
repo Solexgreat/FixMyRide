@@ -17,7 +17,8 @@ class User(Base):
     password = Column(String(255), nullable=False)
     session = Column(String(225))
     reset_token = Column(String(225))
-    roles = Column(String, nullable=False)
+    is_active = Column(Boolean())
+    role = Column(String, nullable=False)
 
 class Service(Base):
     __tablename__ = 'service'

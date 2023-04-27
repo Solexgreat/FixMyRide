@@ -68,9 +68,12 @@ class DB:
     def add_user(self, email: str, hashed_password: str, name: str, role: str) -> User:
         """Add User to session
         """
-        user = User(email=email, password=hashed_password, name=name, role=role)
-        self._session.add(user)
-        self._session.commit()
+        try:
+            user = User(email=email, password=hashed_password, name=name, role=role)
+            self._session.add(user)
+            self._session.commit()
+        except Exception as e:
+            self._session.rollback()
         return user
     
     def find_user(self, **kwargs) -> User:
