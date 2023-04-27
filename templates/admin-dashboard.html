@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/styles/admin-dashboard.css" />
+    <link rel="stylesheet" href="{{ url_for('static', /styles/admin-dashboard.css') }}">
+  </head>
+  <body>
+    <!-- Navigation -->
+    <header>
+      <nav>
+        <h2>Dashboard</h2>
+        <h3>FixMyRide</h3>
+
+        <div class="nav-right">
+          <div class="notification">
+            <img src="./images/search.png" alt="search" />
+            <img src="./images/Group 573.png" alt="image" />
+            <img src="./images/Group 572.png" alt="image" />
+
+            <p>Need Help?</p>
+          </div>
+
+          <div class="fixmyride">
+            <h4><a href="./index.html">FixMyRide</a></h4>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Side Bar -->
+      <section class="side-bar">
+        <div class="side-bar-container">
+          <div class="side-bar-icons">
+            <img src="./images/C.png" alt="C" />
+            <img src="./images/Home icon.png" alt="Home" />
+            <img src="./images/Activity icon.png" alt="activity" />
+            <img src="./images/Emergency icon.png" alt="emergency" />
+            <img src="./images/Discount icon.png" alt="discount" />
+            <img src="./images/Car-repair icon.png" alt="car repair" />
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <!-- Live Activity -->
+        <section class="live-activity">
+          <div class="activity">
+            <h3>Live Activity</h3>
+            <div class="product-update">
+              <div class="update">
+                <div class="request">
+                  <img
+                    src="./images/Product requests icon.png"
+                    alt="product request"
+                  />
+                  <p>Product Requests</p>
+                </div>
+
+                <div class="graph">
+                  <img class="icon" src="./images/Graph.png" alt="graph" />
+                  <p>10%</p>
+                  <img src="./images/Graph (up).png" alt="graph" />
+                  <h1 class="number">10</h1>
+                </div>
+              </div>
+
+              <div class="update">
+                <div class="request">
+                  <img
+                    src="./images/Service requests icon.png"
+                    alt="service request"
+                  />
+                  <p>Service Requests</p>
+                </div>
+
+                <div class="graph">
+                  <img class="icon" src="./images/Graph (1).png" alt="graph" />
+                  <p>10%</p>
+                  <img src="./images/Graph (Down).png" alt="graph" />
+                  <h1 class="number">2</h1>
+                </div>
+              </div>
+
+              <div class="update">
+                <div class="request">
+                  <img
+                    src="./images/Emergency Service requests icon.png"
+                    alt="service request"
+                  />
+                  <p>Emergency Service Requests</p>
+                </div>
+
+                <div class="graph">
+                  <img class="icon" src="./images/Graph.png" alt="graph" />
+                  <p>6%</p>
+                  <img src="./images/Graph (up).png" alt="graph" />
+                  <h1 class="number">10</h1>
+                </div>
+              </div>
+
+              <div class="update">
+                <div class="request">
+                  <img
+                    src="./images/Emergency Service requests icon (1).png"
+                    alt="service request"
+                  />
+                  <p>Transaction</p>
+                </div>
+
+                <div class="graph">
+                  <img class="icon" src="./images/Graph.png" alt="graph" />
+                  <p>15%</p>
+                  <img src="./images/Graph (up).png" alt="graph" />
+                  <h1 class="number">22</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Recent Order -->
+        <section class="recent-order">
+          <div class="order-header">
+            <h3>Recent Orders</h3>
+            <img src="./images/Frame 575.png" alt="image" />
+          </div>
+
+          <div class="table-container">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Customer</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Order Details</th>
+                  <th scope="col">Order Type</th>
+                  <th scope="col">OTP Verification</th>
+                  <th scope="col">Order Status</th>
+                  <th scope="col">Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Bukola Salako</td>
+                  <td>Jibowu Street</td>
+                  <td>Dunlop Wheel</td>
+                  <td>Product</td>
+                  <td>
+                    <p class="otp">Enter OTP <span>Verify</span></p>
+                  </td>
+                  <td class="pending">Pending</td>
+                  <td>Just now</td>
+                </tr>
+                <tr>
+                  <td>Emeka Chukwu</td>
+                  <td>Odogwu Street</td>
+                  <td>Battery Replacement</td>
+                  <td>Emergency</td>
+                  <td>
+                    <p class="otp">Enter OTP <span>Verify</span></p>
+                  </td>
+                  <td class="pending">Pending</td>
+                  <td>Just now</td>
+                </tr>
+                <tr>
+                  <td>Musa Bala</td>
+                  <td>Satelite Town</td>
+                  <td>Punctured Tire</td>
+                  <td>Service</td>
+                  <td>
+                    <p class="otp">Enter OTP <span>Verify</span></p>
+                  </td>
+                  <td class="pending">Pending</td>
+                  <td>2 hours ago</td>
+                </tr>
+                <tr>
+                  <td>Effiong Grace</td>
+                  <td>Ajao Estate</td>
+                  <td>Oil Change</td>
+                  <td>Product</td>
+                  <td>
+                    <p class="otp">
+                      030304<span
+                        ><img src="./images/Group 508.png" alt="check"
+                      /></span>
+                    </p>
+                  </td>
+                  <td class="completed">completed</td>
+                  <td>3 hours ago</td>
+                </tr>
+                <tr>
+                  <td>Jacob Ajibola</td>
+                  <td>Bukola Close</td>
+                  <td>Battery</td>
+                  <td>Product</td>
+                  <td>
+                    <p class="otp">
+                      030304<span
+                        ><img src="./images/Group 508.png" alt="check"
+                      /></span>
+                    </p>
+                  </td>
+                  <td class="completed">Completed</td>
+                  <td>Today 10:30am</td>
+                </tr>
+                <tr>
+                  <td>John Thornton</td>
+                  <td>Banana Island</td>
+                  <td>Upholstery</td>
+                  <td>Emergency</td>
+                  <td>
+                    <p class="otp">
+                      030304<span
+                        ><img src="./images/Group 508.png" alt="check"
+                      /></span>
+                    </p>
+                  </td>
+                  <td class="completed">Completed</td>
+                  <td>Today 10:30am</td>
+                </tr>
+                <tr>
+                  <td>Steve</td>
+                  <td>Nigeria</td>
+                  <td>Dunlop Wheel</td>
+                  <td>Product</td>
+                  <td>
+                    <p class="otp">
+                      030304<span
+                        ><img src="./images/Group 508.png" alt="check"
+                      /></span>
+                    </p>
+                  </td>
+                  <td class="cancelled">Cancelled</td>
+                  <td>Today 10:00am</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
