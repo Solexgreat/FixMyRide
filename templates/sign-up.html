@@ -11,7 +11,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
   />
 
-    <link rel="stylesheet" href="/styles/customer-sign-up.css" />
+    <link rel="stylesheet" href="../styles/sign-up.css" />
     <link rel="stylesheet" href="{{ url_for('static', /styles/customer-sign-up.css') }}">
   </head>
   <body>
@@ -25,13 +25,6 @@
 
       <div class="sign-up-form">
         <h3>Sign up</h3>
-
-        <div class="button">
-          <button class="customer">Customer</button>
-          <button class="admin">
-            <a href="admin-sign-up.html">Admin</a>
-          </button>
-        </div>
 
         <form action="http://localhost:5000/register" class="form" method="POST" id="register-form">
           <div class="form-contents">
@@ -83,7 +76,6 @@
               required
             />
             <br>
-            <label for="role">Admin</label>
             <input
               type="radio"
               name="role"
@@ -91,7 +83,7 @@
               autocomplete="on"
               required
             />
-            <label for="role">Customer</label>
+            <label for="role">Admin</label>
             <input
               type="radio"
               name="role"
@@ -99,6 +91,7 @@
               autocomplete="on"
               required
             />
+            <label for="role">Customer</label>
             <br>
 
             <div class="confirm-pwd">
@@ -112,7 +105,7 @@
           </div>
           <p class="option">
             Already have an account?
-            <span><a href="customer-sign-in.html">Sign in</a></span>
+            <span><a href="../templates/sign-in.html">Sign in</a></span>
           </p>
         </form>
       </div>

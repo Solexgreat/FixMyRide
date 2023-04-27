@@ -61,52 +61,16 @@ body {
 
 /* Login Cobtainer Styling */
 .login-con {
-  margin: 3rem 0.3rem;
+  margin: 6rem 0.3rem;
   display: flex;
   flex-direction: column;
 }
 
 h3 {
   font-size: 1.2rem;
-  color: var(--yellow);
+  color: var(--blue);
   text-align: center;
   margin-bottom: 2rem;
-}
-
-.button {
-  display: flex;
-  justify-content: center;
-  border-radius: 2rem;
-  background: var(--gray);
-  padding: 0.3rem 1rem;
-  margin-bottom: 3rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.admin {
-  background: var(--blue);
-  color: var(--white);
-  font-size: 1rem;
-  border-radius: 2rem;
-  padding: 1rem 2.5rem;
-  border: none;
-  margin-right: 3rem;
-  margin-left: 0;
-}
-
-.customer a {
-  color: var(--white);
-}
-
-.customer {
-  background: transparent;
-  color: var(--white);
-  font-size: 1rem;
-  border-radius: 2rem;
-  padding: 1rem 2rem;
-  margin-right: 2.5rem;
-  border: none;
 }
 
 form {
@@ -157,6 +121,10 @@ input[placeholder] {
   border: none;
 }
 
+.log-in a {
+  color: var(--white);
+}
+
 .option {
   color: var(--white);
 }
@@ -173,14 +141,14 @@ p {
   font-size: 0.9rem;
 }
 
+.arrow {
+  display: none;
+}
+
 /* Media Query */
 @media screen and (max-width: 1024px) {
   .image h2 {
     font-size: 1.4rem;
-  }
-
-  .avatar {
-    width: 50vw;
   }
 
   h3 {
@@ -199,8 +167,8 @@ p {
     padding: 1rem 1.9rem;
   }
 
-  .admin,
-  .customer {
+  .customer,
+  .admin {
     font-size: 0.9rem;
   }
 
@@ -225,13 +193,17 @@ p {
     width: 25%;
     font-size: 0.8rem;
   }
+  .arrow {
+    display: block;
+  }
 }
 
 @media screen and (max-width: 768px) {
+
   h3 {
-    margin-right: 10rem;
+    margin: auto;
+    padding-bottom: 2rem;
     font-size: 1.5rem;
-    color: var(--blue);
   }
 
   body {
@@ -250,26 +222,10 @@ p {
     display: none;
   }
 
-  .button {
-    width: 80%;
-    margin-left: 0;
-    padding: 0.4rem 0.2rem;
-  }
-
-  .admin {
-    margin-left: 2.5rem;
-    padding: 1rem 1.5rem;
-  }
-
-  .admin,
-  .customer {
-    font-size: 1rem;
-  }
-
   input[type="text"],
   input[type="password"] {
     padding: 0.8rem 0.6rem;
-    width: 80%;
+    width: 90%;
   }
 
   .pwd,
@@ -283,43 +239,47 @@ p {
     color: var(--darkblue);
   }
 
-.back-to-top {
-  display: grid;
-  justify-content: end;
-}
-
-.top {
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  column-gap: 5px;
-  align-items: center;
-}
-
-.top li {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.top li a {
-  display: inline-block;
-  padding: 5px;
-  color: #000;
-  text-decoration: none;
-}
-
-.top li a:hover {
-  color: #fff;
-  background-color: #000;
-}
-
-.top li p {
-  margin: 0;
-  font-size: 14px;
-}
+  .back-to-top {
+    display: grid;
+    justify-content: end;
+  }
+  
+  .top {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    column-gap: 5px;
+    align-items: center;
+  }
+  
+  .top li {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .top li a {
+    display: inline-block;
+    padding: 5px;
+    color: #000;
+    text-decoration: none;
+  }
+  
+  .top li a:hover {
+    color: #fff;
+    background-color: #000;
+  }
+  
+  .top li p {
+    margin: 0;
+    font-size: 14px;
+  }
 }
 
 @media screen and (max-width: 600px) {
+  body {
+    background-color: var(--white);
+  }
+
   .container {
     background-image: none;
   }
@@ -333,45 +293,35 @@ p {
   }
 
   h3 {
-    margin-right: 8rem;
-    font-size: 1.5rem;
-  }
-
-  .button {
-    padding: 0.3rem 0.2rem;
-    width: 80%;
-    margin-left: 0;
-  }
-
-  .admin {
-    margin-left: 2rem;
-    padding: 0.7rem 1.5rem;
-  }
-
-  .admin,
-  .customer {
-    font-size: 1rem;
+    font-size: 1.2rem;
+    margin: auto;
   }
 
   input[type="text"],
   input[type="password"] {
-    width: 80%;
+    width: 100%;
     padding: 0.8rem 0.6rem;
   }
 
   .pwd,
-  .forgot-pwd label,
+  .forgot-pwd label{
+    font-size: 0.7rem;
+  }
+
   .option,
   span {
     font-size: 0.9rem;
   }
 
   .pwd {
-    margin-left: 7rem;
+    margin-left: 3rem;
   }
 
   .option {
     color: var(--darkblue);
+  }
+  .log-in {
+    width: 35%;
   }
 }
 
@@ -380,16 +330,16 @@ p {
     width: 85%;
   }
 
-  .customer {
+  .admin {
     margin-left: 1.7rem;
   }
 
   input[type="text"],
   input[type="password"] {
-    width: 85%;
+    width: 100%;
   }
 
   .pwd {
-    margin-left: 6rem;
+    margin-left: 2rem;
   }
 }

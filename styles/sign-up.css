@@ -74,41 +74,6 @@ h3 {
   margin-bottom: 2rem;
 }
 
-.button {
-  display: flex;
-  justify-content: center;
-  border-radius: 2rem;
-  background: var(--darkgray);
-  padding: 0.4rem 1rem;
-  margin-bottom: 3rem;
-  margin-left: 2.5rem;
-  margin-right: auto;
-}
-
-.admin {
-  background: transparent;
-  font-size: 1rem;
-  border-radius: 2rem;
-  padding: 1rem 2rem;
-  border: none;
-  margin-right: 2.5rem;
-}
-
-.admin a {
-  color: var(--white);
-}
-
-.customer {
-  background: var(--blue);
-  color: var(--white);
-  font-size: 1rem;
-  border-radius: 2rem;
-  padding: 1rem 2.5rem;
-  border: none;
-  margin-right: 3rem;
-  margin-left: 0;
-}
-
 .form {
   margin-top: 1rem;
   margin-left: auto;
@@ -132,9 +97,14 @@ input[type="email"] {
   border-radius: 0.3rem;
 }
 
+label {
+  padding-right: .5rem;
+  color: var(--lightblue);
+}
+
 .confirm-pwd {
   display: flex;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
   color: var(--lightblue);
 }
 
@@ -168,6 +138,10 @@ span a {
 
 span a:hover {
   color: var(--yellowgreen);
+}
+
+.arrow {
+  display: none;
 }
 
 /* MEDIA QUERY */
@@ -209,6 +183,7 @@ span a:hover {
   .option {
     color: var(--darkblue);
   }
+
   .back-to-top {
     display: grid;
     justify-content: end;
@@ -243,6 +218,10 @@ span a:hover {
     margin: 0;
     font-size: 14px;
   }
+
+  .arrow{
+    display: block;
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -255,30 +234,24 @@ span a:hover {
   }
 
   h3 {
-    margin-right: 5rem;
-    font-size: 1.5rem;
-  }
-
-  .button {
-    padding: 0.2rem 0.2rem;
-    margin-left: 0;
-    width: 80%;
-  }
-
-  .customer {
-    margin-left: 2.9rem;
+    margin:auto;
+    font-size: 1.2rem;
   }
 
   .confirm-pwd label,
   p,
   span {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
 
   input[type="text"],
   input[type="password"],
   input[type="tel"],
   input[type="email"] {
-    width: 80%;
+    width: 100%;
+  }
+
+  .reg {
+    width: 45%;
   }
 }
