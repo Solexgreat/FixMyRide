@@ -5,7 +5,7 @@ from db import DB
 from auth import AUTH
 
 
-app = Flask(__name__)
+app = Flask(__name__)#static_folder='path/to/static/folder'
 app.secret_key = 'your_secret_key_here'
 DB = DB()
 AUTH = AUTH()
@@ -25,38 +25,24 @@ def load_user(user_id):
 def register_user() -> str:
     """Creat new user
     """
-    data = None
-    error_msg = None
+    
+    name = request.form['first name']
+    email = request.form['email']
+    password = request.form['password']
+    role = request.form['role']
     try:
-        data = request.form
+        user = AUTH.register_user(email, password, name, role)
     except Exception as e:
-        data = None
-    if not data:
-        error_msg = 'wrong format'
-    if not error_msg and data.get('email') == "":
-        error_msg = 'email is missing'
-    if not error_msg and data.get('password') == "":
-        error_msg = 'password is messing'
-    if not error_msg and data.get('role') == "":
-        error_msg = 'role is missing'
-    if error_msg is None:
-        try:
-            email = data.get('email')
-            password = data.get('password')
-            name = data.get('firstname')
-            role = data.get('role')
-            user = AUTH.register_user(email, password, name, role)
-            login_user(user)
-            
-            if user:
-                if user.role == 'mechanic':
-                    return render_template('mechanic.html')
-                
-                if user.role == 'costumer':
-                    return render_template('costumer.html')
-        except Exception:
-            error_msg = "User already exist"
-    return jsonify ({'error_msg': error_msg}), 400
+        return flash(f'user already exist', category='danger')
+    login_user(user)        
+    if user:
+        if user.role == 'Admin':
+            return render_template('admin-dashboard.html')
+        
+        if user.role == 'Costumer':
+            return render_template('index.html')
+    else:
+        flash(f'user already exist', category='danger')
 
 @app.route('/appointments', methods=['POST'], strict_slashes = False)
 def Create_appointment() -> str:
@@ -322,6 +308,31 @@ def check_login_status():
             return False
     else:
         return False
+
+@app.route('/sign-up.html')
+def sign_up():
+    """
+    """
+    return render_template('sign-up.html')
+
+@app.route('/templates/sign-in.html')
+@app.route('/sign-in.html')
+def sign_in():
+    """
+    """
+    return render_template('sign-in.html')
+
+@app.route('/admin-dashboard.html')
+def admin():
+    """
+    """
+    return render_template('admin-dashboard.html')
+
+@app.route('/index.html')
+def index():
+    """
+    """
+    return render_template('index.html')
     
 if __name__ == "__main__":
     app.run(port="5000", debug=True)
