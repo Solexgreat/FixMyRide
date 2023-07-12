@@ -185,12 +185,13 @@ button {
 .details {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 50px;
+  /* grid-gap: 50px; */
 }
 
 .mission,
 .vision {
   padding: 20px;
+  margin: 0 2.5rem;
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);

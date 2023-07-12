@@ -40,9 +40,12 @@ body {
 }
 
 .image h2 {
-  color: var(--yellow);
   font-size: 1.5rem;
   margin: 2rem;
+}
+
+.image h2 a {
+  color: var(--yellow);
 }
 
 .image h3 {
@@ -61,14 +64,15 @@ body {
 
 /* Login Cobtainer Styling */
 .login-con {
-  margin: 6rem 0.3rem;
+  margin: auto;
+  padding: 6rem 0.3rem;
   display: flex;
   flex-direction: column;
 }
 
 h3 {
-  font-size: 1.2rem;
-  color: var(--blue);
+  font-size: 1.5rem;
+  color: var(--white);
   text-align: center;
   margin-bottom: 2rem;
 }
@@ -130,7 +134,7 @@ input[placeholder] {
 }
 
 span a {
-  color: var(--blue);
+  color: var(--white);
 }
 
 span a:hover {
@@ -193,9 +197,6 @@ p {
     width: 25%;
     font-size: 0.8rem;
   }
-  .arrow {
-    display: block;
-  }
 }
 
 @media screen and (max-width: 768px) {
@@ -216,6 +217,10 @@ p {
 
   .login-con {
     margin: auto;
+  }
+
+  .login-con h3 {
+    color: var(--blue);
   }
 
   .image {
@@ -272,6 +277,10 @@ p {
   .top li p {
     margin: 0;
     font-size: 14px;
+  }
+
+  span a {
+    color: var(--blue);
   }
 }
 
