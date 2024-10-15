@@ -2,7 +2,7 @@ from flask import Flask
 from flask import Flask, jsonify, request, abort, redirect, render_template, flash
 from flask_login import login_user, logout_user, login_required, current_user, LoginManager
 from db import DB
-from auth import AUTH
+from Backend.auth import AUTH
 
 
 app = Flask(__name__)#static_folder='path/to/static/folder'
@@ -25,7 +25,7 @@ def load_user(user_id):
 def register_user() -> str:
     """Creat new user
     """
-    
+
     name = request.form['first name']
     email = request.form['email']
     password = request.form['password']

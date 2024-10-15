@@ -6,10 +6,10 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
-from models import User, Appointment, Service, Repair, Revenue
+from Backend.models import User, Appointment, Service, Repair, Revenue
 from typing import List
 from datetime import datetime
-from models import Base
+from Backend.models import Base
 from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
 
 
@@ -33,38 +33,38 @@ class DB:
             DBsession = sessionmaker(bind=self._engine)
             self.__session = DBsession()
         return self.__session
-    
+
     def get_users(self) -> dict:
         """Return dict of users
         """
         users = self._session.query(User).all()
         return [u.__dict__ for u in users]
-    
+
     def get_service(self) -> dict:
         """Return dict of services
         """
         services = self._session.query(Service).all()
         return [s.__dict__ for s in services]
-    
+
     def get_all_appointment(self) -> dict:
         """Return dict of services
         """
         appointment = self._session.query(Appointment).all()
         return [a.__dict__ for a in appointment]
-    
+
     def get_all_repairs(self) -> dict:
         """Return dict of services
         """
         repairs = self._session.query(Repair).all()
         return [r.__dict__ for r in repairs]
-    
+
     def get_all_revenue(self) ->Revenue:
         """Add User to session
         """
         revenues = self._session.query(Revenue).all()
 
         return [r.__dict__ for r in revenues]
-    
+
     def add_user(self, email: str, hashed_password: str, name: str, role: str) -> User:
         """Add User to session
         """
@@ -75,9 +75,9 @@ class DB:
         except Exception as e:
             self._session.rollback()
         return user
-    
+
     def find_user(self, **kwargs) -> User:
-        """ find user by email 
+        """ find user by email
             and return user
         """
         try:

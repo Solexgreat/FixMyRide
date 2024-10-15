@@ -1,5 +1,5 @@
 from db import DB
-from models import User, Appointment, Service, Repair, Revenue
+from Backend.models import User, Appointment, Service, Repair, Revenue
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 import uuid
@@ -26,7 +26,7 @@ class AUTH:
 
     def register_user(self, email: str, password: str, name: str, role: str) -> User:
         """Find user via there email info
-           add_user and return new_user 
+           add_user and return new_user
         """
         try:
             user = self._db.find_user(email=email)
@@ -34,11 +34,11 @@ class AUTH:
                raise ValueError (f"{user.name} already exits")
         except:
             hash_pwd = _hash_password(password)
-            new_user = self._db.add_user(email, password, name, role)
+            new_user = self._db.add_user(email, hash_pwd, name, role)
             return new_user
-    
+
     def valid_loggin(self, email, password):
-        """Verify if the user logging details 
+        """Verify if the user logging details
            are valid
         """
 
