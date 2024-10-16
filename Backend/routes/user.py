@@ -39,3 +39,18 @@ def get_users() -> str:
     """
 
     return jsonify(DB.get_users()), 200
+
+@app.route('/profile', methods=['GET'], strict_slashes=False)
+def profile() -> str:
+    """GET / profile
+       :Retrun
+       -    use sesion_id to find user
+        - 403 if session_id or user is not found
+    """
+    session_id = request.cookies.get("session_id")
+    if session_id is None:
+        abort(403)
+    user = AUTH.get_user_from_session_id(session_id)
+    if user:
+        return jsonify({"email": user.email}), 200
+    abort(403)

@@ -7,3 +7,32 @@ def get_service() -> str:
     """
 
     return jsonify(DB.get_service()), 200
+
+
+@app.route('/service', methods=['POST'], strict_slashes=False)
+def create_service() ->str:
+    """POST /revenue
+       Return: Jsonify status 200
+    """
+    data = request.get_json()
+    err_msg = None
+    if not data:
+        err_msg = 'wrong format'
+
+    if not err_msg and data.get('name')  == "":
+        err_msg = 'name is missing'
+    if not err_msg and data.get('price')  == "":
+        err_msg = 'price is messing'
+    if not err_msg and data.get('category')  == "":
+        err_msg = 'category is messing'
+    if err_msg is None:
+        try:
+            name = data.get('name')
+            price = data.get('price')
+            category = data.get('category')
+
+            service = DB.add_service(name, price, category)
+            return jsonify({"message": "Service is Created"}), 200
+        except Exception as e:
+            err_msg = "can't create appointment: {}".format(e)
+    return (f"{err_msg}")
