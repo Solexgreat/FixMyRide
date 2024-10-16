@@ -4,10 +4,9 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
-from Backend.models import User, Appointment, Service, Repair, Revenue
+from .model import Appointment
 from typing import List
 from datetime import datetime
-from Backend.models import Base
 from .....db import DB
 
 
