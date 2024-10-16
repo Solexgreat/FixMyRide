@@ -8,8 +8,9 @@ from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 from typing import List
 from datetime import datetime
-from Backend.models import Base
-# from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
+
+
+Base = declarative_base()
 
 
 class DB:

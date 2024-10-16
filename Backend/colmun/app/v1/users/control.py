@@ -11,54 +11,54 @@ from .....db import DB
 
 
 
-def get_users() -> dict:
-	"""Return dict of users
-	"""
-	users = DB._session.query(User).all()
-	return [u.__dict__ for u in users]
+class UserControl(DB):
+    """User control class that inherits from DB"""
 
-def add_user(email: str, hashed_password: str, name: str, role: str) -> User:
-	"""Add User to session
-	"""
-	try:
-			user = User(email=email, password=hashed_password, name=name, role=role)
-			DB._session.add(user)
-			DB._session.commit()
-	except Exception as e:
-			DB._session.rollback()
-	return user
+    def get_users(self) -> dict:
+        """Return a list of users as dictionaries"""
+        users = self._session.query(User).all()
+        return [u.__dict__ for u in users]
 
-def find_user(**kwargs) -> User:
-        """ find user by email
-            and return user
-        """
+    def add_user(self, email: str, hashed_password: str, name: str, role: str) -> User:
+        """Add a user to the session and commit"""
         try:
-            user = DB._session.query(User).filter_by(**kwargs).first()
-        except TypeError:
-            raise InvalidRequestError
-        if user is None:
-            raise NoResultFound
+            user = User(email=email, password=hashed_password, name=name, role=role)
+            self._session.add(user)
+            self._session.commit()
+        except Exception as e:
+            self._session.rollback()
+            raise e
         return user
 
-def get_user_id( **kwargs) -> int:
-	"""To get the user_id """
-	try:
-			user = DB.find_user(**kwargs)
-			user_id = user.user_id
-	except Exception as e:
-			return e
-	return user_id
+    def find_user(self, **kwargs) -> User:
+        """Find a user by provided criteria (e.g., email) and return the user"""
+        try:
+            user = self._session.query(User).filter_by(**kwargs).first()
+        except TypeError:
+            raise InvalidRequestError("Invalid arguments provided.")
+        if user is None:
+            raise NoResultFound(f"No user found with criteria: {kwargs}")
+        return user
 
-def update_user(user_id: int, **kwargs) -> None:
-	"""
-	"""
-	try:
-			user = DB.find_user(user_id=user_id)
-			for i, j in kwargs.items():
-					if hasattr(user, i):
-							setattr(user, i, j)
-					else:
-							raise ValueError(f"{i} is not a valid attribute of User")
-	except NoResultFound:
-			return (f"Invalid user_id")
-	return None
+    def get_user_id(self, **kwargs) -> int:
+        """Get the user_id of a user based on given criteria"""
+        try:
+            user = self.find_user(**kwargs)
+            user_id = user.user_id
+        except Exception as e:
+            return e
+        return user_id
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Update a user's attributes"""
+        try:
+            user = self.find_user(user_id=user_id)
+            for key, value in kwargs.items():
+                if hasattr(user, key):
+                    setattr(user, key, value)
+                else:
+                    raise ValueError(f"{key} is not a valid attribute of User")
+            self._session.commit()
+        except NoResultFound:
+            return f"Invalid user_id"
+        return None

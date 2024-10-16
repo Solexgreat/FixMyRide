@@ -1,8 +1,7 @@
-from db import DB
-from Backend.models import User, Appointment, Service, Repair, Revenue
-from sqlalchemy.orm.exc import NoResultFound
+from ..users.control import UserControl
+from ..users.model import User
 from sqlalchemy.exc import InvalidRequestError
-import uuid
+from sqlalchemy.orm.exc import NoResultFound
 import bcrypt
 from .security import _hash_password
 
@@ -12,7 +11,7 @@ class AUTH:
     """Auth class to interact with the authentication database.
     """
     def __init__(self) -> None:
-        self._db = DB()
+        self._db = UserControl()
 
     def register_user(self, email: str, password: str, name: str, role: str) -> User:
         """Find user via there email info
