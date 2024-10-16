@@ -34,29 +34,9 @@ class DB:
             self.__session = DBsession()
         return self.__session
 
-    def get_users(self) -> dict:
-        """Return dict of users
-        """
-        users = self._session.query(User).all()
-        return [u.__dict__ for u in users]
 
-    def get_service(self) -> dict:
-        """Return dict of services
-        """
-        services = self._session.query(Service).all()
-        return [s.__dict__ for s in services]
 
-    def get_all_appointment(self) -> dict:
-        """Return dict of services
-        """
-        appointment = self._session.query(Appointment).all()
-        return [a.__dict__ for a in appointment]
-
-    def get_all_repairs(self) -> dict:
-        """Return dict of services
-        """
-        repairs = self._session.query(Repair).all()
-        return [r.__dict__ for r in repairs]
+    
 
     def get_all_revenue(self) ->Revenue:
         """Add User to session
@@ -87,7 +67,7 @@ class DB:
         if user is None:
             raise NoResultFound
         return user
-    
+
     def get_user_id(self, **kwargs) -> int:
         """To get the user_id """
         try:
@@ -96,7 +76,7 @@ class DB:
         except Exception as e:
             return e
         return user_id
-    
+
     def get_service_id(self, **kwargs) -> int:
         """ """
         try:

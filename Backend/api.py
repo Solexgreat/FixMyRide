@@ -2,7 +2,7 @@ from flask import Flask
 from flask import Flask, jsonify, request, abort, redirect, render_template, flash
 from flask_login import login_user, logout_user, login_required, current_user, LoginManager
 from db import DB
-from Backend.auth import AUTH
+from Backend.colmun.app.v1.core.auth import AUTH
 
 
 app = Flask(__name__)#static_folder='path/to/static/folder'
