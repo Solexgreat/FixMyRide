@@ -1,5 +1,5 @@
-from db import DB
-from Backend.models import User, Appointment, Service, Repair, Revenue
+from ..users.control import UserControl
+from ..users.model import User
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 import uuid
@@ -24,7 +24,7 @@ class SECURITY:
     """Auth class to interact with the authentication database.
     """
     def __init__(self) -> None:
-        self._db = DB()
+        self._db = UserControl()
 
     def create_session(self, email: str,):
         """Create a session via uuid

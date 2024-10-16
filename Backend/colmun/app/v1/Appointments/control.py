@@ -1,5 +1,3 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
@@ -9,6 +7,7 @@ from typing import List
 from datetime import datetime
 from .....db import DB
 from ..Revenues.model import Revenue
+from ..Services.model import Service
 
 
 class AppointmentControl(DB):
