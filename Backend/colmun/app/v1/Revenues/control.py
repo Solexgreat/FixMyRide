@@ -11,11 +11,11 @@ from .....db import DB
 
 
 def get_all_revenue() ->Revenue:
-        """Add User to session
-        """
-        revenues = DB._session.query(Revenue).all()
+	"""Add User to session
+	"""
+	revenues = DB._session.query(Revenue).all()
 
-        return [r.__dict__ for r in revenues]
+	return [r.__dict__ for r in revenues]
 
 
 def add_revenue(date_time: datetime.now(), total_appointment: int,
@@ -25,5 +25,5 @@ def add_revenue(date_time: datetime.now(), total_appointment: int,
 	revenue = Repair(date_time=date_time, total_appointment=total_appointment,
 									total_repair=total_repair, total_revenue=total_revenue)
 	DB._session.add(revenue)
-	DB._session.commit() 
+	DB._session.commit()
 	return revenue
