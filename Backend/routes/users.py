@@ -1,7 +1,17 @@
+from flask import Flask
+from flask import Flask, jsonify, request, abort, redirect, render_template, flash
+# from flask_login import login_user, logout_user, login_required, current_user, LoginManager
+from ..colmun.app.v1.users.control import UserControl
+from Backend.colmun.app.v1.core.auth import AUTH
 
 
+app = Flask(__name__)#static_folder='path/to/static/folder'
+app.secret_key = 'your_secret_key_here'
+DB = UserControl()
+AUTH = AUTH()
 
-@login_manager.user_loader
+
+# @login_manager.user_loader
 def load_user(user_id):
     """
     """
@@ -22,16 +32,16 @@ def register_user() -> str:
         user = AUTH.register_user(email, password, name, role)
     except Exception as e:
         return flash(f'user already exist', category='danger')
-    login_user(user)        
+    # login_user(user)
     if user:
         if user.role == 'Admin':
             return render_template('admin-dashboard.html')
-        
+
         if user.role == 'Costumer':
             return render_template('index.html')
     else:
         flash(f'user already exist', category='danger')
-        
+
 
 @app.route('/user', methods=['GET'], strict_slashes = False)
 def get_users() -> str:

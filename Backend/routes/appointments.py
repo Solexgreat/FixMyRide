@@ -1,6 +1,14 @@
+from flask import Flask
+from flask import Flask, jsonify, request, abort, redirect, render_template, flash
+# from flask_login import login_user, logout_user, login_required, current_user, LoginManager
+from ..colmun.app.v1.Appointments.control import AppointmentControl
+from Backend.colmun.app.v1.core.auth import AUTH
 
 
-
+app = Flask(__name__)#static_folder='path/to/static/folder'
+app.secret_key = 'your_secret_key_here'
+DB = AppointmentControl()
+AUTH = AUTH()
 
 
 @app.route('/appointments', methods=['POST'], strict_slashes = False)
@@ -12,10 +20,10 @@ def Create_appointment() -> str:
     data = request.form
     error_msg = None
 
-    login_status = check_login_status()
-    if login_status is False:
-        return render_template('sign-in.html')
-   
+    # login_status = check_login_status()
+    # if login_status is False:
+    #     return render_template('sign-in.html')
+
     if not data:
         error_msg = 'wrong format'
     if not error_msg and data.get('date_time') == "":
@@ -26,7 +34,7 @@ def Create_appointment() -> str:
         error_msg = 'service_name is missing'
     if not error_msg and data.get('model') == "":
         error_msg = 'enter model'
-    
+
     if error_msg is None:
         try:
             date_time = data.get('date_time')
@@ -35,7 +43,7 @@ def Create_appointment() -> str:
             customer_id = DB.get_user_id(email=email)
             name = data.get('name')
             service_id = DB.get_service_id(name=name)
-            DB.add_appiontment(date_time, 
+            DB.add_appiontment(date_time,
                                 customer_id,
                                 service_id, model)
             #return jsonify({"message": "sucessfully created"}), 201
