@@ -13,141 +13,16 @@ login_manager = LoginManager(app)
 login_manager.login_view = "login"
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    """
-    """
-    user = DB.find_user(user_id=user_id)
-    if user is None:
-        return None
 
-@app.route('/register', methods=['POST'], strict_slashes=False)
-def register_user() -> str:
-    """Creat new user
-    """
 
-    name = request.form['first name']
-    email = request.form['email']
-    password = request.form['password']
-    role = request.form['role']
-    try:
-        user = AUTH.register_user(email, password, name, role)
-    except Exception as e:
-        return flash(f'user already exist', category='danger')
-    login_user(user)        
-    if user:
-        if user.role == 'Admin':
-            return render_template('admin-dashboard.html')
-        
-        if user.role == 'Costumer':
-            return render_template('index.html')
-    else:
-        flash(f'user already exist', category='danger')
 
-@app.route('/appointments', methods=['POST'], strict_slashes = False)
-def Create_appointment() -> str:
-    """POST /appoitments
-       Return:
-       json obj with status 201
-    """
-    data = request.form
-    error_msg = None
 
-    login_status = check_login_status()
-    if login_status is False:
-        return render_template('sign-in.html')
-   
-    if not data:
-        error_msg = 'wrong format'
-    if not error_msg and data.get('date_time') == "":
-        error_msg = 'date is missing'
-    if not error_msg and data.get('email') == "":
-        error_msg = 'customer_email is missing'
-    if not error_msg and data.get('name') == "":
-        error_msg = 'service_name is missing'
-    if not error_msg and data.get('model') == "":
-        error_msg = 'enter model'
-    
-    if error_msg is None:
-        try:
-            date_time = data.get('date_time')
-            email = data.get('email')
-            model = data.get('model')
-            customer_id = DB.get_user_id(email=email)
-            name = data.get('name')
-            service_id = DB.get_service_id(name=name)
-            DB.add_appiontment(date_time, 
-                                customer_id,
-                                service_id, model)
-            #return jsonify({"message": "sucessfully created"}), 201
-            flash(f'sucessfully created', category='success')
-            return render_template('index.html')
-        except Exception as e:
-            error_msg = "can't create appointment: {}".format(e)
-            flash(f'{error_msg}', category='danger')
 
-@app.route('/appointments/history', methods=['GET'], strict_slashes=False)
-def appointment_history() -> str:
-    """Render the appointment history page"""
-    appointments = DB.get_all_appointment()
-    return render_template('appointments.html', appointments=appointments)
 
-@app.route('/user', methods=['GET'], strict_slashes = False)
-def get_users() -> str:
-    """Return all users
-    """
 
-    return jsonify(DB.get_users()), 200
 
-@app.route('/service', methods=['GET'], strict_slashes=False)
-def get_service() -> str:
-    """Return all service
-    """
-    
-    return jsonify(DB.get_service()), 200
 
-@app.route('/appointments', methods=['GET'], strict_slashes=False)
-def get_appointment() -> str:
-    """Return json of all appointments
-    """
-    return jsonify(DB.get_all_appointment())
 
-@app.route('/repairs', methods=['GET'], strict_slashes=False)
-def get_repairs() -> str:
-    """Return json of all repairs
-    """
-    return jsonify(DB.get_all_repairs())
-
-@app.route('/repairs', methods=['POST'], strict_slashes = False)
-def create_repairs() -> str:
-    """POST /repairs
-       Return: Jsonify(message) status 200 
-    """
-    data = request.get_json()
-    err_msg = None
-    if not data:
-        err_msg = 'wrong format'
-
-    if not err_msg and data.get('date_time')  == "":
-        err_msg = 'date is missing'
-    if not err_msg and data.get('customer_id')  == "":
-        err_msg = 'customer_id is messing'
-    if not err_msg and data.get('service_id')  == "":
-        err_msg = 'service_id is messing'
-    if err_msg is None:
-        try:
-            date_time = data.get('date_time')
-            customer_id = data.get('customer_id')
-            service_id = data.get('service_id')
-            mechanic_id = data.get('mechanic_id')
-            repair = DB.add_repair(date_time,
-                            customer_id, 
-                            service_id, 
-                            mechanic_id)
-            return jsonify({"message": "Repair Created"}), 200
-        except Exception as e:
-            err_msg = "can't create appointment: {}".format(e)
-    return (f"{err_msg}")
 
 @app.route('/renvenue', methods=['GET'], strict_slashes=False)
 def get_revenue() -> str:
