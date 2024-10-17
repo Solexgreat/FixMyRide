@@ -4,6 +4,12 @@ from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 import uuid
 import bcrypt
+from datetime import datetime, timedelta
+from .....app import app
+from itsdangerous import URLSafeTimedSerializer
+
+# Initialize serializer with a secret key
+serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
 
 def _hash_password(password: str) -> bytes:
@@ -61,5 +67,23 @@ class SECURITY:
             raise ValueError
 
         reset_token = _generate_uuid()
-        self._db.update_user(user.user_id, reset_token=reset_token)
+        expiration_time = datetime.now() + timedelta(hours=1)
+        self._db.update_user(user.user_id, reset_token=reset_token, token_expiration=expiration_time)
         return reset_token
+
+    def validate_reset_token(self, email: str, reset_token: str) -> bool:
+        """Validate the reset token and check for expiration."""
+        try:
+            user = self._db.find_user(email=email)
+        except NoResultFound:
+            return False
+
+        if user.reset_token != reset_token:
+            return False
+
+        # Check if the token is expired
+        if datetime.now() > user.token_expiration:
+            return False
+
+        return True
+
