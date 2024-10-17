@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_jwt_extended import JWTManager
 from .config import Config
-from .routes import user_bp, service_bp, appointment_bp  # Import your blueprints
+from .routes import user_bp, service_bp, appointment_bp, repair_bp, revenue_bp, auth_bp  # Import your blueprints
 from .column.app.v1.error import register_error_handlers  # Import error handlers
 from .db import DB  # Import your DB class
 
@@ -25,6 +25,8 @@ def create_app():
     # Register your blueprints (routes)
     app.register_blueprint(user_bp)
     app.register_blueprint(service_bp)
+    app.register_blueprint(revenue_bp)
+    app.register_blueprint(repair_bp)
     app.register_blueprint(appointment_bp)
 
     # Register error handlers
