@@ -1,5 +1,6 @@
 """DB module
 """
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -17,11 +18,15 @@ class DB:
     """DB class
     """
 
-    def __init__(self) -> None:
+    def __init__(self, drop_tables=False) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///FMR.db", echo=True)
-        Base.metadata.drop_all(self._engine)
+        database_url = os.environ.get('DATABASE_URL')
+        self._engine = create_engine(database_url, echo=True)
+
+        if drop_tables:
+            Base.metadata.drop_all(self._engine)
+
         Base.metadata.create_all(self._engine)
         self.__session = None
 
