@@ -33,7 +33,7 @@ class AUTH:
         """
         try:
             user = self._db.find_user(email=email)
-            password_encode = password.encode('utf-8')
+            password_encode = _hash_password(password)
             user_pwd = user.password
             return bcrypt.checkpw(user_pwd, password_encode)
         except (NoResultFound, InvalidRequestError):
