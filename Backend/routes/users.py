@@ -3,10 +3,9 @@ from flask import Flask, jsonify, request, abort, redirect, render_template, fla
 # from flask_login import login_user, logout_user, login_required, current_user, LoginManager
 from ..colmun.app.v1.users.control import UserControl
 from Backend.colmun.app.v1.core.auth import AUTH
+from . import user_bp
 
 
-app = Flask(__name__)#static_folder='path/to/static/folder'
-app.secret_key = 'your_secret_key_here'
 DB = UserControl()
 AUTH = AUTH()
 
@@ -19,7 +18,7 @@ def load_user(user_id):
     if user is None:
         return None
 
-@app.route('/register', methods=['POST'], strict_slashes=False)
+@user_bp.route('/register', methods=['POST'], strict_slashes=False)
 def register_user() -> str:
     """Creat new user
     """
@@ -43,14 +42,14 @@ def register_user() -> str:
         flash(f'user already exist', category='danger')
 
 
-@app.route('/user', methods=['GET'], strict_slashes = False)
+@user_bp.route('/user', methods=['GET'], strict_slashes = False)
 def get_users() -> str:
     """Return all users
     """
 
     return jsonify(DB.get_users()), 200
 
-@app.route('/profile', methods=['GET'], strict_slashes=False)
+@user_bp.route('/profile', methods=['GET'], strict_slashes=False)
 def profile() -> str:
     """GET / profile
        :Retrun

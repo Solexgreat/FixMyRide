@@ -4,22 +4,22 @@ from flask import Flask, jsonify, request, abort, redirect, render_template, fla
 from db import DB
 from ..colmun.app.v1.Repairs.control import RepairControl
 from Backend.colmun.app.v1.core.auth import AUTH
+from . import repair_bp
 
 
-app = Flask(__name__)#static_folder='path/to/static/folder'
-app.secret_key = 'your_secret_key_here'
+
 DB = RepairControl()
 AUTH = AUTH()
 
 
 
-@app.route('/repairs', methods=['GET'], strict_slashes=False)
+@repair_bp.route('/repairs', methods=['GET'], strict_slashes=False)
 def get_repairs() -> str:
     """Return json of all repairs
     """
     return jsonify(DB.get_all_repairs())
 
-@app.route('/repairs', methods=['POST'], strict_slashes = False)
+@repair_bp.route('/repairs', methods=['POST'], strict_slashes = False)
 def create_repairs() -> str:
     """POST /repairs
        Return: Jsonify(message) status 200
@@ -42,8 +42,8 @@ def create_repairs() -> str:
             service_id = data.get('service_id')
             mechanic_id = data.get('mechanic_id')
             repair = DB.add_repair(date_time,
-                            customer_id, 
-                            service_id, 
+                            customer_id,
+                            service_id,
                             mechanic_id)
             return jsonify({"message": "Repair Created"}), 200
         except Exception as e:

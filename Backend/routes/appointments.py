@@ -3,15 +3,15 @@ from flask import Flask, jsonify, request, abort, redirect, render_template, fla
 # from flask_login import login_user, logout_user, login_required, current_user, LoginManager
 from ..colmun.app.v1.Appointments.control import AppointmentControl
 from Backend.colmun.app.v1.core.auth import AUTH
+from . import appointment_bp
 
 
-app = Flask(__name__)#static_folder='path/to/static/folder'
-app.secret_key = 'your_secret_key_here'
+
 DB = AppointmentControl()
 AUTH = AUTH()
 
 
-@app.route('/appointments', methods=['POST'], strict_slashes = False)
+@appointment_bp.route('/appointments', methods=['POST'], strict_slashes = False)
 def Create_appointment() -> str:
     """POST /appoitments
        Return:
@@ -53,13 +53,13 @@ def Create_appointment() -> str:
             error_msg = "can't create appointment: {}".format(e)
             flash(f'{error_msg}', category='danger')
 
-@app.route('/appointments/history', methods=['GET'], strict_slashes=False)
+@appointment_bp.route('/appointments/history', methods=['GET'], strict_slashes=False)
 def appointment_history() -> str:
     """Render the appointment history page"""
     appointments = DB.get_all_appointment()
     return render_template('appointments.html', appointments=appointments)
 
-@app.route('/appointments', methods=['GET'], strict_slashes=False)
+@appointment_bp.route('/appointments', methods=['GET'], strict_slashes=False)
 def get_appointment() -> str:
     """Return json of all appointments
     """

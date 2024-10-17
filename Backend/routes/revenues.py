@@ -4,21 +4,21 @@ from flask import Flask, jsonify, request, abort, redirect, render_template, fla
 from db import DB
 from ..colmun.app.v1.Revenues.control import RevenueControl
 from Backend.colmun.app.v1.core.auth import AUTH
+from . import revenue_bp
 
 
-app = Flask(__name__)#static_folder='path/to/static/folder'
-app.secret_key = 'your_secret_key_here'
+
 DB = RevenueControl()
 AUTH = AUTH()
 
 
-@app.route('/renvenue', methods=['GET'], strict_slashes=False)
+@revenue_bp.route('/renvenue', methods=['GET'], strict_slashes=False)
 def get_revenue() -> str:
     """Return all the Revenue property
     """
     return jsonify(DB.get_all_revenue())
 
-@app.route('/revenue', methods=['POST'], strict_slashes=False)
+@revenue_bp.route('/revenue', methods=['POST'], strict_slashes=False)
 def create_revenue() ->str:
     """POST /revenue
        Return: Jsonify status 200

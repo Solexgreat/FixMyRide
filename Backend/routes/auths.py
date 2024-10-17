@@ -2,14 +2,14 @@ from flask import Flask
 from flask import Flask, jsonify, request, abort, redirect, render_template, flash
 # from flask_login import login_user, logout_user, login_required, current_user, LoginManager
 from Backend.colmun.app.v1.core.auth import AUTH
+from . import auth_bp
 
 
-app = Flask(__name__)#static_folder='path/to/static/folder'
-app.secret_key = 'your_secret_key_here'
+
 AUTH = AUTH()
 
 
-@app.route('/reset_password', methods=['POST'], strict_slashes=False)
+@auth_bp.route('/reset_password', methods=['POST'], strict_slashes=False)
 def get_reset_password_token() -> str:
     """POST /reset_password
         :Return
@@ -22,7 +22,7 @@ def get_reset_password_token() -> str:
     else:
         abort(403)
 
-@app.route('/reset_password', methods=['PUT'], strict_slashes=False)
+@auth_bp.route('/reset_password', methods=['PUT'], strict_slashes=False)
 def update_password() -> str:
     """PUT /reset_password
        :Return
@@ -38,7 +38,7 @@ def update_password() -> str:
 
     return jsonify({"email": email, "message": "Password updated"}), 200
 
-@app.route('/api/check_login_status', methods=['GET'])
+@auth_bp.route('/api/check_login_status', methods=['GET'])
 def check_login_status():
     # Check if session_id cookie is present
     session_id = request.cookies.get('session_id')

@@ -4,15 +4,15 @@ from flask import Flask, jsonify, request, abort, redirect, render_template, fla
 from db import DB
 from ..colmun.app.v1.Services.control import ServiceControl
 from Backend.colmun.app.v1.core.auth import AUTH
+from . import service_bp
 
 
-app = Flask(__name__)#static_folder='path/to/static/folder'
-app.secret_key = 'your_secret_key_here'
+
 DB = ServiceControl()
 AUTH = AUTH()
 
 
-@app.route('/service', methods=['GET'], strict_slashes=False)
+@service_bp.route('/service', methods=['GET'], strict_slashes=False)
 def get_service() -> str:
     """Return all service
     """
@@ -20,7 +20,7 @@ def get_service() -> str:
     return jsonify(DB.get_service()), 200
 
 
-@app.route('/service', methods=['POST'], strict_slashes=False)
+@service_bp.route('/service', methods=['POST'], strict_slashes=False)
 def create_service() ->str:
     """POST /revenue
        Return: Jsonify status 200
