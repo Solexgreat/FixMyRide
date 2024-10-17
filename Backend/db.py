@@ -9,6 +9,11 @@ from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 from typing import List
 from datetime import datetime
+from dotenv import load_dotenv
+
+
+
+load_dotenv()
 
 
 Base = declarative_base()
@@ -21,7 +26,7 @@ class DB:
     def __init__(self, drop_tables=False) -> None:
         """Initialize a new DB instance
         """
-        database_url = os.environ.get('DATABASE_URL')
+        database_url = os.getenv('DATABASE_URL')
         self._engine = create_engine(database_url, echo=True)
 
         if drop_tables:
