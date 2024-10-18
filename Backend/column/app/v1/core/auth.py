@@ -13,7 +13,7 @@ class AUTH:
     def __init__(self) -> None:
         self._db = UserControl()
 
-    def register_user(self, email: str, password: str, name: str, role: str) -> User:
+    def register_user(self,**kwags) -> User:
         """Find user via there email info
            add_user and return new_user
         """

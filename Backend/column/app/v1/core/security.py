@@ -5,7 +5,7 @@ from sqlalchemy.exc import InvalidRequestError
 import uuid
 import bcrypt
 from datetime import datetime, timedelta
-from ..... import run
+# from ..... import run
 # from itsdangerous import URLSafeTimedSerializer
 
 # Initialize serializer with a secret key
@@ -40,8 +40,9 @@ class SECURITY:
         try:
             user = self._db.find_user(email=email)
             session_id = uuid.uuid4()
+            session_expiration = datetime.now() + timedelta(hours=24)
             user_id = user.user_id
-            user = self._db.update_user(user_id, session_id=session_id)
+            user = self._db.update_user(user_id, session_id=session_id, session_expiration=session_expiration)
             return session_id
         except NoResultFound:
             return None

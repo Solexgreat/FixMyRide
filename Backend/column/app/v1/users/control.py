@@ -19,10 +19,10 @@ class UserControl(DB):
         users = self._session.query(User).all()
         return [u.__dict__ for u in users]
 
-    def add_user(self, email: str, hashed_password: str, name: str, role: str) -> User:
+    def add_user(self, **kwags) -> User:
         """Add a user to the session and commit"""
         try:
-            user = User(email=email, password=hashed_password, name=name, role=role)
+            user = User(**kwags)
             self._session.add(user)
             self._session.commit()
         except Exception as e:

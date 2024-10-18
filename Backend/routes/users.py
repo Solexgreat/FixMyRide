@@ -1,5 +1,5 @@
-from flask import Flask
 from flask import Flask, jsonify, request, abort, redirect, render_template, flash
+from werkzeug.exceptions import BadRequest
 # from flask_login import login_user, logout_user, login_required, current_user, LoginManager
 from ..column.app.v1.users.control import UserControl
 from Backend.column.app.v1.core.auth import AUTH
@@ -21,24 +21,13 @@ def load_user(user_id):
 def register_user() -> str:
     """Creat new user
     """
-
-    name = request.form['first name']
-    email = request.form['email']
-    password = request.form['password']
-    role = request.form['role']
+    data = request.get_json()
     try:
-        user = AUTH.register_user(email, password, name, role)
+        user = AUTH.register_user(**data)
+    except BadRequest as e:
+		return jsonify({"error": str(e)}), 400
     except Exception as e:
-        return flash(f'user already exist', category='danger')
-    # login_user(user)
-    # if user:
-    #     if user.role == 'Admin':
-    #         return render_template('admin-dashboard.html')
-
-    #     if user.role == 'Costumer':
-    #         return render_template('index.html')
-    # else:
-        # flash(f'user already exist', category='danger')
+        return jsonify({'msg': ""})
 
 
 @user_bp.route('/user', methods=['GET'], strict_slashes = False)

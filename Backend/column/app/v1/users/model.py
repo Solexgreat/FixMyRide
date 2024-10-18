@@ -11,8 +11,10 @@ class User(Base):
     __tablename__ = 'user'
 
     user_id = Column(Integer, primary_key=True)
-    name = Column(String(255), nullable=False)
-    email = Column(String(255), nullable=False)
+    first_name = Column(String(255), nullable=False)
+    last_name = Column(String(255), nullable=False)
+    user_name = Column(String(255), nullable=False, unique=True)
+    email = Column(String(255), nullable=False, unique=True)
     password = Column(String(255), nullable=False)
     session = Column(String(225))
     reset_token = Column(String(225), nullable=True)
