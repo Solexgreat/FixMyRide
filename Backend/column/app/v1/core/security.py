@@ -5,11 +5,11 @@ from sqlalchemy.exc import InvalidRequestError
 import uuid
 import bcrypt
 from datetime import datetime, timedelta
-from .....app import app
-from itsdangerous import URLSafeTimedSerializer
+from ..... import run
+# from itsdangerous import URLSafeTimedSerializer
 
 # Initialize serializer with a secret key
-serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+
 
 
 def _hash_password(password: str) -> bytes:

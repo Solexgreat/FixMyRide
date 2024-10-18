@@ -1,5 +1,7 @@
 FMR.db
-./Backend/FMR.db
+/Backend/FMR.db
 __pycache__
 /myenv
 .env
+/Backend/myenv
+/Backend/__pycache__

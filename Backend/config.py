@@ -7,7 +7,8 @@ load_dotenv()
 
 class Config:
 	"""Base configuration class."""
-	SECRET_KEY = os.getenv('SECRET_KEY')
+	# SECRET_KEY = os.getenv('SECRET_KEY')
+	JWT_SECRET = os.getenv('JWT_SECRET', 'default_secret_key')
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 	DATABASE_URL = os.getenv('DATABASE_URL')
 

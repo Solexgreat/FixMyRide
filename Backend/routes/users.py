@@ -7,7 +7,6 @@ from . import user_bp
 
 
 DB = UserControl()
-AUTH = AUTH()
 
 
 # @login_manager.user_loader
@@ -32,14 +31,14 @@ def register_user() -> str:
     except Exception as e:
         return flash(f'user already exist', category='danger')
     # login_user(user)
-    if user:
-        if user.role == 'Admin':
-            return render_template('admin-dashboard.html')
+    # if user:
+    #     if user.role == 'Admin':
+    #         return render_template('admin-dashboard.html')
 
-        if user.role == 'Costumer':
-            return render_template('index.html')
-    else:
-        flash(f'user already exist', category='danger')
+    #     if user.role == 'Costumer':
+    #         return render_template('index.html')
+    # else:
+        # flash(f'user already exist', category='danger')
 
 
 @user_bp.route('/user', methods=['GET'], strict_slashes = False)
@@ -59,7 +58,7 @@ def profile() -> str:
     session_id = request.cookies.get("session_id")
     if session_id is None:
         abort(403)
-    user = AUTH.get_user_from_session_id(session_id)
+    user = AUTH.get_current_user(session_id)
     if user:
         return jsonify({"email": user.email}), 200
     abort(403)
