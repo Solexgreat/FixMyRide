@@ -3,7 +3,7 @@ from ..users.model import User
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 import bcrypt
-from .security import _hash_password
+from .security import _hash_password, SECURITY
 
 
 
@@ -13,31 +13,40 @@ class AUTH:
     def __init__(self) -> None:
         self._db = UserControl()
 
-    def register_user(self,**kwags) -> User:
+    def register_user(self,**kwargs) -> User:
         """Find user via there email info
            add_user and return new_user
         """
         try:
-            user = self._db.find_user(email=email)
+            user = self._db.find_user(**kwargs)
             if user:
-               raise ValueError (f"{user.name} already exits")
-        except:
+               raise ValueError (f"{user.email} already exits")
+        except NoResultFound:
+            password = kwargs.get('password')
+            if not password:
+                raise ValueError("Password is required")
             hash_pwd = _hash_password(password)
-            new_user = self._db.add_user(email, hash_pwd, name, role)
+            SECURITY.create_session(user.email)
+            new_user = self._db.add_user(**kwargs, password=hash_pwd)
             return new_user
 
 
-    def verify_login(self, email, password):
+    def verify_login(self, **kwargs: dict) -> User:
         """Verify if the user logging details
            are valid
         """
         try:
-            user = self._db.find_user(email=email)
+            password = kwargs.get('password')
+            user = self._db.find_user(**kwargs)
             password_encode = _hash_password(password)
             user_pwd = user.password
-            return bcrypt.checkpw(user_pwd, password_encode)
+            if bcrypt.checkpw(user_pwd, password_encode):
+                SECURITY.create_session(user.email)
+                return user
+            else:
+                raise ValueError('Invalid password')
         except (NoResultFound, InvalidRequestError):
-            return False
+            raise Exception
 
     def get_current_user(self, session_id: str) -> User:
         """get the user from  the session_id

@@ -26,6 +26,17 @@ def get_reset_password_token() -> str:
 	else:
 		return jsonify({"message": "Invalid email or account not found"}), 403
 
+@auth_bp.route('/login', methods=['POST'])
+def login():
+	"""
+			login user via user details
+	"""
+	data = request.get_json()
+	try:
+		user = AUTH.verify_login(**data)
+		return jsonify({'msg': "Login successful",'token': f'{user.session_id}' }), 201
+	except Exception as e:
+		return jsonify({'msg': e})
 
 @auth_bp.route('/reset_password', methods=['PUT'], strict_slashes=False)
 def update_password() -> str:

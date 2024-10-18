@@ -32,18 +32,16 @@ class SECURITY:
     def __init__(self) -> None:
         self._db = UserControl()
 
-    def create_session(self, email: str,):
+    def create_session(self, **kwargs: dict):
         """Create a session via uuid
            update the user session and
            retyrb the session id
         """
         try:
-            user = self._db.find_user(email=email)
             session_id = uuid.uuid4()
             session_expiration = datetime.now() + timedelta(hours=24)
-            user_id = user.user_id
-            user = self._db.update_user(user_id, session_id=session_id, session_expiration=session_expiration)
-            return session_id
+            self._db.update_user(**kwargs, session_id=session_id, session_expiration=session_expiration)
+            return None
         except NoResultFound:
             return None
 
@@ -84,6 +82,22 @@ class SECURITY:
 
         # Check if the token is expired
         if datetime.now() > user.token_expiration:
+            return False
+
+        return True
+
+    def validate_session(self, email: str, session_id: str) -> bool:
+        """Validate the reset token and check for expiration."""
+        try:
+            user = self._db.find_user(email=email)
+        except NoResultFound:
+            return False
+
+        if user.session_id != session_id:
+            return False
+
+        # Check if the token is expired
+        if datetime.now() > user.session_expiration:
             return False
 
         return True

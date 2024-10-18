@@ -19,10 +19,10 @@ class UserControl(DB):
         users = self._session.query(User).all()
         return [u.__dict__ for u in users]
 
-    def add_user(self, **kwags) -> User:
+    def add_user(self, **kwargs) -> User:
         """Add a user to the session and commit"""
         try:
-            user = User(**kwags)
+            user = User(**kwargs)
             self._session.add(user)
             self._session.commit()
         except Exception as e:
@@ -33,11 +33,18 @@ class UserControl(DB):
     def find_user(self, **kwargs) -> User:
         """Find a user by provided criteria (e.g., email) and return the user"""
         try:
-            user = self._session.query(User).filter_by(**kwargs).first()
+            user_name = kwargs.get('user_name')
+            email= kwargs.get('email')
+            if email:
+                user = self._session.query(User).filter_by(email=email).first()
+            elif user_name:
+                user = self._session.query(User).filter_by(user_name=user_name).first()
+            else:
+                raise ValueError("No search criteria provided")
         except TypeError:
-            raise InvalidRequestError("Invalid arguments provided.")
+            raise InvalidRequestError
         if user is None:
-            raise NoResultFound(f"No user found with criteria: {kwargs}")
+            raise NoResultFound
         return user
 
     def get_user_id(self, **kwargs) -> int:
@@ -49,10 +56,10 @@ class UserControl(DB):
             return e
         return user_id
 
-    def update_user(self, user_id: int, **kwargs) -> None:
+    def update_user(self, **kwargs: dict) -> None:
         """Update a user's attributes"""
         try:
-            user = self.find_user(user_id=user_id)
+            user = self.find_user(**kwargs)
             for key, value in kwargs.items():
                 if hasattr(user, key):
                     setattr(user, key, value)
@@ -60,5 +67,5 @@ class UserControl(DB):
                     raise ValueError(f"{key} is not a valid attribute of User")
             self._session.commit()
         except NoResultFound:
-            return f"Invalid user_id"
+            return NoResultFound
         return None

@@ -24,10 +24,11 @@ def register_user() -> str:
     data = request.get_json()
     try:
         user = AUTH.register_user(**data)
-    except BadRequest as e:
-		return jsonify({"error": str(e)}), 400
+        return jsonify({'msg': f'{user.user_name} created successfully', 'token': f'{user.session_id}'}), 201
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
     except Exception as e:
-        return jsonify({'msg': ""})
+        return jsonify({'error': str(e)}), 500
 
 
 @user_bp.route('/user', methods=['GET'], strict_slashes = False)
