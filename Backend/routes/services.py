@@ -40,7 +40,14 @@ def create_service() ->str:
             return jsonify({'msg': 'Expecting data'}), 400
 
         service = DB.add_service(**data, seller_id=seller_id)
-        return jsonify({"message": "Service is Created"}), 201
+        return jsonify({"message": "Service is Created"}, service.service_id), 201
     except Exception as e:
-        err_msg = "can't create appointment: {}".format(e)
-        return (f"{err_msg}")
+        return jsonify({'msg': 'Internal error', 'error': e})
+
+@service_bp.routes('/delete/{service_id}', methods=['DELETE'], strict_slashes=False)
+@authenticate
+def delete_sercice(service_id):
+    """
+        delete service via service_id
+    """
+    
