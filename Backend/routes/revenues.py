@@ -5,6 +5,7 @@ from flask import Flask, jsonify, request, abort, redirect, render_template, fla
 from ..column.app.v1.Revenues.control import RevenueControl
 from Backend.column.app.v1.core.auth import AUTH
 from . import revenue_bp
+from ..column.app.v1.core.middleware import authenticate
 
 
 

@@ -12,3 +12,6 @@ class Service(Base):
     service_id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
     price = Column(Float, nullable=False)
+    seller_id = Column(Integer, ForeignKey('users.user_id'))
+
+    seller = relationship("User", back_populates="services")

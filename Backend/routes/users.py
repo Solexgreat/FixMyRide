@@ -4,6 +4,7 @@ from werkzeug.exceptions import BadRequest
 from ..column.app.v1.users.control import UserControl
 from Backend.column.app.v1.core.auth import AUTH
 from . import user_bp
+from ..column.app.v1.core.middleware import authenticate
 
 
 DB = UserControl()
@@ -32,23 +33,24 @@ def register_user() -> str:
 
 
 @user_bp.route('/user', methods=['GET'], strict_slashes = False)
+@authenticate
 def get_users() -> str:
     """Return all users
     """
-
+    user = request.user
+    if user.role != 'admin':
+        return jsonify({'msg': "Not authorized"}), 403
     return jsonify(DB.get_users()), 200
 
 @user_bp.route('/profile', methods=['GET'], strict_slashes=False)
+@authenticate
 def profile() -> str:
     """GET / profile
        :Retrun
        -    use sesion_id to find user
         - 403 if session_id or user is not found
     """
-    session_id = request.cookies.get("session_id")
-    if session_id is None:
-        abort(403)
-    user = AUTH.get_current_user(session_id)
+    user = request.user
     if user:
-        return jsonify({"email": user.email}), 200
+        return jsonify({user}), 200
     abort(403)

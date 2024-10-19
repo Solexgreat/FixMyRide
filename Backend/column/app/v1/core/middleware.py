@@ -1,14 +1,14 @@
 from functools import wraps
 from flask import request, jsonify
+from ..users.control import UserControl
 
 def authenticate(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        auth_header = request.headers.get('Authorization')
-        if auth_header and auth_header.startswith("Bearer "):
-            session_id = auth_header.split(" ")[1]
-            user = db.find_user_by_session_id(session_id)  # Check if session_id exists in the database
-            
+        session_id = request.cookies.get("session_id")
+        if session_id:
+            user = UserControl.find_user_by_session_id(session_id)  # Check if session_id exists in the database
+
             if user:
                 # Optionally, check if the session is expired
                 request.user = user  # Add the user to the request context

@@ -29,10 +29,10 @@ class ServiceControl(DB):
             raise InvalidRequestError("Invalid arguments provided.")
         return service_id
 
-    def add_service(self, name: str, price: int, category: str) -> dict:
+    def add_service(self, **kwargs: dict) -> dict:
         """Add a service to the session and commit"""
         try:
-            service = Service(name=name, price=price, category=category)
+            service = Service(**kwargs)
             self._session.add(service)
             self._session.commit()
         except Exception as e:

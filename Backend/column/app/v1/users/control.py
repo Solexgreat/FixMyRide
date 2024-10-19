@@ -8,6 +8,7 @@ from .model import User
 from typing import List
 from datetime import datetime
 from .....db import DB
+from ..core.security import SECURITY
 
 
 
@@ -68,4 +69,13 @@ class UserControl(DB):
             self._session.commit()
         except NoResultFound:
             return NoResultFound
+        return None
+
+    def find_user_by_session_id(self, session_id: str):
+        """
+            Get user via session_id
+        """
+        user = self._session.query(User).filter_by(session_id=session_id).first()
+        if SECURITY.validate_session(user.email, user.session_id):
+            return user
         return None

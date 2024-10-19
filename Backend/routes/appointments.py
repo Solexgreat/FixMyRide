@@ -4,6 +4,7 @@ from flask import Flask, jsonify, request, abort, redirect, render_template, fla
 from ..column.app.v1.Appointments.control import AppointmentControl
 from Backend.column.app.v1.core.auth import AUTH
 from . import appointment_bp
+from ..column.app.v1.core.middleware import authenticate
 
 
 
@@ -12,6 +13,7 @@ AUTH = AUTH()
 
 
 @appointment_bp.route('/appointments', methods=['POST'], strict_slashes = False)
+@authenticate
 def Create_appointment() -> str:
     """POST /appoitments
        Return:
@@ -54,12 +56,14 @@ def Create_appointment() -> str:
             flash(f'{error_msg}', category='danger')
 
 @appointment_bp.route('/appointments/history', methods=['GET'], strict_slashes=False)
+@authenticate
 def appointment_history() -> str:
     """Render the appointment history page"""
     appointments = DB.get_all_appointment()
     return render_template('appointments.html', appointments=appointments)
 
 @appointment_bp.route('/appointments', methods=['GET'], strict_slashes=False)
+@authenticate
 def get_appointment() -> str:
     """Return json of all appointments
     """

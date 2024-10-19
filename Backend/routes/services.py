@@ -5,6 +5,7 @@ from flask import Flask, jsonify, request, abort, redirect, render_template, fla
 from ..column.app.v1.Services.control import ServiceControl
 from Backend.column.app.v1.core.auth import AUTH
 from . import service_bp
+from ..column.app.v1.core.middleware import authenticate
 
 
 
@@ -13,37 +14,33 @@ AUTH = AUTH()
 
 
 @service_bp.route('/service', methods=['GET'], strict_slashes=False)
+@authenticate
 def get_service() -> str:
     """Return all service
     """
+    user = request.user
+    if user.role != 'admin':
+        return jsonify({'msg': "Not authorized"}), 403
 
     return jsonify(DB.get_service()), 200
 
 
 @service_bp.route('/service', methods=['POST'], strict_slashes=False)
+@authenticate
 def create_service() ->str:
     """POST /revenue
        Return: Jsonify status 200
     """
     data = request.get_json()
-    err_msg = None
-    if not data:
-        err_msg = 'wrong format'
+    user = request.user
+    seller_id = user.user_id
 
-    if not err_msg and data.get('name')  == "":
-        err_msg = 'name is missing'
-    if not err_msg and data.get('price')  == "":
-        err_msg = 'price is messing'
-    if not err_msg and data.get('category')  == "":
-        err_msg = 'category is messing'
-    if err_msg is None:
-        try:
-            name = data.get('name')
-            price = data.get('price')
-            category = data.get('category')
+    try:
+        if not data:
+            return jsonify({'msg': 'Expecting data'}), 400
 
-            service = DB.add_service(name, price, category)
-            return jsonify({"message": "Service is Created"}), 200
-        except Exception as e:
-            err_msg = "can't create appointment: {}".format(e)
-    return (f"{err_msg}")
+        service = DB.add_service(**data, seller_id=seller_id)
+        return jsonify({"message": "Service is Created"}), 201
+    except Exception as e:
+        err_msg = "can't create appointment: {}".format(e)
+        return (f"{err_msg}")

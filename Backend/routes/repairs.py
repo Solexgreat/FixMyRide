@@ -4,7 +4,7 @@ from flask import Flask, jsonify, request, abort, redirect, render_template, fla
 from ..column.app.v1.Repairs.control import RepairControl
 from Backend.column.app.v1.core.auth import AUTH
 from . import repair_bp
-
+from ..column.app.v1.core.middleware import authenticate
 
 
 DB = RepairControl()

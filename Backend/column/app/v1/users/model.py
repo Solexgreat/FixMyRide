@@ -22,3 +22,4 @@ class User(Base):
     session_expiration= Column(DateTime(), nullable=True)
     is_active = Column(Boolean(), default=True)
     role = Column(String, nullable=False)
+    services = relationship("Service", back_populates="seller")
