@@ -49,3 +49,14 @@ class AppointmentControl(DB):
         except Exception as e:
             self._session.rollback()
             raise e
+
+    def update_appointment(self, status: str, appointment_id: str):
+        """
+            update appointment
+        """
+        appointments = self._session.query(Revenue).get(appointment_id).first()
+
+        if not appointments:
+            raise NoResultFound (f'Appointment not found')
+
+        self

@@ -11,7 +11,8 @@ class Revenue(Base):
     __tablename__ = 'revenue'
 
     revenue_id = Column(Integer, primary_key=True)
-    date = Column(DateTime, nullable=False)
+    from_date = Column(DateTime, nullable=False)
+    to_date = Column(DateTime, nullable=False)
     total_revenue = Column(Float, nullable=False)
     total_appointments = Column(Integer, nullable=False)
     total_repairs = Column(Integer, nullable=False)

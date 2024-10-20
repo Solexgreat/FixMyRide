@@ -2,6 +2,7 @@ from flask import Flask
 from flask import Flask, jsonify, request, abort, redirect, render_template, flash
 # from flask_login import login_user, logout_user, login_required, current_user, LoginManager
 # from .db import DB
+from sqlalchemy.exc import InvalidRequestError
 from ..column.app.v1.Services.control import ServiceControl
 from Backend.column.app.v1.core.auth import AUTH
 from . import service_bp
@@ -50,4 +51,12 @@ def delete_sercice(service_id):
     """
         delete service via service_id
     """
-    
+    try:
+        user_id = request.user.user_id
+        del_service = DB.delete_service(service_id, user_id)
+        return jsonify({del_service}), 200
+    except InvalidRequestError as e:
+        return jsonify({'msg': e})
+    except Exception as e:
+        return jsonify({'msg': e })
+

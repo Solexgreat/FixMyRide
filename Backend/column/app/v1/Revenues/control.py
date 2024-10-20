@@ -25,3 +25,17 @@ class RevenueControl(DB):
         self._session.add(revenue)
         self._session.commit()
         return revenue
+
+    def delete_revenue(self, service_id: str)-> str:
+        """Delete revenue by revenue_id"""
+        revenue = self._session.query(Revenue).filter_by(service_id=service_id).first()
+        if not revenue:
+            raise NoResultFound(f'Revenue not found')
+
+        try:
+            self._session.delete(revenue)
+            self._session.commit()
+            return {"message": "Revenue deleted successfully"}
+        except Exception as e:
+            self._session.rollback()
+            raise Exception('An error occured: {e}')

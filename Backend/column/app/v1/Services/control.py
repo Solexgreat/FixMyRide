@@ -40,16 +40,18 @@ class ServiceControl(DB):
             raise e
         return service
 
-    def delete_service(self, service_id: str):
+    def delete_service(self, service_id: str, seller_id: int)-> str:
         """Delete service by service_id"""
         service = self._session.query(Service).filter_by(service_id=service_id).first()
         if not service:
             raise NoResultFound(f'Service not found')
 
         try:
+            if seller_id != service.seller_id:
+                raise InvalidRequestError('Unauthorize user')
             self._session.delete(service)
             self._session.commit()
             return {"message": "Service deleted successfully"}
         except Exception as e:
-            self._session.roollback()
+            self._session.rollback()
             raise Exception('An error occured: {e}')

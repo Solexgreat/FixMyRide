@@ -14,9 +14,13 @@ AUTH = AUTH()
 
 
 @revenue_bp.route('/renvenue', methods=['GET'], strict_slashes=False)
+@authenticate
 def get_revenue() -> str:
     """Return all the Revenue property
     """
+    user = request.user
+    if user.role != 'admin':
+        return jsonify({'msg': "Not authorized"}), 403
     return jsonify(DB.get_all_revenue())
 
 @revenue_bp.route('/revenue', methods=['POST'], strict_slashes=False)
@@ -25,29 +29,40 @@ def create_revenue() ->str:
        Return: Jsonify status 200
     """
     data = request.get_json()
+    required_fields = ['date_time', 'total_appointment', 'total_repairs', 'total_revenue']
     err_msg = None
-    if not data:
-        err_msg = 'wrong format'
 
-    if not err_msg and data.get('date_time') == "":
-        err_msg = 'date is missing'
-    if not err_msg and data.get('total_appointment') == "":
-        err_msg = 'total_appointment is messing'
-    if not err_msg and data.get('total_repairs')  == "":
-        err_msg = 'total_repairs is messing'
-    if not err_msg and data.get('total_revenue')  == "":
-        err_msg = 'total_revenue is messing'
+    # Check for missing fields
+    for field in required_fields:
+        if not data or data.get(field) == "":
+            err_msg = f'{field} is missing'
+            break
     if err_msg is None:
         try:
-            date_time = data.get('date_time')
-            total_appointment = data.get('total_appointment')
-            total_repairs = data.get('total_repairs')
-            total_revenue = data.get('total_revenue')
+            date_time = data['date_time']
+            total_appointment = data['total_appointment']
+            total_repairs = data['total_repairs']
+            total_revenue = data['total_revenue']
             revenue = DB.add_revenue(date_time,
-                            total_appointment, 
-                            total_repairs, 
+                            total_appointment,
+                            total_repairs,
                             total_revenue)
-            return jsonify({"message": "Revenure Created"}), 200
+            return jsonify({"message": "Revenure Created", 'revenue_id':revenue.revenue_id}), 201
         except Exception as e:
             err_msg = "can't create appointment: {}".format(e)
-    return jsonify({'err_msg': err_msg})
+    return jsonify({'err_msg': err_msg}), 400
+
+@revenue_bp.routes('/delete/{revenue_id}', methods=['DELETE'], strict_slashes=False)
+@authenticate
+def delete_sercice(revenue_id):
+    """
+        delete service via revenue id
+    """
+    try:
+        user = request.user
+        if user.role != 'admin':
+            return jsonify({'msg': 'Not authorized'}), 403
+        del_service = DB.delete_revenue(revenue_id)
+        return jsonify({del_service}), 200
+    except Exception as e:
+        return jsonify({'msg': e })
