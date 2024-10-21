@@ -8,7 +8,6 @@ from .model import User
 from typing import List
 from datetime import datetime
 from .....db import DB
-from ..core.security import SECURITY
 
 
 
@@ -76,6 +75,4 @@ class UserControl(DB):
             Get user via session_id
         """
         user = self._session.query(User).filter_by(session_id=session_id).first()
-        if SECURITY.validate_session(user.email, user.session_id):
-            return user
-        return None
+        return user

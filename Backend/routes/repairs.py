@@ -54,7 +54,7 @@ def create_repairs() -> str:
             err_msg = "can't create appointment: {}".format(e)
     return (f"{err_msg}")
 
-@repair_bp.routes('/delete/{repair_id}', methods=['DELETE'], strict_slashes=False)
+@repair_bp.route('/delete/{repair_id}', methods=['DELETE'], strict_slashes=False)
 @authenticate
 def delete_revenue(repair_id):
     """

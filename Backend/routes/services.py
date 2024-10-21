@@ -45,7 +45,7 @@ def create_service() ->str:
     except Exception as e:
         return jsonify({'msg': 'Internal error', 'error': e})
 
-@service_bp.routes('/delete/{service_id}', methods=['DELETE'], strict_slashes=False)
+@service_bp.route('/delete/{service_id}', methods=['DELETE'], strict_slashes=False)
 @authenticate
 def delete_sercice(service_id):
     """

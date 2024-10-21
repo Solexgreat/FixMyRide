@@ -52,7 +52,7 @@ def create_revenue() ->str:
             err_msg = "can't create appointment: {}".format(e)
     return jsonify({'err_msg': err_msg}), 400
 
-@revenue_bp.routes('/delete/{revenue_id}', methods=['DELETE'], strict_slashes=False)
+@revenue_bp.route('/delete/{revenue_id}', methods=['DELETE'], strict_slashes=False)
 @authenticate
 def delete_revenue(revenue_id):
     """

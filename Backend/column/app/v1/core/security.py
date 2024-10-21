@@ -53,7 +53,7 @@ class SECURITY:
         try:
             user = self._db.find_user(user_id)
             session_id = None
-            self._db.update_user(user_id, session_id=session_id)
+            self._db.update_user(user.user_id, session_id=session_id)
         except NoResultFound:
             return None
 

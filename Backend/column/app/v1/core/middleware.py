@@ -1,6 +1,8 @@
 from functools import wraps
 from flask import request, jsonify
 from ..users.control import UserControl
+from ..core.security import SECURITY
+
 
 def authenticate(f):
     @wraps(f)
@@ -9,8 +11,7 @@ def authenticate(f):
         if session_id:
             user = UserControl.find_user_by_session_id(session_id)  # Check if session_id exists in the database
 
-            if user:
-                # Optionally, check if the session is expired
+            if user and SECURITY.validate_session(user.email, user.session_id):
                 request.user = user  # Add the user to the request context
                 return f(*args, **kwargs)
             else:
