@@ -38,4 +38,4 @@ class RevenueControl(DB):
             return {"message": "Revenue deleted successfully"}
         except Exception as e:
             self._session.rollback()
-            raise Exception('An error occured: {e}')
+            raise Exception(f'An error occured: {e}')

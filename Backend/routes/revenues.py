@@ -54,7 +54,7 @@ def create_revenue() ->str:
 
 @revenue_bp.routes('/delete/{revenue_id}', methods=['DELETE'], strict_slashes=False)
 @authenticate
-def delete_sercice(revenue_id):
+def delete_revenue(revenue_id):
     """
         delete service via revenue id
     """

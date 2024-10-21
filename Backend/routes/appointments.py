@@ -19,8 +19,9 @@ def Create_appointment() -> str:
        Return:
        json obj with status 201
     """
-    data = request.form
+    data = request.get_json
     error_msg = None
+    user_id = request.user.user_id
 
     # login_status = check_login_status()
     # if login_status is False:
@@ -28,43 +29,42 @@ def Create_appointment() -> str:
 
     if not data:
         error_msg = 'wrong format'
-    if not error_msg and data.get('date_time') == "":
-        error_msg = 'date is missing'
-    if not error_msg and data.get('email') == "":
-        error_msg = 'customer_email is missing'
-    if not error_msg and data.get('name') == "":
-        error_msg = 'service_name is missing'
+    if not error_msg and data.get('service_id') == "":
+        error_msg = 'service_id is missing'
     if not error_msg and data.get('model') == "":
         error_msg = 'enter model'
 
     if error_msg is None:
         try:
-            date_time = data.get('date_time')
-            email = data.get('email')
+            date_time = None
             model = data.get('model')
-            customer_id = DB.get_user_id(email=email)
-            name = data.get('name')
-            service_id = DB.get_service_id(name=name)
-            DB.add_appiontment(date_time,
+            customer_id = user_id
+            service_id = data.get('service_id')
+            appointment = DB.add_appointment(date_time,
                                 customer_id,
                                 service_id, model)
-            #return jsonify({"message": "sucessfully created"}), 201
-            flash(f'sucessfully created', category='success')
-            return render_template('index.html')
+            return jsonify({"message": "sucessfully created", 'appointment_id': appointment.appointment_id}), 201
         except Exception as e:
             error_msg = "can't create appointment: {}".format(e)
-            flash(f'{error_msg}', category='danger')
+            return jsonify({'error': error_msg}), 500
 
 @appointment_bp.route('/appointments/history', methods=['GET'], strict_slashes=False)
 @authenticate
 def appointment_history() -> str:
     """Render the appointment history page"""
-    appointments = DB.get_all_appointment()
-    return render_template('appointments.html', appointments=appointments)
+
+    user_id = request.user.user_id
+
+    appointments = DB.get_all_appointments(user_id)
+    return jsonify({'Appointments' : appointments}), 201
 
 @appointment_bp.route('/appointments', methods=['GET'], strict_slashes=False)
 @authenticate
 def get_appointment() -> str:
     """Return json of all appointments
     """
-    return jsonify(DB.get_all_appointment())
+
+    user = request.user
+    if user.role != 'admin':
+        return jsonify({'msg': 'Not authorized'}), 403
+    return jsonify(DB.get_all_appointments())

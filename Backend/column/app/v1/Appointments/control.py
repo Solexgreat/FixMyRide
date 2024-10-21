@@ -14,16 +14,21 @@ from ..Services.model import Service
 class AppointmentControl(DB):
     """Appointment control class that inherits from DB"""
 
-    def get_all_appointments(self) -> dict:
+    def get_all_appointments(self, customer_id: int) -> dict:
         """Return a list of all appointments as dictionaries"""
-        appointments = self._session.query(Appointment).all()
+
+        appointments = self._session.query(Appointment).filter_by(customer_id=customer_id).all()
         return [a.__dict__ for a in appointments]
 
-    def add_appointment(self, customer_id: int, service_id: int, model: str, status: str) -> Appointment:
+    def add_appointment(self, date_time: datetime, customer_id: int, service_id: int, model: str, status: str) -> Appointment:
         """Add an appointment and update revenue"""
+
+        if date_time is None:
+            date_time = date_time.date()
+
         try:
             # Create a new appointment
-            appointment = Appointment(date_time=datetime.now(), customer_id=customer_id,
+            appointment = Appointment(date_time=date_time, customer_id=customer_id,
                                       service_id=service_id, model=model, status=status)
             self._session.add(appointment)
             self._session.commit()

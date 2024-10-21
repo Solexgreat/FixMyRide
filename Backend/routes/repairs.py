@@ -13,38 +13,59 @@ AUTH = AUTH()
 
 
 @repair_bp.route('/repairs', methods=['GET'], strict_slashes=False)
+@authenticate
 def get_repairs() -> str:
     """Return json of all repairs
     """
+    user = request.user
+    if user.role != 'admin':
+        return jsonify({'msg': 'Not authorized'}), 403
+
     return jsonify(DB.get_all_repairs())
 
 @repair_bp.route('/repairs', methods=['POST'], strict_slashes = False)
+@authenticate
 def create_repairs() -> str:
     """POST /repairs
        Return: Jsonify(message) status 200
     """
     data = request.get_json()
+    user_id = request.user.user_id
     err_msg = None
     if not data:
         err_msg = 'wrong format'
 
-    if not err_msg and data.get('date_time')  == "":
-        err_msg = 'date is missing'
-    if not err_msg and data.get('customer_id')  == "":
+    if not err_msg and data['customer_id']  == "":
         err_msg = 'customer_id is messing'
-    if not err_msg and data.get('service_id')  == "":
+    if not err_msg and data['service_id']  == "":
         err_msg = 'service_id is messing'
     if err_msg is None:
         try:
-            date_time = data.get('date_time')
-            customer_id = data.get('customer_id')
-            service_id = data.get('service_id')
-            mechanic_id = data.get('mechanic_id')
+            date_time = data['date_time']
+            customer_id = data['customer_id']
+            service_id = data['service_id']
+            mechanic_id = user_id
             repair = DB.add_repair(date_time,
                             customer_id,
                             service_id,
                             mechanic_id)
-            return jsonify({"message": "Repair Created"}), 200
+            return jsonify({"message": "Repair Created successfully", 'repair_id': repair.repair_id}), 200
         except Exception as e:
             err_msg = "can't create appointment: {}".format(e)
     return (f"{err_msg}")
+
+@repair_bp.routes('/delete/{repair_id}', methods=['DELETE'], strict_slashes=False)
+@authenticate
+def delete_revenue(repair_id):
+    """
+        delete service via revenue id
+    """
+    try:
+        user = request.user
+        if user.role != 'admin':
+            return jsonify({'msg': 'Not authorized'}), 403
+
+        del_service = DB.delete_repair(repair_id)
+        return jsonify({del_service}), 200
+    except Exception as e:
+        return jsonify({'msg': e })

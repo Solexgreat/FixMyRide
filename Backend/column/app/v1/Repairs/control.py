@@ -20,8 +20,8 @@ class RepairControl(DB):
         repairs = self._session.query(Repair).all()
         return [r.__dict__ for r in repairs]
 
-    def add_repair(self, date_time: datetime = None, customer_id: str = '',
-                   service_id: int = 0, mechanic_id: int = 0) -> Repair:
+    def add_repair(self, date_time: datetime, customer_id: int,
+                   service_id: int, mechanic_id: int) -> Repair:
         """Add a new repair to the database and return the repair object"""
         if date_time is None:
             date_time = datetime.now()  # Use current time if not provided
@@ -33,20 +33,21 @@ class RepairControl(DB):
             self._session.add(repair)
             self._session.commit()
 
-            #Update revenue
-            revenue = self._session.query(Revenue).order_by(Revenue.date.desc()).first()
-            # if revenue:
-            #     revenue.total_appointments += 1
-            # else:
-            #     revenue = Revenue(date_time=date_time, total_appointments=1,
-            #                       total_repairs=0, total_revenue=0)
+            revenue= Revenue(date_time=date_time.date())
+            self._session.add(revenue)
+            self._session.commit()
 
-            # Update revenue based on the service
+            revenue = self._session.query(Revenue).filter_by(date_time=date_time.date()).first()
+
             service = self._session.query(Service).get(service_id)
             if service:
                 revenue.total_revenue += service.price
+                revenue.total_appointments += 1
                 if service.category == 'Repairs':
                     revenue.total_repairs += 1
+            revenue = self._session.query(Revenue).filter_by(date_time=date_time.date()).update(total_repairs= revenue.total_repairs ,
+                                                                                                total_revenue=revenue.total_repairs,
+                                                                                                total_appointments=revenue.total_appointments)
 
             self._session.add(revenue)
             self._session.commit()
@@ -55,3 +56,40 @@ class RepairControl(DB):
         except Exception as e:
             self._session.rollback()
             raise e  # Raise the exception after rolling back
+
+    def delete_repair(self, repair_id: int):
+        """
+
+        """
+        repair = self._session.query(Repair).filter_by(repair_id=repair_id).first()
+
+        if not repair:
+            raise NoResultFound(f'Repair not found')
+
+        date_time = repair.date_time
+        service_id = repair.service_id
+
+        try:
+            #update revenue database
+            revenue= self._session.query(Revenue).filter_by(date_time=date_time).first()
+
+            #get service to get the price
+            service = self._session.query(Service).get(service_id)
+            if service:
+                revenue.total_revenue -= service.price
+                revenue.total_appointments -= 1
+                if service.category == 'Repairs':
+                    revenue.total_repairs -= 1
+            revenue = self._session.query(Revenue).filter_by(date_time=date_time.date()).update(total_repairs= revenue.total_repairs ,
+                                                                                                total_revenue=revenue.total_repairs,
+                                                                                                total_appointments=revenue.total_appointments)
+
+            self._session.add(revenue)
+            self._session.commit()
+
+            self._session.delete(repair)
+            self._session.commit()
+            return {"message": "Delete deleted successfully"}
+        except Exception as e:
+            self._session.rollback()
+            raise Exception('An error occured: {e}')
