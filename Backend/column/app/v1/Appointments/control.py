@@ -2,6 +2,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy import and_
 from .model import Appointment
 from typing import List
 from datetime import datetime
@@ -18,33 +19,14 @@ class AppointmentControl(DB):
         appointments = self._session.query(Appointment).all()
         return [a.__dict__ for a in appointments]
 
-    def add_appointment(self, date_time: datetime, customer_id: int, service_id: int, model: str) -> Appointment:
+    def add_appointment(self, customer_id: int, service_id: int, model: str, status: str) -> Appointment:
         """Add an appointment and update revenue"""
         try:
             # Create a new appointment
-            appointment = Appointment(date_time=date_time, customer_id=customer_id,
-                                      service_id=service_id, model=model)
+            appointment = Appointment(date_time=datetime.now(), customer_id=customer_id,
+                                      service_id=service_id, model=model, status=status)
             self._session.add(appointment)
             self._session.commit()
-
-            # Update revenue
-            revenue = self._session.query(Revenue).order_by(Revenue.date.desc()).first()
-            if revenue:
-                revenue.total_appointments += 1
-            else:
-                revenue = Revenue(date_time=date_time, total_appointments=1,
-                                  total_repairs=0, total_revenue=0)
-
-            # Update revenue based on the service
-            service = self._session.query(Service).get(service_id)
-            if service:
-                revenue.total_revenue += service.price
-                if service.category == 'Repairs':
-                    revenue.total_repairs += 1
-
-            self._session.add(revenue)
-            self._session.commit()
-            return appointment
 
         except Exception as e:
             self._session.rollback()
@@ -54,9 +36,29 @@ class AppointmentControl(DB):
         """
             update appointment
         """
-        appointments = self._session.query(Revenue).get(appointment_id).first()
+        appointments = self._session.query(Appointment).get(appointment_id)
 
         if not appointments:
             raise NoResultFound (f'Appointment not found')
 
-        self
+        appointments = self._session.query(Appointment).filter_by(appointment_id=appointment_id).update(status=status,
+                                                                                                        updated_date=datetime.now())
+
+    def get_appointment_between_dates(self, start_date: datetime, end_date: datetime):
+        """
+        """
+        appointments = self._session.query(Appointment).filter(
+            Appointment.date_time.between(start_date, end_date)
+        ).all()
+        return appointments
+
+    def get_completed_appointment_between_dates(self, start_date: datetime, end_date: datetime):
+        """
+        """
+        appointments = self._session.query(Appointment).filter(
+            and_(
+                Appointment.status == 'completed',
+                Appointment.updated_date.between(start_date, end_date)
+            )
+            ).all()
+        return appointments
