@@ -1,6 +1,7 @@
 from sqlalchemy import Boolean, Column, Integer, String, Float, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+from ..Services.model import Service
 # from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
 
 
@@ -22,4 +23,5 @@ class User(Base):
     session_expiration= Column(DateTime(), nullable=True)
     is_active = Column(Boolean(), default=True)
     role = Column(String, nullable=False)
-    services = relationship("Service", backrefs="users")
+
+    # services = relationship("Service", back_populates="seller")
