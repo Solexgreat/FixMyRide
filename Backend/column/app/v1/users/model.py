@@ -8,7 +8,7 @@ Base = declarative_base()
 
 
 class User(Base):
-    __tablename__ = 'user'
+    __tablename__ = 'users'
 
     user_id = Column(Integer, primary_key=True)
     first_name = Column(String(255), nullable=False)
@@ -22,4 +22,4 @@ class User(Base):
     session_expiration= Column(DateTime(), nullable=True)
     is_active = Column(Boolean(), default=True)
     role = Column(String, nullable=False)
-    services = relationship("Service", back_populates="seller")
+    services = relationship("Service", backrefs="users")

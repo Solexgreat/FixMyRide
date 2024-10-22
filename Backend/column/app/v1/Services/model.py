@@ -15,4 +15,4 @@ class Service(Base):
     category = Column(String(255), nullable=False)
     seller_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
 
-    seller = relationship("User", back_populates="services")
+    seller = relationship("User", backrefs="services")
