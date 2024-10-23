@@ -50,8 +50,8 @@ class UserControl(DB):
 
     def find_user(self, **kwargs) -> User:
         """Find a user by provided criteria (e.g., email or user_name) and return the user"""
-        email = kwargs.get('email')
         user_name = kwargs.get('user_name')
+        email = kwargs.get('email')
 
         if not email and not user_name:
             raise ValueError("No search criteria provided")
@@ -60,11 +60,9 @@ class UserControl(DB):
             query = self._session.query(User)
 
             if email:
-                user = query.filter(User.email == email).first()
+                user = query.filter(User.user_name == user_name).first()
             if user_name:
-                user = query.filter_by(user_name=user_name).first()
-
-
+                user = query.filter(User.email == email).first()
 
             if user is None:
                 raise NoResultFound

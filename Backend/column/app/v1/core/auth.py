@@ -5,21 +5,23 @@ from sqlalchemy.orm.exc import NoResultFound
 import bcrypt
 from .security import _hash_password, SECURITY
 
+DB = UserControl()
+security = SECURITY()
+
 
 
 class AUTH:
     """Auth class to interact with the authentication database.
     """
     def __init__(self) -> None:
-        self._db = UserControl()
+        self._db = DB
 
-    def register_user(self,**kwargs) -> User:
+    def register_user(self, **kwargs) -> User:
         """Find user via there email info
            add_user and return new_user
         """
         try:
             user = self._db.find_user(**kwargs)
-            email = kwargs.get('email')
             if user:
                raise ValueError (f"user already exits {user}")
         except NoResultFound:
@@ -27,7 +29,7 @@ class AUTH:
             if not password:
                 raise ValueError("Password is required")
             hash_pwd = _hash_password(password)
-            SECURITY.create_session(email)
+            security.create_session(**kwargs)
             new_user = self._db.add_user(**kwargs, password=hash_pwd)
             return new_user
 
@@ -42,7 +44,7 @@ class AUTH:
             password_encode = _hash_password(password)
             user_pwd = user.password
             if bcrypt.checkpw(user_pwd, password_encode):
-                SECURITY.create_session(user.email)
+                security.create_session(user.email)
                 return user
             else:
                 raise ValueError('Invalid password')

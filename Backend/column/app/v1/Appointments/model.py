@@ -15,5 +15,5 @@ class Appointment(Base):
     model = Column(String(50))
     status = Column(String(50), default='pending')
     updated_date = Column(DateTime, nullable=False)
-    customer = relationship('User', foreign_keys=[customer_id])
+    customer = relationship('User', foreign_keys=[customer_id], primaryjoin="Appointment.customer_id == User.user_id")
     service = relationship('Service', foreign_keys=[service_id])

@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 
 # Initialize serializer with a secret key
 
-
+DB = UserControl()
 
 def _hash_password(password: str) -> bytes:
     """returned bytes is a salted hash of the input password
@@ -30,7 +30,7 @@ class SECURITY:
     """Auth class to interact with the authentication database.
     """
     def __init__(self) -> None:
-        self._db = UserControl()
+        self._db = DB
 
     def create_session(self, **kwargs: dict):
         """Create a session via uuid
