@@ -19,14 +19,15 @@ class AUTH:
         """
         try:
             user = self._db.find_user(**kwargs)
+            email = kwargs.get('email')
             if user:
-               raise ValueError (f"{user.email} already exits")
+               raise ValueError (f"user already exits {user}")
         except NoResultFound:
             password = kwargs.get('password')
             if not password:
                 raise ValueError("Password is required")
             hash_pwd = _hash_password(password)
-            SECURITY.create_session(user.email)
+            SECURITY.create_session(email)
             new_user = self._db.add_user(**kwargs, password=hash_pwd)
             return new_user
 

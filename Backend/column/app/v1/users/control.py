@@ -1,14 +1,32 @@
 from sqlalchemy import create_engine
+from flask import Flask, jsonify
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.exc import InvalidRequestError, OperationalError,  DBAPIError
 from .model import User
 from typing import List
 from datetime import datetime
 from .....db import DB
+import logging
 
+logger = logging.getLogger(__name__)
+
+# Create a file handler to write logs to a file
+file_handler = logging.FileHandler('app.log')
+
+# Set the logging level for the handler
+file_handler.setLevel(logging.DEBUG)  # Adjust the level as needed
+
+# Create a formatter to format the log messages
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+
+# Add the formatter to the handler
+file_handler.setFormatter(formatter)
+
+# Add the handler to the logger
+logger.addHandler(file_handler)
 
 
 class UserControl(DB):
@@ -31,20 +49,30 @@ class UserControl(DB):
         return user
 
     def find_user(self, **kwargs) -> User:
-        """Find a user by provided criteria (e.g., email) and return the user"""
+        """Find a user by provided criteria (e.g., email or user_name) and return the user"""
+        email = kwargs.get('email')
+        user_name = kwargs.get('user_name')
+
+        if not email and not user_name:
+            raise ValueError("No search criteria provided")
+
         try:
-            user_name = kwargs.get('user_name')
-            email= kwargs.get('email')
+            query = self._session.query(User)
+
             if email:
-                user = self._session.query(User).filter_by(email=email).first()
-            elif user_name:
-                user = self._session.query(User).filter_by(user_name=user_name).first()
-            else:
-                raise ValueError("No search criteria provided")
-        except TypeError:
-            raise InvalidRequestError
-        if user is None:
-            raise NoResultFound
+                user = query.filter(User.email == email).first()
+            if user_name:
+                user = query.filter_by(user_name=user_name).first()
+
+
+
+            if user is None:
+                raise NoResultFound
+        except DBAPIError as e:  # Replace with the actual database error type
+            logger.exception("Database error:", exc_info=e)
+            raise DBAPIError(f"Database error occurred: {e}")
+        # raise InvalidRequestError("An error occurred while finding the user")
+
         return user
 
     def get_user_id(self, **kwargs) -> int:

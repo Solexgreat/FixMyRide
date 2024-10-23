@@ -1,10 +1,7 @@
 from sqlalchemy import Boolean, Column, Integer, String, Float, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 # from flask_security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
-
-
-Base = declarative_base()
+from .....db import Base
 
 
 class Revenue(Base):
