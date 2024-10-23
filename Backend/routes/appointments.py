@@ -9,7 +9,7 @@ from ..column.app.v1.core.middleware import authenticate
 
 
 DB = AppointmentControl()
-AUTH = AUTH()
+auth = AUTH()
 
 
 @appointment_bp.route('/appointments', methods=['POST'], strict_slashes = False)

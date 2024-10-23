@@ -3,6 +3,7 @@ from ..users.model import User
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
 import bcrypt
+from datetime import datetime, timedelta
 from .security import _hash_password, SECURITY
 
 DB = UserControl()
@@ -29,8 +30,12 @@ class AUTH:
             if not password:
                 raise ValueError("Password is required")
             hash_pwd = _hash_password(password)
-            security.create_session(**kwargs)
-            new_user = self._db.add_user(**kwargs, password=hash_pwd)
+            session_expiration = datetime.now() + timedelta(hours=24)
+            session_id = security.create_session()
+            kwargs.pop('password', None)
+
+            new_user = self._db.add_user(**kwargs, password=hash_pwd, session_expiration=session_expiration, session_id=session_id)
+
             return new_user
 
 

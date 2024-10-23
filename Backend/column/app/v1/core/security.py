@@ -1,4 +1,5 @@
 from ..users.control import UserControl
+from flask import Flask, jsonify
 from ..users.model import User
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
@@ -32,18 +33,16 @@ class SECURITY:
     def __init__(self) -> None:
         self._db = DB
 
-    def create_session(self, **kwargs: dict):
+    def create_session(self,):
         """Create a session via uuid
            update the user session and
            retyrb the session id
         """
         try:
-            session_id = uuid.uuid4()
-            session_expiration = datetime.now() + timedelta(hours=24)
-            self._db.update_user(**kwargs, session_id=session_id, session_expiration=session_expiration)
-            return None
+            session_id = _generate_uuid()
+            return session_id
         except NoResultFound:
-            return None
+            return NoResultFound
 
     def destroy_session(self, user_id: int) -> None:
         """Updates user's session_id to None
