@@ -8,7 +8,7 @@ from ..column.app.v1.core.middleware import authenticate
 
 
 DB = UserControl()
-auth_instance = AUTH()
+auth = AUTH()
 
 
 # @login_manager.user_loader
@@ -25,7 +25,7 @@ def register_user() -> str:
     """
     data = request.get_json()
     try:
-        user = auth_instance.register_user(**data)
+        user = auth.register_user(**data)
         return jsonify({'msg': f'{user.user_name} created successfully', 'token': f'{user.session_id}'}), 201
     except ValueError as e:
         return jsonify({"error": str(e)}), 400

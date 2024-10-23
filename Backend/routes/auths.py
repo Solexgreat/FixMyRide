@@ -6,7 +6,8 @@ from Backend.column.app.v1.core.security import SECURITY
 from .. import mail
 from . import auth_bp
 
-
+security = SECURITY()
+auth = AUTH()
 
 
 @auth_bp.route('/reset_password', methods=['POST'], strict_slashes=False)
@@ -17,7 +18,7 @@ def get_reset_password_token() -> str:
 	"""
 	data=request.get_json()
 	email = data['email']
-	reset_token = SECURITY.get_reset_password_token(email)
+	reset_token = security.get_reset_password_token(email)
 	if reset_token:
 		msg = Message('Password Reset Request', recipients=[email])
 		msg.body = f"To reset your password, use the following token: {reset_token}"
@@ -33,7 +34,7 @@ def login():
 	"""
 	data = request.get_json()
 	try:
-		user = AUTH.verify_login(**data)
+		user = auth.verify_login(**data)
 		return jsonify({'msg': "Login successful",'token': f'{user.session_id}' }), 201
 	except Exception as e:
 		return jsonify({'msg': e})
@@ -49,13 +50,13 @@ def update_password() -> str:
 	new_password = data['new_password']
 	reset_token = data['reset_token']
 
-	token_email = SECURITY.validate_reset_token(email, reset_token)
+	token_email = security.validate_reset_token(email, reset_token)
 
 	if token_email is None or token_email != email:
 		return jsonify({"message": "Invalid or expired reset token"}), 403
 
 	try:
-		AUTH.update_password(reset_token, new_password)
+		auth.update_password(reset_token, new_password)
 	except Exception:
 		abort(403)
 
@@ -67,7 +68,7 @@ def check_login_status():
 	session_id = request.cookies.get('session_id')
 	if session_id:
 			# Verify session_id with AUTH class
-			if AUTH.get_current_user(session_id):
+			if auth.get_current_user(session_id):
 					return True
 			else:
 					return False
