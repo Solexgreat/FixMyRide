@@ -70,7 +70,7 @@ class SECURITY:
     def validate_reset_token(self, email: str, reset_token: str) -> bool:
         """Validate the reset token and check for expiration."""
         try:
-            user = self._db.find_user(email=email)
+            user = self._db.find_user('email', email)
         except NoResultFound:
             return False
 
@@ -86,7 +86,7 @@ class SECURITY:
     def validate_session(self, email: str, session_id: str) -> bool:
         """Validate the reset token and check for expiration."""
         try:
-            user = self._db.find_user(email=email)
+            user = self._db.find_user("email", email)
         except NoResultFound:
             return False
 

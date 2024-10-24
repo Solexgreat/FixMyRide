@@ -42,7 +42,7 @@ def get_users() -> str:
     try:
         if user.role != 'admin':
             return jsonify({'msg': "Not authorized"}), 403
-        return jsonify(DB.get_users()), 200
+        return (DB.get_users())
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

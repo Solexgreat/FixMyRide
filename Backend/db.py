@@ -10,6 +10,7 @@ from sqlalchemy.exc import InvalidRequestError
 from typing import List
 from datetime import datetime
 from dotenv import load_dotenv
+from sqlalchemy.orm import scoped_session, sessionmaker
 
 
 
@@ -24,8 +25,7 @@ class DB:
     """
 
     def __init__(self, drop_tables=False) -> None:
-        """Initialize a new DB instance
-        """
+        """Initialize a new DB instance"""
         database_url = os.getenv('DATABASE_URL')
         self._engine = create_engine(database_url, echo=True)
 
@@ -33,13 +33,11 @@ class DB:
             Base.metadata.drop_all(self._engine)
 
         Base.metadata.create_all(self._engine)
-        self.__session = None
+
+        # Use scoped_session for thread-safe sessions
+        self.Session = scoped_session(sessionmaker(bind=self._engine))
 
     @property
-    def _session(self) -> Session:
-        """Memoized session object
-        """
-        if self.__session is None:
-            DBsession = sessionmaker(bind=self._engine)
-            self.__session = DBsession()
-        return self.__session
+    def _session(self):
+        """Thread-safe session object"""
+        return self.Session()

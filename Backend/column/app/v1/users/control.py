@@ -35,7 +35,7 @@ class UserControl(DB):
     def get_users(self) -> dict:
         """Return a list of users as dictionaries"""
         users = self._session.query(User).all()
-        return [u.__dict__ for u in users]
+        return [u.to_dict() for u in users]
 
     def add_user(self, **kwargs) -> User:
         """Add a user to the session and commit"""
@@ -48,21 +48,13 @@ class UserControl(DB):
             raise e
         return user
 
-    def find_user(self, **kwargs) -> User:
+    def find_user(self, field: str, value: str) -> User:
         """Find a user by provided criteria (e.g., email or user_name) and return the user"""
-        user_name = kwargs.get('user_name')
-        email = kwargs.get('email')
-
-        if not email and not user_name:
-            raise ValueError("No search criteria provided")
 
         try:
             query = self._session.query(User)
 
-            if user_name:
-                user = query.filter(User.user_name == user_name).first()
-            else:
-                user = query.filter(User.email == email).first()
+            user = query.filter(getattr(User, field) == value).first()
 
             if user is None:
                 raise NoResultFound(f"user not found")

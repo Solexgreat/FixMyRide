@@ -43,10 +43,22 @@ class AUTH:
         """Verify if the user logging details
            are valid
         """
+        user_name = kwargs.get('user_name')
+        email = kwargs.get('email')
+
+        if not email and not user_name:
+            raise ValueError("No search criteria provided")
+
         try:
             password = kwargs.get('password')
-            user = self._db.find_user(**kwargs)
+
+            if user_name:
+                user = self._db.find_user('user_name', user_name)
+            if not user_name:
+                user = self._db.find_user('email', email)
             user_pwd = user.password
+
+
             if bcrypt.checkpw(password.encode('utf-8'), user_pwd):
                 session_id = security.create_session()
                 user = self._db.update_user(**kwargs, session_id=session_id)
