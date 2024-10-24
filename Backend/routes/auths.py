@@ -10,15 +10,15 @@ security = SECURITY()
 auth = AUTH()
 
 
-@auth_bp.route('/reset_password', methods=['POST'], strict_slashes=False)
+@auth_bp.route('/reset_password', methods=['GET'], strict_slashes=False)
 def get_reset_password_token() -> str:
 	"""POST /reset_password
 		:Return
 		-status 403 if email is invalid
 	"""
 	data=request.get_json()
-	email = data['email']
-	reset_token = security.get_reset_password_token(email)
+	email= data.get('email')
+	reset_token = security.get_reset_password_token(**data)
 	if reset_token:
 		msg = Message('Password Reset Request', recipients=[email])
 		msg.body = f"To reset your password, use the following token: {reset_token}"
@@ -37,7 +37,7 @@ def login():
 		user = auth.verify_login(**data)
 		return jsonify({'msg': "Login successful",'token': f'{user.session_id}' }), 201
 	except Exception as e:
-		return jsonify({'msg': e})
+		return jsonify({'msg': str(e)}), 500
 
 @auth_bp.route('/reset_password', methods=['PUT'], strict_slashes=False)
 def update_password() -> str:

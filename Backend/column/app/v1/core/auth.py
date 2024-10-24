@@ -1,4 +1,4 @@
-from ..users.control import UserControl
+from ..users.control import UserControl, logger
 from ..users.model import User
 from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy.orm.exc import NoResultFound
@@ -46,15 +46,16 @@ class AUTH:
         try:
             password = kwargs.get('password')
             user = self._db.find_user(**kwargs)
-            password_encode = _hash_password(password)
             user_pwd = user.password
-            if bcrypt.checkpw(user_pwd, password_encode):
-                security.create_session(user.email)
+            if bcrypt.checkpw(password.encode('utf-8'), user_pwd):
+                session_id = security.create_session()
+                user = self._db.update_user(**kwargs, session_id=session_id)
                 return user
             else:
                 raise ValueError('Invalid password')
-        except (NoResultFound, InvalidRequestError):
-            raise Exception
+        except (InvalidRequestError) as e:
+            logger.exception("Database error:", exc_info=e)
+            raise Exception(f'{e}')
 
     def get_current_user(self, session_id: str) -> User:
         """get the user from  the session_id

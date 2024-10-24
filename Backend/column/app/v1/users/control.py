@@ -59,13 +59,13 @@ class UserControl(DB):
         try:
             query = self._session.query(User)
 
-            if email:
-                user = query.filter(User.user_name == user_name).first()
             if user_name:
+                user = query.filter(User.user_name == user_name).first()
+            else:
                 user = query.filter(User.email == email).first()
 
             if user is None:
-                raise NoResultFound
+                raise NoResultFound(f"user not found")
         except DBAPIError as e:  # Replace with the actual database error type
             logger.exception("Database error:", exc_info=e)
             raise DBAPIError(f"Database error occurred: {e}")
@@ -94,7 +94,7 @@ class UserControl(DB):
             self._session.commit()
         except NoResultFound:
             return NoResultFound
-        return None
+        return user
 
     def find_user_by_session_id(self, session_id: str):
         """

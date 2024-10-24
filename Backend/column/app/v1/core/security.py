@@ -56,18 +56,16 @@ class SECURITY:
         except NoResultFound:
             return None
 
-    def get_reset_password_token(self, email: str) -> str:
+    def get_reset_password_token(self, **kwargs: dict) -> str:
         """Generate new token with uuid4
         """
         try:
-            user = self._db.find_user(email=email)
-        except NoResultFound:
-            raise ValueError
-
-        reset_token = _generate_uuid()
-        expiration_time = datetime.now() + timedelta(hours=1)
-        self._db.update_user(user.user_id, reset_token=reset_token, token_expiration=expiration_time)
-        return reset_token
+            reset_token = _generate_uuid()
+            expiration_time = datetime.now() + timedelta(hours=1)
+            self._db.update_user(**kwargs, reset_token=reset_token, token_expiration=expiration_time)
+            return reset_token
+        except Exception as e:
+            raise Exception(f'{e}')
 
     def validate_reset_token(self, email: str, reset_token: str) -> bool:
         """Validate the reset token and check for expiration."""

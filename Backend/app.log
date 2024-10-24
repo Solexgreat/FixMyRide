@@ -1,0 +1,8 @@
+2024-10-24 09:27:56,832 - ERROR - Database error:
+Traceback (most recent call last):
+  File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\auth.py", line 48, in verify_login
+    user = self._db.find_user(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\users\control.py", line 68, in find_user
+    raise NoResultFound
+sqlalchemy.exc.NoResultFound: ()
