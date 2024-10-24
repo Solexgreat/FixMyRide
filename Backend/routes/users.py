@@ -39,9 +39,12 @@ def get_users() -> str:
     """Return all users
     """
     user = request.user
-    if user.role != 'admin':
-        return jsonify({'msg': "Not authorized"}), 403
-    return jsonify(DB.get_users()), 200
+    try:
+        if user.role != 'admin':
+            return jsonify({'msg': "Not authorized"}), 403
+        return jsonify(DB.get_users()), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @user_bp.route('/profile', methods=['GET'], strict_slashes=False)
 @authenticate
