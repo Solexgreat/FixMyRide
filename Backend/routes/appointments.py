@@ -4,11 +4,12 @@ from flask import Flask, jsonify, request, abort, redirect, render_template, fla
 from ..column.app.v1.Appointments.control import AppointmentControl
 from Backend.column.app.v1.core.auth import AUTH
 from . import appointment_bp
+from ..db import DB
 from ..column.app.v1.core.middleware import authenticate
 
 
-
-DB = AppointmentControl()
+db_instance = DB()
+db = AppointmentControl()
 auth = AUTH()
 
 
@@ -36,13 +37,16 @@ def Create_appointment() -> str:
 
     if error_msg is None:
         try:
+
+            # db_instance.add_column('appointment', 'updated_date', 'TEXT')
             date_time = None
             model = data.get('model')
             customer_id = user_id
             service_id = data.get('service_id')
-            appointment = DB.add_appointment(date_time,
+            status = data.get('status')
+            appointment = db.add_appointment(date_time,
                                 customer_id,
-                                service_id, model)
+                                service_id, model, status)
             return jsonify({"message": "sucessfully created", 'appointment_id': appointment.appointment_id}), 201
         except Exception as e:
             error_msg = "can't create appointment: {}".format(e)
@@ -55,7 +59,7 @@ def appointment_history() -> str:
 
     user_id = request.user.user_id
 
-    appointments = DB.get_all_appointments(user_id)
+    appointments = db.get_all_appointments(user_id)
     return jsonify({'Appointments' : appointments}), 201
 
 @appointment_bp.route('/appointments', methods=['GET'], strict_slashes=False)
@@ -67,4 +71,4 @@ def get_appointment() -> str:
     user = request.user
     if user.role != 'admin':
         return jsonify({'msg': 'Not authorized'}), 403
-    return jsonify(DB.get_all_appointments())
+    return jsonify(db.get_all_appointments())

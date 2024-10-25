@@ -24,7 +24,7 @@ class AppointmentControl(DB):
         """Add an appointment and update revenue"""
 
         if date_time is None:
-            date_time = date_time.date()
+            date_time = datetime.now().date()
 
         try:
             # Create a new appointment
