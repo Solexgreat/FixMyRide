@@ -31,6 +31,8 @@ class User(Base):
             'user_id': self.user_id,
             'first_name': self.first_name,
             'last_name': self.last_name,
+            'user_name': self.user_name,
             'email': self.email,
-            # Add other fields here
+            'role': self.role,
+            'is_active': self.is_active
         }

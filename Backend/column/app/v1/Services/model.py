@@ -12,7 +12,18 @@ class Service(Base):
     service_id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
     price = Column(Float, nullable=False)
+    description = Column(String(255), nullable=True)
     category = Column(String(255), nullable=False)
     seller_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
 
     seller = relationship("User", back_populates="services")
+
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'price': self.price,
+            'description': self.description,
+            'category': self.category,
+            'seller_id': self.seller_id,
+            'service_id': self.service_id
+        }

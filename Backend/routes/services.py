@@ -26,8 +26,8 @@ def get_service() -> str:
     return jsonify(DB.get_service()), 200
 
 
-@service_bp.route('/service', methods=['POST'], strict_slashes=False)
-# @authenticate
+@service_bp.route('/create_service', methods=['POST'], strict_slashes=False)
+@authenticate
 def create_service() ->str:
     """POST /revenue
        Return: Jsonify status 200

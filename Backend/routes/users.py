@@ -56,5 +56,5 @@ def profile() -> str:
     """
     user = request.user
     if user:
-        return jsonify({user}), 200
+        return (user.to_dict()), 200
     abort(403)

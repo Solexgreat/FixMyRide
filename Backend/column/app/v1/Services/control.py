@@ -16,7 +16,7 @@ class ServiceControl(DB):
     def get_service(self) -> dict:
         """Return a list of services as dictionaries"""
         services = self._session.query(Service).all()
-        return [s.__dict__ for s in services]
+        return [s.to_dict() for s in services]
 
     def get_service_id(self, **kwargs) -> int:
         """Get the service ID based on provided criteria"""

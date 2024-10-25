@@ -59,7 +59,7 @@ class AUTH:
             user_pwd = user.password
 
 
-            if bcrypt.checkpw(password.encode('utf-8'), user_pwd):
+            if bcrypt.checkpw(password.encode('utf-8'), user_pwd.encode('utf-8')):
                 session_id = security.create_session()
                 user = self._db.update_user(**kwargs, session_id=session_id)
                 return user
