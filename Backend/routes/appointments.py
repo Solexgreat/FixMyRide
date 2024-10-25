@@ -19,7 +19,7 @@ def Create_appointment() -> str:
        Return:
        json obj with status 201
     """
-    data = request.get_json
+    data = request.get_json()
     error_msg = None
     user_id = request.user.user_id
 
@@ -32,7 +32,7 @@ def Create_appointment() -> str:
     if not error_msg and data.get('service_id') == "":
         error_msg = 'service_id is missing'
     if not error_msg and data.get('model') == "":
-        error_msg = 'enter model'
+        error_msg = 'enter car model'
 
     if error_msg is None:
         try:

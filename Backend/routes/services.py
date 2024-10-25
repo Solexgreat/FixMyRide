@@ -48,7 +48,7 @@ def create_service() ->str:
     except Exception as e:
         return jsonify({'msg': 'Internal error', 'error': str(e)}), 500
 
-@service_bp.route('/delete/{service_id}', methods=['DELETE'], strict_slashes=False)
+@service_bp.route('/delete/<int:service_id>', methods=['DELETE'], strict_slashes=False)
 @authenticate
 def delete_sercice(service_id):
     """
@@ -57,9 +57,9 @@ def delete_sercice(service_id):
     try:
         user_id = request.user.user_id
         del_service = db.delete_service(service_id, user_id)
-        return jsonify({del_service}), 200
+        return jsonify({'msg': 'Service deleted successfully', 'service_id': service_id}), 201
     except InvalidRequestError as e:
-        return jsonify({'msg': e})
+        return jsonify({'msg': str(e)}), 403
     except Exception as e:
-        return jsonify({'msg': e })
+        return jsonify({'msg': str(e) }), 500
 

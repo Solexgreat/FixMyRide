@@ -47,11 +47,11 @@ class ServiceControl(DB):
             raise NoResultFound(f'Service not found')
 
         try:
-            if seller_id != service.seller_id:
-                raise InvalidRequestError('Unauthorize user')
+            if str(seller_id) != service.seller_id:
+                raise InvalidRequestError(f'Unauthorize user: ')
             self._session.delete(service)
             self._session.commit()
             return {"message": "Service deleted successfully"}
         except Exception as e:
             self._session.rollback()
-            raise Exception('An error occured: {e}')
+            raise Exception(f'An error occured:{e} ')
