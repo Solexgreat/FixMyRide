@@ -57,7 +57,7 @@ class UserControl(DB):
             user = query.filter(getattr(User, field) == value).first()
 
             if user is None:
-                raise NoResultFound(f"user not found")
+                return None
         except DBAPIError as e:  # Replace with the actual database error type
             logger.exception("Database error:", exc_info=e)
             raise DBAPIError(f"Database error occurred: {e}")

@@ -6,3 +6,8 @@ Traceback (most recent call last):
   File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\users\control.py", line 68, in find_user
     raise NoResultFound
 sqlalchemy.exc.NoResultFound: ()
+2024-10-25 14:44:32,260 - ERROR - ValueError occurred during user registration:
+Traceback (most recent call last):
+  File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\auth.py", line 31, in register_user
+    raise ValueError (f"user already exits {user}")
+ValueError: user already exits <Backend.column.app.v1.users.model.User object at 0x000002785DF118D0>

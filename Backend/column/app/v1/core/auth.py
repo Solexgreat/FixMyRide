@@ -22,21 +22,44 @@ class AUTH:
            add_user and return new_user
         """
         try:
-            user = self._db.find_user(**kwargs)
+            #check if user_name or email already exist
+            user_name = kwargs.get('user_name')
+            email = kwargs.get('email')
+
+            user = self._db.find_user('user_name', user_name)
             if user:
-               raise ValueError (f"user already exits {user}")
-        except NoResultFound:
+               raise ValueError (f"{user.user_name} already exits ")
+
+            user = self._db.find_user('email', email)
+            if user:
+               raise ValueError (f"{user.user_name} already exits ")
+
+            #validate and hash password
             password = kwargs.get('password')
             if not password:
                 raise ValueError("Password is required")
             hash_pwd = _hash_password(password)
+
+            # Generate session
             session_expiration = datetime.now() + timedelta(hours=24)
             session_id = security.create_session()
+
+            #remove password from kwargs if already their to avoid duplication
             kwargs.pop('password', None)
 
-            new_user = self._db.add_user(**kwargs, password=hash_pwd, session_expiration=session_expiration, session_id=session_id)
+            new_user = self._db.add_user(
+                **kwargs, password=hash_pwd,
+                session_expiration=session_expiration,
+                session_id=session_id)
 
             return new_user
+
+        except ValueError as ve:
+            logger.exception("ValueError occurred during user registration:", exc_info=ve)
+            raise ve  # Re-raise to handle it higher up if needed
+        except Exception as e:
+            logger.exception("An error occurred during user registration:", exc_info=e)
+            raise Exception("User registration failed")
 
 
     def verify_login(self, **kwargs: dict) -> User:
@@ -67,7 +90,9 @@ class AUTH:
                 raise ValueError('Invalid password')
         except (InvalidRequestError) as e:
             logger.exception("Database error:", exc_info=e)
-            raise Exception(f'{e}')
+            raise Exception(f'{e}, {user_pwd}')
+        except Exception as e:
+            raise Exception(f'{e}, {user_pwd}')
 
     def get_current_user(self, session_id: str) -> User:
         """get the user from  the session_id
