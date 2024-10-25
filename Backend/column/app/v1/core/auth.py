@@ -66,6 +66,7 @@ class AUTH:
         """Verify if the user logging details
            are valid
         """
+        #check and verify user_name and email
         user_name = kwargs.get('user_name')
         email = kwargs.get('email')
 
@@ -73,26 +74,27 @@ class AUTH:
             raise ValueError("No search criteria provided")
 
         try:
-            password = kwargs.get('password')
-
+            #Verify if user exist by user_name or email
             if user_name:
                 user = self._db.find_user('user_name', user_name)
             if not user_name:
                 user = self._db.find_user('email', email)
             user_pwd = user.password
 
-
-            if bcrypt.checkpw(password.encode('utf-8'), user_pwd.encode('utf-8')):
+            #verify if the entered password is correct
+            password = kwargs.get('password')
+            if bcrypt.checkpw(password.encode('utf-8'), user_pwd):
                 session_id = security.create_session()
                 user = self._db.update_user(**kwargs, session_id=session_id)
                 return user
             else:
                 raise ValueError('Invalid password')
+
         except (InvalidRequestError) as e:
             logger.exception("Database error:", exc_info=e)
-            raise Exception(f'{e}, {user_pwd}')
+            raise Exception(f'{e}')
         except Exception as e:
-            raise Exception(f'{e}, {user_pwd}')
+            raise Exception(f'{e}')
 
     def get_current_user(self, session_id: str) -> User:
         """get the user from  the session_id

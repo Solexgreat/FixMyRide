@@ -1,7 +1,7 @@
 """DB module
 """
 import os
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
@@ -41,3 +41,10 @@ class DB:
     def _session(self):
         """Thread-safe session object"""
         return self.Session()
+
+    def add_column(self, table_name, column_name, column_type):
+        """Adds a column to an existing table."""
+        with self._engine.connect() as connection:
+            connection.execute(
+                text(f"ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};")
+            )

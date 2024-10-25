@@ -58,6 +58,7 @@ class UserControl(DB):
 
             if user is None:
                 return None
+
         except DBAPIError as e:  # Replace with the actual database error type
             logger.exception("Database error:", exc_info=e)
             raise DBAPIError(f"Database error occurred: {e}")
@@ -76,8 +77,16 @@ class UserControl(DB):
 
     def update_user(self, **kwargs: dict) -> None:
         """Update a user's attributes"""
+
+        user_name = kwargs.get('user_name')
+        email = kwargs.get('email')
+
         try:
-            user = self.find_user(**kwargs)
+             #Verify if user exist by user_name or email
+            if user_name:
+                user = self.find_user('user_name', user_name)
+            if not user_name:
+                user = self.find_user('email', email)
             for key, value in kwargs.items():
                 if hasattr(user, key):
                     setattr(user, key, value)

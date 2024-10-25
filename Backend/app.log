@@ -11,3 +11,8 @@ Traceback (most recent call last):
   File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\auth.py", line 31, in register_user
     raise ValueError (f"user already exits {user}")
 ValueError: user already exits <Backend.column.app.v1.users.model.User object at 0x000002785DF118D0>
+2024-10-25 15:05:25,849 - ERROR - ValueError occurred during user registration:
+Traceback (most recent call last):
+  File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\auth.py", line 31, in register_user
+    raise ValueError (f"{user.user_name} already exits ")
+ValueError: test_user_name6 already exits

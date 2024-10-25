@@ -6,11 +6,12 @@ from sqlalchemy.exc import InvalidRequestError
 from ..column.app.v1.Services.control import ServiceControl
 from Backend.column.app.v1.core.auth import AUTH
 from . import service_bp
+from ..db import DB
 from ..column.app.v1.core.middleware import authenticate
 
 
-
-DB = ServiceControl()
+db_instance = DB()
+db = ServiceControl()
 AUTH = AUTH()
 
 
@@ -23,7 +24,7 @@ def get_service() -> str:
     if user.role != 'admin':
         return jsonify({'msg': "Not authorized"}), 403
 
-    return jsonify(DB.get_service()), 200
+    return jsonify(db.get_service()), 200
 
 
 @service_bp.route('/create_service', methods=['POST'], strict_slashes=False)
@@ -40,10 +41,12 @@ def create_service() ->str:
         if not data:
             return jsonify({'msg': 'Expecting data'}), 400
 
-        service = DB.add_service(**data, seller_id=seller_id)
-        return jsonify({"message": "Service is Created"}, service.service_id), 201
+        # db_instance.add_column('service', 'description', 'TEXT')
+
+        service = db.add_service(**data, seller_id=seller_id)
+        return jsonify({"message": "Service is Created", 'service_id': f'{service.service_id}'}), 201
     except Exception as e:
-        return jsonify({'msg': 'Internal error', 'error': e})
+        return jsonify({'msg': 'Internal error', 'error': str(e)}), 500
 
 @service_bp.route('/delete/{service_id}', methods=['DELETE'], strict_slashes=False)
 @authenticate
@@ -53,7 +56,7 @@ def delete_sercice(service_id):
     """
     try:
         user_id = request.user.user_id
-        del_service = DB.delete_service(service_id, user_id)
+        del_service = db.delete_service(service_id, user_id)
         return jsonify({del_service}), 200
     except InvalidRequestError as e:
         return jsonify({'msg': e})
