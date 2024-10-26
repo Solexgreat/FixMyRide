@@ -16,8 +16,8 @@ DB = UserControl()
 def _hash_password(password: str) -> bytes:
     """returned bytes is a salted hash of the input password
     """
-    salt = bcrypt.gensalt().decode('utf-8')
-    hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
     return hashed
 
 def _generate_uuid():

@@ -59,7 +59,7 @@ def appointment_history() -> str:
     appointments = db.get_all_appointments(user_id)
     return jsonify({'Appointments' : appointments}), 201
 
-@appointment_bp.route('/appointments/<int:appointment_id>', methods=['GET'], strict_slashes=False)
+@appointment_bp.route('/appointment/<int:appointment_id>', methods=['GET'], strict_slashes=False)
 @authenticate
 def get_appointment(appointment_id) -> str:
     """Return json of all appointments
@@ -81,7 +81,7 @@ def update_appointment(appointment_id) -> str:
 
     data = request.get_json()
     try:
-        db_instance.add_column('appointment', 'mechanic_id', 'INETGER')
+        # db_instance.add_column('appointment', 'mechanic_id', 'INETGER')
         if not data:
             return jsonify({'msg': 'request is empty'}), 400
         appointment = db.update_appointment(appointment_id, **data)

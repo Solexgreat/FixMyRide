@@ -56,7 +56,7 @@ class AUTH:
 
         except ValueError as ve:
             logger.exception("ValueError occurred during user registration:", exc_info=ve)
-            raise ve  # Re-raise to handle it higher up if needed
+            raise ve
         except Exception as e:
             logger.exception("An error occurred during user registration:", exc_info=e)
             raise Exception("User registration failed")
@@ -89,6 +89,8 @@ class AUTH:
                 session_id = security.create_session()
                 user = self._db.update_user(**kwargs, session_id=session_id)
                 return user
+            else:
+                raise InvalidRequestError(f'Invalid Password')
 
         except (InvalidRequestError) as e:
             logger.exception("Database error:", exc_info=e)

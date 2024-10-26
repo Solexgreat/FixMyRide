@@ -39,3 +39,27 @@ Traceback (most recent call last):
   File "C:\Users\freya_eva\AppData\Local\Programs\Python\Python310\lib\site-packages\bcrypt\__init__.py", line 84, in hashpw
     return _bcrypt.hashpass(password, salt)
 ValueError: Invalid salt
+2024-10-26 18:28:08,395 - ERROR - ValueError occurred during user registration:
+Traceback (most recent call last):
+  File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\auth.py", line 31, in register_user
+    raise ValueError (f"{user.user_name} already exits ")
+ValueError: test_user_name7 already exits 
+2024-10-26 18:29:46,785 - ERROR - An error occurred during user registration:
+Traceback (most recent call last):
+  File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\auth.py", line 41, in register_user
+    hash_pwd = _hash_password(password)
+  File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\security.py", line 20, in _hash_password
+    hashed = bcrypt.hashpw(password.encode('utf-8'), salt)
+  File "C:\Users\freya_eva\AppData\Local\Programs\Python\Python310\lib\site-packages\bcrypt\__init__.py", line 74, in hashpw
+    raise TypeError("Strings must be encoded before hashing")
+TypeError: Strings must be encoded before hashing
+2024-10-26 18:59:15,954 - ERROR - Database error:
+Traceback (most recent call last):
+  File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\auth.py", line 93, in verify_login
+    raise InvalidRequestError(f'Invalid Password')
+sqlalchemy.exc.InvalidRequestError: Invalid Password
+2024-10-26 18:59:25,015 - ERROR - Database error:
+Traceback (most recent call last):
+  File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\auth.py", line 93, in verify_login
+    raise InvalidRequestError(f'Invalid Password')
+sqlalchemy.exc.InvalidRequestError: Invalid Password

@@ -26,7 +26,7 @@ def register_user() -> str:
     data = request.get_json()
     try:
         user = auth.register_user(**data)
-        return jsonify({'msg': f'{user.user_name} created successfully', 'token': f'{user.session_id}', 'password': f'{user.password}'}), 201
+        return jsonify({'msg': f'{user.user_name} created successfully', 'token': f'{user.session_id}'}), 201
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
@@ -34,13 +34,14 @@ def register_user() -> str:
 
 
 @user_bp.route('/user', methods=['GET'], strict_slashes = False)
+@authenticate
 def get_users() -> str:
     """Return all users
     """
-    # user = request.user
+    user = request.user
     try:
-    #     if user.role != 'admin':
-    #         return jsonify({'msg': "Not authorized"}), 403
+        if user.role != 'admin':
+            return jsonify({'msg': "Not authorized"}), 403
         return (DB.get_users())
     except Exception as e:
         return jsonify({'error': str(e)}), 500
