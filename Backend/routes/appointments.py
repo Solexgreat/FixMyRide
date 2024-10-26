@@ -37,8 +37,6 @@ def Create_appointment() -> str:
 
     if error_msg is None:
         try:
-
-            # db_instance.add_column('appointment', 'updated_date', 'TEXT')
             date_time = None
             model = data.get('model')
             customer_id = user_id
@@ -47,10 +45,9 @@ def Create_appointment() -> str:
             appointment = db.add_appointment(date_time,
                                 customer_id,
                                 service_id, model, status)
-            return jsonify({"message": "sucessfully created", 'appointment_id': appointment.appointment_id}), 201
+            return jsonify({"message": "sucessfully created", 'appointment_id': f'{appointment.appointment_id}'}), 201
         except Exception as e:
-            error_msg = "can't create appointment: {}".format(e)
-            return jsonify({'error': error_msg}), 500
+            return jsonify({'msg': 'Internal error', 'error': str(e)}), 500
 
 @appointment_bp.route('/appointments/history', methods=['GET'], strict_slashes=False)
 @authenticate
@@ -71,4 +68,22 @@ def get_appointment() -> str:
     user = request.user
     if user.role != 'admin':
         return jsonify({'msg': 'Not authorized'}), 403
+    return jsonify(db.get_all_appointments())
+
+@appointment_bp.route('/appointments/<int:appointment_id>', methods=['PATCH'], strict_slashes=False)
+@authenticate
+def update_appointment(appointment_id) -> str:
+    """Return json of all appointments
+    """
+
+    user = request.user
+    data = request.get_json()
+    status = data.get('status')
+    try:
+        if not status:
+            return jsonify({'msg': ''})
+        appointment = db.update_appointment()
+        if user.role != 'admin':
+            return jsonify({'msg': 'Not authorized'}), 403
+    except:
     return jsonify(db.get_all_appointments())

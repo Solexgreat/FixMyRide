@@ -24,7 +24,7 @@ class AppointmentControl(DB):
         """Add an appointment and update revenue"""
 
         if date_time is None:
-            date_time = datetime.now().date()
+            date_time = datetime.now()
 
         try:
             # Create a new appointment
@@ -33,21 +33,34 @@ class AppointmentControl(DB):
             self._session.add(appointment)
             self._session.commit()
 
+            print("Created Appointment ID:", appointment.appointment_id)
+
         except Exception as e:
             self._session.rollback()
-            raise e
+            print("Exception occurred:", e, type(e))
+            raise Exception(f'{e}')
+        return appointment
 
-    def update_appointment(self, status: str, appointment_id: str):
+    def update_appointment(self, appointment_id: str, **kwargs: dict):
         """
             update appointment
         """
-        appointments = self._session.query(Appointment).get(appointment_id)
-
-        if not appointments:
+        #Fetech the appointment and check if it exist
+        appointment = self._session.query(Appointment).get(appointment_id)
+        if not appointment:
             raise NoResultFound (f'Appointment not found')
 
-        appointments = self._session.query(Appointment).filter_by(appointment_id=appointment_id).update(status=status,
-                                                                                                        updated_date=datetime.now())
+        #Update the appointment field with kwargs value
+        for key, value in kwargs.items():
+            setattr(appointment, key, value)
+
+        #Update the updateed_date field
+        appointment.updated_date = datetime.now()
+
+        self._session.commit()
+
+
+        return appointment
 
     def get_appointment_between_dates(self, start_date: datetime, end_date: datetime):
         """

@@ -9,7 +9,7 @@ from datetime import datetime
 class Appointment(Base):
     __tablename__ = 'appointment'
 
-    appointment_id = Column(Integer, primary_key=True)
+    appointment_id = Column(Integer, primary_key=True, autoincrement=True)
     date_time = Column(DateTime, nullable=False)
     customer_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
     service_id = Column(Integer, ForeignKey('service.service_id'), nullable=False)
