@@ -49,15 +49,18 @@ def Create_appointment() -> str:
         except Exception as e:
             return jsonify({'msg': 'Internal error', 'error': str(e)}), 500
 
-@appointment_bp.route('/appointments/history', methods=['GET'], strict_slashes=False)
+@appointment_bp.route('/appointment/history', methods=['GET'], strict_slashes=False)
 @authenticate
 def appointment_history() -> str:
     """Render the appointment history page"""
+    try:
+        user_id = request.user.user_id
+        role = request.user.role
 
-    user_id = request.user.user_id
-
-    appointments = db.get_all_appointments(user_id)
-    return jsonify({'Appointments' : appointments}), 201
+        appointments = db.get_all_appointments(user_id, role)
+        return jsonify({'Appointments' : appointments}), 201
+    except Exception as e:
+        return jsonify({'error' : str(e)}), 500
 
 @appointment_bp.route('/appointment/<int:appointment_id>', methods=['GET'], strict_slashes=False)
 @authenticate
@@ -71,7 +74,7 @@ def get_appointment(appointment_id) -> str:
         appointment = db.get_appointments(appointment_id, user_id, role)
         return jsonify(appointment)
     except Exception as e:
-        return jsonify({'error': f'{e}'})
+        return jsonify({'error': f'{e}'}), 500
 
 @appointment_bp.route('/update_appointment/<int:appointment_id>', methods=['PUT'], strict_slashes=False)
 @authenticate

@@ -14,17 +14,21 @@ from ..Services.model import Service
 class AppointmentControl(DB):
     """Appointment control class that inherits from DB"""
 
-    def get_all_appointments(self, customer_id: int, role: str) -> dict:
+    def get_all_appointments(self, user_id: int, role: str) -> dict:
         """Return a list of all appointments as dictionaries"""
 
-        if role == 'admin':
-            appointments = self._session.query(Appointment).all()
-        elif role == 'mechanic':
-            appointments = self._session.query(Appointment).filter_by(mechanic_id=customer_id).all()
-        else:
-            appointments = self._session.query(Appointment).filter_by(mechanic_id=customer_id).all()
+        try:
 
-        return [a.to_dict() for a in appointments]
+            if role == 'admin':
+                appointments = self._session.query(Appointment).all()
+            elif role == 'mechanic':
+                appointments = self._session.query(Appointment).filter_by(mechanic_id=user_id).all()
+            else:
+                appointments = self._session.query(Appointment).filter_by(mechanic_id=user_id).all()
+
+            return [a.to_dict() for a in appointments]
+        except Exception as e:
+            raise(f'{e}')
 
     def get_appointments(self, appointment_id: int, user_id: int, role: str) -> dict:
         """Return a list of all appointments as dictionaries"""
