@@ -73,7 +73,7 @@ def get_appointment(appointment_id) -> str:
     except Exception as e:
         return jsonify({'error': f'{e}'})
 
-@appointment_bp.route('/update_appointment/<int:appointment_id>', methods=['PATCH'], strict_slashes=False)
+@appointment_bp.route('/update_appointment/<int:appointment_id>', methods=['PUT'], strict_slashes=False)
 @authenticate
 def update_appointment(appointment_id) -> str:
     """Return json of all appointments
@@ -81,9 +81,10 @@ def update_appointment(appointment_id) -> str:
 
     data = request.get_json()
     try:
+        db_instance.add_column('appointment', 'mechanic_id', 'INETGER')
         if not data:
             return jsonify({'msg': 'request is empty'}), 400
         appointment = db.update_appointment(appointment_id, **data)
         return jsonify({'msg': 'Appointment updated successfuly', 'appointment_id': f'{appointment.appointment_id}'})
     except Exception as e:
-        return jsonify({'msg': 'Internal error', 'error': str(e)})
+        return jsonify({'msg': 'Internal error', 'error': str(e)}), 500

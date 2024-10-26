@@ -14,11 +14,17 @@ from ..Services.model import Service
 class AppointmentControl(DB):
     """Appointment control class that inherits from DB"""
 
-    def get_all_appointments(self, customer_id: int) -> dict:
+    def get_all_appointments(self, customer_id: int, role: str) -> dict:
         """Return a list of all appointments as dictionaries"""
 
-        appointments = self._session.query(Appointment).filter_by(customer_id=customer_id).all()
-        return [a.__dict__ for a in appointments]
+        if role == 'admin':
+            appointments = self._session.query(Appointment).all()
+        elif role == 'mechanic':
+            appointments = self._session.query(Appointment).filter_by(mechanic_id=customer_id).all()
+        else:
+            appointments = self._session.query(Appointment).filter_by(mechanic_id=customer_id).all()
+
+        return [a.to_dict() for a in appointments]
 
     def get_appointments(self, appointment_id: int, user_id: int, role: str) -> dict:
         """Return a list of all appointments as dictionaries"""
@@ -27,20 +33,15 @@ class AppointmentControl(DB):
         if not appointment:
             raise NoResultFound(f'Appointment with {appointment_id} does not exist')
         try:
-            #Get service through the service_id and check if it exist
-            service_id = appointment.service_id
-            service = self._session.query(Service).filter_by(service_id=service_id).first()
-            if not service:
-                raise NoResultFound(f'Service or Mechanic no longer available')
 
             #Get the mechanic_id and check if it exist
-            seller_id = service.seller_id
-            if not seller_id:
+            mechanic_id = appointment.mechanic_id
+            if not mechanic_id:
                 raise NoResultFound(f'Service or Mechanic no longer available')
 
             #Check if the user(mechanic or customer) is authorize to get appointment
             customer_id = appointment.customer_id
-            if user_id != seller_id or user_id != customer_id:
+            if user_id != mechanic_id or user_id != customer_id:
                 raise InvalidRequestError(f'Unauthorized request')
 
             if role == 'admin':

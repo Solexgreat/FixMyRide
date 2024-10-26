@@ -16,9 +16,11 @@ class Appointment(Base):
     status = Column(String(50), default='pending')
     updated_date = Column(DateTime, nullable=False, default=datetime.now().date())
     model = Column(String(50))
+    mechanic_id = Column(Integer, ForeignKey('service.seller_id'), nullable=False)
 
     customer = relationship('User', foreign_keys=[customer_id], primaryjoin="Appointment.customer_id == User.user_id")
     service = relationship('Service', foreign_keys=[service_id])
+    service = relationship('Service', foreign_keys=[mechanic_id])
 
     def to_dict(self):
         return {
