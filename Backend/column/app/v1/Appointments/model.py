@@ -10,12 +10,22 @@ class Appointment(Base):
     __tablename__ = 'appointment'
 
     appointment_id = Column(Integer, primary_key=True, autoincrement=True)
-    date_time = Column(DateTime, nullable=False)
+    date_time = Column(DateTime, nullable=False, default=datetime.now().date())
     customer_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
     service_id = Column(Integer, ForeignKey('service.service_id'), nullable=False)
     status = Column(String(50), default='pending')
-    updated_date = Column(DateTime, nullable=False, default=datetime.now())
+    updated_date = Column(DateTime, nullable=False, default=datetime.now().date())
     model = Column(String(50))
 
     customer = relationship('User', foreign_keys=[customer_id], primaryjoin="Appointment.customer_id == User.user_id")
     service = relationship('Service', foreign_keys=[service_id])
+
+    def to_dict(self):
+        return {
+            'date': self.date_time,
+            'status': self.status,
+            'Car_model': self.model,
+            'customer_id': self.customer_id,
+            'service_id': self.service_id,
+            'updated_date': self.updated_date
+        }

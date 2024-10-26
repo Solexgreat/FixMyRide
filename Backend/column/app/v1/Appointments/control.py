@@ -20,6 +20,35 @@ class AppointmentControl(DB):
         appointments = self._session.query(Appointment).filter_by(customer_id=customer_id).all()
         return [a.__dict__ for a in appointments]
 
+    def get_appointments(self, appointment_id: int, user_id: int, role: str) -> dict:
+        """Return a list of all appointments as dictionaries"""
+        #Get appointment and verify if it exist
+        appointment = self._session.query(Appointment).filter_by(appointment_id=appointment_id).first()
+        if not appointment:
+            raise NoResultFound(f'Appointment with {appointment_id} does not exist')
+        try:
+            #Get service through the service_id and check if it exist
+            service_id = appointment.service_id
+            service = self._session.query(Service).filter_by(service_id=service_id).first()
+            if not service:
+                raise NoResultFound(f'Service or Mechanic no longer available')
+
+            #Get the mechanic_id and check if it exist
+            seller_id = service.seller_id
+            if not seller_id:
+                raise NoResultFound(f'Service or Mechanic no longer available')
+
+            #Check if the user(mechanic or customer) is authorize to get appointment
+            customer_id = appointment.customer_id
+            if user_id != seller_id or user_id != customer_id:
+                raise InvalidRequestError(f'Unauthorized request')
+
+            if role == 'admin':
+                return appointment.to_dict()
+            return appointment.to_dict()
+        except Exception as e:
+            raise (f'{e}')
+
     def add_appointment(self, date_time: datetime, customer_id: int, service_id: int, model: str, status: str) -> Appointment:
         """Add an appointment and update revenue"""
 
@@ -54,7 +83,7 @@ class AppointmentControl(DB):
         for key, value in kwargs.items():
             setattr(appointment, key, value)
 
-        #Update the updateed_date field
+        #Update the updated_date field
         appointment.updated_date = datetime.now()
 
         self._session.commit()

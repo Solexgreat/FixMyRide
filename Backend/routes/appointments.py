@@ -59,31 +59,31 @@ def appointment_history() -> str:
     appointments = db.get_all_appointments(user_id)
     return jsonify({'Appointments' : appointments}), 201
 
-@appointment_bp.route('/appointments', methods=['GET'], strict_slashes=False)
+@appointment_bp.route('/appointments/<int:appointment_id>', methods=['GET'], strict_slashes=False)
 @authenticate
-def get_appointment() -> str:
+def get_appointment(appointment_id) -> str:
     """Return json of all appointments
     """
-
     user = request.user
-    if user.role != 'admin':
-        return jsonify({'msg': 'Not authorized'}), 403
-    return jsonify(db.get_all_appointments())
+    role = user.role
+    user_id = user.user_id
+    try:
+        appointment = db.get_appointments(appointment_id, user_id, role)
+        return jsonify(appointment)
+    except Exception as e:
+        return jsonify({'error': f'{e}'})
 
-@appointment_bp.route('/appointments/<int:appointment_id>', methods=['PATCH'], strict_slashes=False)
+@appointment_bp.route('/update_appointment/<int:appointment_id>', methods=['PATCH'], strict_slashes=False)
 @authenticate
 def update_appointment(appointment_id) -> str:
     """Return json of all appointments
     """
 
-    user = request.user
     data = request.get_json()
-    status = data.get('status')
     try:
-        if not status:
-            return jsonify({'msg': ''})
-        appointment = db.update_appointment()
-        if user.role != 'admin':
-            return jsonify({'msg': 'Not authorized'}), 403
-    except:
-    return jsonify(db.get_all_appointments())
+        if not data:
+            return jsonify({'msg': 'request is empty'}), 400
+        appointment = db.update_appointment(appointment_id, **data)
+        return jsonify({'msg': 'Appointment updated successfuly', 'appointment_id': f'{appointment.appointment_id}'})
+    except Exception as e:
+        return jsonify({'msg': 'Internal error', 'error': str(e)})
