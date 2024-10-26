@@ -33,6 +33,8 @@ class AppointmentControl(DB):
         if not appointment:
             raise NoResultFound(f'Appointment with {appointment_id} does not exist')
         try:
+            if role == 'admin':
+                return appointment.to_dict()
 
             #Get the mechanic_id and check if it exist
             mechanic_id = appointment.mechanic_id
@@ -44,8 +46,6 @@ class AppointmentControl(DB):
             if user_id != mechanic_id or user_id != customer_id:
                 raise InvalidRequestError(f'Unauthorized request')
 
-            if role == 'admin':
-                return appointment.to_dict()
             return appointment.to_dict()
         except Exception as e:
             raise (f'{e}')

@@ -79,21 +79,22 @@ class AUTH:
                 user = self._db.find_user('user_name', user_name)
             if not user_name:
                 user = self._db.find_user('email', email)
-            user_pwd = user.password
+
+            if user is None:
+                raise ValueError('User does not exist')
 
             #verify if the entered password is correct
             password = kwargs.get('password')
-            if bcrypt.checkpw(password.encode('utf-8'), user_pwd):
+            if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
                 session_id = security.create_session()
                 user = self._db.update_user(**kwargs, session_id=session_id)
                 return user
-            else:
-                raise ValueError('Invalid password')
 
         except (InvalidRequestError) as e:
             logger.exception("Database error:", exc_info=e)
             raise Exception(f'{e}')
         except Exception as e:
+            logger.exception("Database error:", exc_info=e,)
             raise Exception(f'{e}')
 
     def get_current_user(self, session_id: str) -> User:

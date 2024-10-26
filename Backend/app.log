@@ -16,3 +16,26 @@ Traceback (most recent call last):
   File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\auth.py", line 31, in register_user
     raise ValueError (f"{user.user_name} already exits ")
 ValueError: test_user_name6 already exits
+2024-10-26 17:45:13,827 - ERROR - Database error:
+Traceback (most recent call last):
+  File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\auth.py", line 89, in verify_login
+    if bcrypt.checkpw(password.encode('utf-8'), user_pwd):
+  File "C:\Users\freya_eva\AppData\Local\Programs\Python\Python310\lib\site-packages\bcrypt\__init__.py", line 89, in checkpw
+    raise TypeError("Strings must be encoded before checking")
+TypeError: Strings must be encoded before checking
+2024-10-26 17:45:15,052 - ERROR - Database error:
+Traceback (most recent call last):
+  File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\auth.py", line 89, in verify_login
+    if bcrypt.checkpw(password.encode('utf-8'), user_pwd):
+  File "C:\Users\freya_eva\AppData\Local\Programs\Python\Python310\lib\site-packages\bcrypt\__init__.py", line 89, in checkpw
+    raise TypeError("Strings must be encoded before checking")
+TypeError: Strings must be encoded before checking
+2024-10-26 18:13:21,243 - ERROR - Database error:
+Traceback (most recent call last):
+  File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\auth.py", line 88, in verify_login
+    if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+  File "C:\Users\freya_eva\AppData\Local\Programs\Python\Python310\lib\site-packages\bcrypt\__init__.py", line 91, in checkpw
+    ret = hashpw(password, hashed_password)
+  File "C:\Users\freya_eva\AppData\Local\Programs\Python\Python310\lib\site-packages\bcrypt\__init__.py", line 84, in hashpw
+    return _bcrypt.hashpass(password, salt)
+ValueError: Invalid salt
