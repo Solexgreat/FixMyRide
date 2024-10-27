@@ -83,7 +83,7 @@ def appointment_history_between() -> str:
 
 @appointment_bp.route('/appointment/completed_between', methods=['GET'], strict_slashes=False)
 @authenticate
-def appointment_history_between() -> str:
+def appointment_completed_between() -> str:
     """Render the appointment history page"""
     try:
         data = request.get_json()

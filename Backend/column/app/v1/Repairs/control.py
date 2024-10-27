@@ -33,11 +33,11 @@ class RepairControl(DB):
             self._session.add(repair)
             self._session.commit()
 
-            revenue= Revenue(date_time=date_time.date())
+            revenue= Revenue(date_time=date_time)
             self._session.add(revenue)
             self._session.commit()
 
-            revenue = self._session.query(Revenue).filter_by(date_time=date_time.date()).first()
+            revenue = self._session.query(Revenue).filter_by(date_time=date_time).first()
 
             service = self._session.query(Service).get(service_id)
             if service:
@@ -45,17 +45,23 @@ class RepairControl(DB):
                 revenue.total_appointments += 1
                 if service.category == 'Repairs':
                     revenue.total_repairs += 1
-            revenue = self._session.query(Revenue).filter_by(date_time=date_time.date()).update(total_repairs= revenue.total_repairs ,
-                                                                                                total_revenue=revenue.total_repairs,
-                                                                                                total_appointments=revenue.total_appointments)
 
-            self._session.add(revenue)
+            data = {'total_repairs': revenue.total_repairs ,
+                    'total_revenue' : revenue.total_repairs,
+                    'total_appointments' :revenue.total_appointments}
+
+            revenue = self._session.query(Revenue).get(date_time)
+
+             #Update the appointment field with kwargs value
+            for key, value in data.items():
+                setattr(revenue, key, value)
+
             self._session.commit()
             return repair
 
         except Exception as e:
             self._session.rollback()
-            raise e  # Raise the exception after rolling back
+            raise e
 
     def delete_repair(self, repair_id: int):
         """

@@ -4,9 +4,11 @@ from flask import Flask, jsonify, request, abort, redirect, render_template, fla
 from ..column.app.v1.Repairs.control import RepairControl
 from Backend.column.app.v1.core.auth import AUTH
 from . import repair_bp
+from ..db import DB
 from ..column.app.v1.core.middleware import authenticate
 
 
+db_instance = DB()
 db = RepairControl()
 AUTH = AUTH()
 
@@ -27,12 +29,14 @@ def get_repairs() -> str:
     except Exception as e:
         return jsonify({'error': str(e)})
 
-@repair_bp.route('/repairs', methods=['POST'], strict_slashes = False)
+@repair_bp.route('/create-repair', methods=['POST'], strict_slashes = False)
 @authenticate
 def create_repairs() -> str:
     """POST /repairs
        Return: Jsonify(message) status 200
     """
+
+    #db_instance.add_column('revenue', 'date_time', 'DATETIME')
     data = request.get_json()
     user_id = request.user.user_id
     err_msg = None
@@ -45,7 +49,7 @@ def create_repairs() -> str:
         err_msg = 'service_id is messing'
     if err_msg is None:
         try:
-            date_time = data['date_time']
+            date_time = None
             customer_id = data['customer_id']
             service_id = data['service_id']
             mechanic_id = user_id
@@ -58,14 +62,13 @@ def create_repairs() -> str:
             err_msg = "can't create appointment:"
             return jsonify({'msg': err_msg, 'error': str(e)}), 500
 
-@repair_bp.route('/delete/{repair_id}', methods=['DELETE'], strict_slashes=False)
+@repair_bp.route('/delete/<int:repair_id>', methods=['DELETE'], strict_slashes=False)
 @authenticate
 def delete_revenue(repair_id):
     """
         delete service via revenue id
     """
     try:
-        data = request.get_json()
         user = request.user
         if user.role != 'admin':
             return jsonify({'msg': 'Not authorized'}), 403
@@ -73,4 +76,4 @@ def delete_revenue(repair_id):
         del_service = db.delete_repair(repair_id)
         return jsonify({del_service}), 200
     except Exception as e:
-        return jsonify({'msg': e })
+        return jsonify({'msg': str(e) })

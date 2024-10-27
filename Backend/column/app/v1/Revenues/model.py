@@ -8,7 +8,7 @@ class Revenue(Base):
     __tablename__ = 'revenue'
 
     revenue_id = Column(Integer, primary_key=True)
+    total_revenue = Column(Float, nullable=True, default=0)
+    total_appointments = Column(Integer, nullable=True, default=0)
+    total_repairs = Column(Integer, nullable=True, default=0)
     date_time = Column(DateTime, nullable=False)
-    total_revenue = Column(Float, nullable=False)
-    total_appointments = Column(Integer, nullable=False)
-    total_repairs = Column(Integer, nullable=False)
