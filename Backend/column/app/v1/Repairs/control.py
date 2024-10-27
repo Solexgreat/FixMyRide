@@ -24,7 +24,7 @@ class RepairControl(DB):
                    service_id: int, mechanic_id: int) -> Repair:
         """Add a new repair to the database and return the repair object"""
         if date_time is None:
-            date_time = datetime.now()
+            date_time = datetime.now().date()
         try:
             repair = Repair(date_time=datetime.now(),
                             customer_id=customer_id,
@@ -46,9 +46,9 @@ class RepairControl(DB):
                 if service.category == 'Repairs':
                     revenue.total_repairs += 1
 
-            data = {'total_repairs': revenue.total_repairs ,
-                    'total_revenue' : revenue.total_repairs,
-                    'total_appointments' :revenue.total_appointments}
+            data = {'total_repairs': revenue.total_repairs,
+                    'total_revenue': revenue.total_repairs,
+                    'total_appointments': revenue.total_appointments}
 
             revenue = self._session.query(Revenue).get(date_time)
 
@@ -86,7 +86,7 @@ class RepairControl(DB):
                 revenue.total_appointments -= 1
                 if service.category == 'Repairs':
                     revenue.total_repairs -= 1
-            revenue = self._session.query(Revenue).filter_by(date_time=date_time.date()).update(total_repairs= revenue.total_repairs ,
+            revenue = self._session.query(Revenue).filter_by(date_time=date_time).update(total_repairs= revenue.total_repairs ,
                                                                                                 total_revenue=revenue.total_repairs,
                                                                                                 total_appointments=revenue.total_appointments)
 

@@ -20,11 +20,14 @@ AUTH = AUTH()
 def get_service() -> str:
     """Return all service
     """
-    user = request.user
-    if user.role != 'admin':
-        return jsonify({'msg': "Not authorized"}), 403
+    try:
+        user = request.user
+        if user.role != 'admin':
+            return jsonify({'msg': "Not authorized"}), 403
 
-    return jsonify(db.get_service()), 200
+        return jsonify(db.get_service()), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 @service_bp.route('/create_service', methods=['POST'], strict_slashes=False)

@@ -35,5 +35,4 @@ class User(Base):
             'email': self.email,
             'role': self.role,
             'is_active': self.is_active,
-            'password': str(self.password)
         }

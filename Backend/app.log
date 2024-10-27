@@ -63,3 +63,28 @@ Traceback (most recent call last):
   File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\auth.py", line 93, in verify_login
     raise InvalidRequestError(f'Invalid Password')
 sqlalchemy.exc.InvalidRequestError: Invalid Password
+2024-10-27 21:09:36,308 - ERROR - Database error:
+Traceback (most recent call last):
+  File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\auth.py", line 88, in verify_login
+    if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+  File "C:\Users\freya_eva\AppData\Local\Programs\Python\Python310\lib\site-packages\bcrypt\__init__.py", line 91, in checkpw
+    ret = hashpw(password, hashed_password)
+  File "C:\Users\freya_eva\AppData\Local\Programs\Python\Python310\lib\site-packages\bcrypt\__init__.py", line 84, in hashpw
+    return _bcrypt.hashpass(password, salt)
+ValueError: Invalid salt
+2024-10-27 21:09:38,872 - ERROR - Database error:
+Traceback (most recent call last):
+  File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\auth.py", line 88, in verify_login
+    if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+  File "C:\Users\freya_eva\AppData\Local\Programs\Python\Python310\lib\site-packages\bcrypt\__init__.py", line 91, in checkpw
+    ret = hashpw(password, hashed_password)
+  File "C:\Users\freya_eva\AppData\Local\Programs\Python\Python310\lib\site-packages\bcrypt\__init__.py", line 84, in hashpw
+    return _bcrypt.hashpass(password, salt)
+ValueError: Invalid salt
+2024-10-27 22:22:55,236 - ERROR - Database error:
+Traceback (most recent call last):
+  File "C:\Users\freya_eva\Documents\FixMyRide\FixMyRide\Backend\column\app\v1\core\auth.py", line 89, in verify_login
+    if bcrypt.checkpw(password.encode('utf-8'), user_pwd):
+  File "C:\Users\freya_eva\AppData\Local\Programs\Python\Python310\lib\site-packages\bcrypt\__init__.py", line 89, in checkpw
+    raise TypeError("Strings must be encoded before checking")
+TypeError: Strings must be encoded before checking
