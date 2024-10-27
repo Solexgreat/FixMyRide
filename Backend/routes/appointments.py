@@ -62,6 +62,44 @@ def appointment_history() -> str:
     except Exception as e:
         return jsonify({'error' : str(e)}), 500
 
+@appointment_bp.route('/appointment/history_between', methods=['GET'], strict_slashes=False)
+@authenticate
+def appointment_history_between() -> str:
+    """Render the appointment history page"""
+    try:
+        data = request.get_json()
+        initial_date = data.get('initial_date')
+        current_date = data.get('current_date')
+        role = request.user.role
+
+        #Check if user is an admin
+        if role != 'admin':
+            return jsonify({'msg': 'unauthorised user'}), 403
+
+        appointments = db.get_appointment_between_dates(initial_date, current_date)
+        return jsonify({'Appointments' : appointments}), 201
+    except Exception as e:
+        return jsonify({'error' : str(e)}), 500
+
+@appointment_bp.route('/appointment/completed_between', methods=['GET'], strict_slashes=False)
+@authenticate
+def appointment_history_between() -> str:
+    """Render the appointment history page"""
+    try:
+        data = request.get_json()
+        initial_date = data.get('initial_date')
+        current_date = data.get('current_date')
+        role = request.user.role
+
+        #Check if user is an admin
+        if role != 'admin':
+            return jsonify({'msg': 'unauthorised user'}), 403
+
+        appointments = db.get_completed_appointment_between_dates(initial_date, current_date)
+        return jsonify({'Appointments' : appointments}), 201
+    except Exception as e:
+        return jsonify({'error' : str(e)}), 500
+
 @appointment_bp.route('/appointment/<int:appointment_id>', methods=['GET'], strict_slashes=False)
 @authenticate
 def get_appointment(appointment_id) -> str:

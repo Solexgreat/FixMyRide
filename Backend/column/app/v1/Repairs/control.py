@@ -18,13 +18,13 @@ class RepairControl(DB):
     def get_all_repairs(self) -> dict:
         """Return a list of all repairs as dictionaries"""
         repairs = self._session.query(Repair).all()
-        return [r.__dict__ for r in repairs]
+        return [r.to_dict() for r in repairs]
 
     def add_repair(self, date_time: datetime, customer_id: int,
                    service_id: int, mechanic_id: int) -> Repair:
         """Add a new repair to the database and return the repair object"""
         if date_time is None:
-            date_time = datetime.now()  # Use current time if not provided
+            date_time = datetime.now()
         try:
             repair = Repair(date_time=datetime.now(),
                             customer_id=customer_id,
@@ -59,7 +59,7 @@ class RepairControl(DB):
 
     def delete_repair(self, repair_id: int):
         """
-
+            Delete repair and also update revenue
         """
         repair = self._session.query(Repair).filter_by(repair_id=repair_id).first()
 

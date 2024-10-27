@@ -7,7 +7,7 @@ from . import repair_bp
 from ..column.app.v1.core.middleware import authenticate
 
 
-DB = RepairControl()
+db = RepairControl()
 AUTH = AUTH()
 
 
@@ -17,11 +17,15 @@ AUTH = AUTH()
 def get_repairs() -> str:
     """Return json of all repairs
     """
-    user = request.user
-    if user.role != 'admin':
-        return jsonify({'msg': 'Not authorized'}), 403
 
-    return jsonify(DB.get_all_repairs())
+    try:
+        user = request.user
+        if user.role != 'admin' or user.role != 'mechanic':
+            return jsonify({'msg': 'Not authorized'}), 403
+
+        return jsonify(db.get_all_repairs()), 201
+    except Exception as e:
+        return jsonify({'error': str(e)})
 
 @repair_bp.route('/repairs', methods=['POST'], strict_slashes = False)
 @authenticate
@@ -45,14 +49,14 @@ def create_repairs() -> str:
             customer_id = data['customer_id']
             service_id = data['service_id']
             mechanic_id = user_id
-            repair = DB.add_repair(date_time,
+            repair = db.add_repair(date_time,
                             customer_id,
                             service_id,
                             mechanic_id)
             return jsonify({"message": "Repair Created successfully", 'repair_id': repair.repair_id}), 200
         except Exception as e:
-            err_msg = "can't create appointment: {}".format(e)
-    return (f"{err_msg}")
+            err_msg = "can't create appointment:"
+            return jsonify({'msg': err_msg, 'error': str(e)}), 500
 
 @repair_bp.route('/delete/{repair_id}', methods=['DELETE'], strict_slashes=False)
 @authenticate
@@ -61,11 +65,12 @@ def delete_revenue(repair_id):
         delete service via revenue id
     """
     try:
+        data = request.get_json()
         user = request.user
         if user.role != 'admin':
             return jsonify({'msg': 'Not authorized'}), 403
 
-        del_service = DB.delete_repair(repair_id)
+        del_service = db.delete_repair(repair_id)
         return jsonify({del_service}), 200
     except Exception as e:
         return jsonify({'msg': e })

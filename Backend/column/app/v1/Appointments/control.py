@@ -24,7 +24,7 @@ class AppointmentControl(DB):
             elif role == 'mechanic':
                 appointments = self._session.query(Appointment).filter_by(mechanic_id=user_id).all()
             else:
-                appointments = self._session.query(Appointment).filter_by(mechanic_id=user_id).all()
+                appointments = self._session.query(Appointment).filter_by(mechanic_id=customer_id).all()
 
             return [a.to_dict() for a in appointments]
         except Exception as e:
@@ -98,6 +98,7 @@ class AppointmentControl(DB):
 
     def get_appointment_between_dates(self, start_date: datetime, end_date: datetime):
         """
+            Get appointments between a period of time
         """
         appointments = self._session.query(Appointment).filter(
             Appointment.date_time.between(start_date, end_date)
@@ -106,6 +107,7 @@ class AppointmentControl(DB):
 
     def get_completed_appointment_between_dates(self, start_date: datetime, end_date: datetime):
         """
+            Get appointments with 'status' complete between a period of time
         """
         appointments = self._session.query(Appointment).filter(
             and_(
