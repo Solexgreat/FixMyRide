@@ -62,7 +62,7 @@ def appointment_history() -> str:
     except Exception as e:
         return jsonify({'error' : str(e)}), 500
 
-@appointment_bp.route('/appointment/history_between', methods=['GET'], strict_slashes=False)
+@appointment_bp.route('/history_between', methods=['GET'], strict_slashes=False)
 @authenticate
 def appointment_history_between() -> str:
     """Render the appointment history page"""
@@ -77,11 +77,11 @@ def appointment_history_between() -> str:
             return jsonify({'msg': 'unauthorised user'}), 403
 
         appointments = db.get_appointment_between_dates(initial_date, current_date)
-        return jsonify({'Appointments' : appointments}), 201
+        return appointments
     except Exception as e:
         return jsonify({'error' : str(e)}), 500
 
-@appointment_bp.route('/appointment/completed_between', methods=['GET'], strict_slashes=False)
+@appointment_bp.route('/completed_history_between', methods=['GET'], strict_slashes=False)
 @authenticate
 def appointment_completed_between() -> str:
     """Render the appointment history page"""
@@ -96,7 +96,7 @@ def appointment_completed_between() -> str:
             return jsonify({'msg': 'unauthorised user'}), 403
 
         appointments = db.get_completed_appointment_between_dates(initial_date, current_date)
-        return jsonify({'Appointments' : appointments}), 201
+        return jsonify(appointments), 201
     except Exception as e:
         return jsonify({'error' : str(e)}), 500
 
@@ -129,3 +129,18 @@ def update_appointment(appointment_id) -> str:
         return jsonify({'msg': 'Appointment updated successfuly', 'appointment_id': f'{appointment.appointment_id}'})
     except Exception as e:
         return jsonify({'msg': 'Internal error', 'error': str(e)}), 500
+
+
+@appointment_bp.route('/delete/<int:appointment_id>', methods=['DELETE'], strict_slashes=False)
+@authenticate
+def delete_sercice(appointment_id):
+    """
+        delete service via service_id
+    """
+    try:
+        user_id = request.user.user_id
+        del_service = db.delete_appointment(appointment_id)
+        if del_service:
+            return jsonify(del_service), 201
+    except Exception as e:
+        return jsonify({'msg': str(e) }), 500

@@ -33,9 +33,9 @@ class RepairControl(DB):
             self._session.add(repair)
             self._session.commit()
 
-            revenue = self._session.query(Revenue).filter_by(date_time=date_time).first()
+            revenue = self._session.query(Revenue).filter_by(repair_id=repair.repair_id).first()
             if not revenue:
-                revenue= Revenue(date_time=date_time)
+                revenue= Revenue(repair_id=repair.repair_id)
                 self._session.add(revenue)
                 self._session.commit()
 
@@ -64,11 +64,9 @@ class RepairControl(DB):
         if not repair:
             raise NoResultFound(f'Repair not found')
 
-        date_time = repair.date_time
-
         try:
             #update revenue database
-            revenue= self._session.query(Revenue).filter_by(date_time=date_time).first()
+            revenue= self._session.query(Revenue).filter_by(repair_id=repair_id).first()
             if revenue:
                 self._session.delete(revenue)
 

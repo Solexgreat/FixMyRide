@@ -5,7 +5,7 @@ from sqlalchemy.exc import InvalidRequestError
 from sqlalchemy import and_
 from .model import Appointment
 from typing import List
-from datetime import datetime
+from datetime import datetime, timedelta
 from .....db import DB
 from ..Revenues.model import Revenue
 from ..Services.model import Service
@@ -24,7 +24,7 @@ class AppointmentControl(DB):
             elif role == 'mechanic':
                 appointments = self._session.query(Appointment).filter_by(mechanic_id=user_id).all()
             else:
-                appointments = self._session.query(Appointment).filter_by(mechanic_id=customer_id).all()
+                appointments = self._session.query(Appointment).filter_by(mechanic_id=user_id).all()
 
             return [a.to_dict() for a in appointments]
         except Exception as e:
@@ -96,23 +96,49 @@ class AppointmentControl(DB):
 
         return appointment
 
-    def get_appointment_between_dates(self, start_date: datetime, end_date: datetime):
+    def get_appointment_between_dates(self, start_date_str: datetime, end_date_str: datetime):
         """
             Get appointments between a period of time
         """
-        appointments = self._session.query(Appointment).filter(
-            Appointment.date_time.between(start_date, end_date)
-        ).all()
-        return appointments
+        try:
+            start_date = datetime.strptime(start_date_str, "%a, %d %b %Y")
+            end_date = datetime.strptime(end_date_str, "%a, %d %b %Y") + timedelta(days=1)
+            appointments = self._session.query(Appointment).filter(
+                Appointment.date_time.between(start_date, end_date)
+            ).all()
+            appointments_dict = [appointment.to_dict() for appointment in appointments]
+            return appointments_dict
+        except Exception as e:
+            raise Exception(f'{str(e)}')
 
-    def get_completed_appointment_between_dates(self, start_date: datetime, end_date: datetime):
+    def get_completed_appointment_between_dates(self, start_date_str: str, end_date_str: str):
         """
             Get appointments with 'status' complete between a period of time
         """
-        appointments = self._session.query(Appointment).filter(
-            and_(
-                Appointment.status == 'completed',
-                Appointment.updated_date.between(start_date, end_date)
-            )
-            ).all()
-        return appointments
+        try:
+            start_date = datetime.strptime(start_date_str, "%a, %d %b %Y")
+            end_date = datetime.strptime(end_date_str, "%a, %d %b %Y") + timedelta(days=1)
+            appointments = self._session.query(Appointment).filter(
+                and_(
+                    Appointment.status == 'completed',
+                    Appointment.updated_date.between(start_date, end_date)
+                )
+                ).all()
+            appointments_dict = [appointment.to_dict() for appointment in appointments]
+            return appointments_dict
+        except Exception as e:
+            raise Exception(f'{str(e)}')
+
+    def delete_appointment(self, appointment_id: int,)-> str:
+        """Delete service by service_id"""
+        appointment = self._session.query(Appointment).filter_by(appointment_id=appointment_id).first()
+        if not appointment:
+            raise NoResultFound(f'Appointment not found')
+
+        try:
+            self._session.delete(appointment)
+            self._session.commit()
+            return {"message": "Appointment deleted successfully"}
+        except Exception as e:
+            self._session.rollback()
+            raise Exception(f'An error occured:{e} ')

@@ -5,3 +5,4 @@ __pycache__
 .env
 /Backend/myenv
 /Backend/__pycache__
+app.log

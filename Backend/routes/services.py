@@ -60,7 +60,8 @@ def delete_sercice(service_id):
     try:
         user_id = request.user.user_id
         del_service = db.delete_service(service_id, user_id)
-        return jsonify({'msg': 'Service deleted successfully', 'service_id': service_id}), 201
+        if del_service:
+            return jsonify({'msg': 'Service deleted successfully', 'service_id': service_id}), 201
     except InvalidRequestError as e:
         return jsonify({'msg': str(e)}), 403
     except Exception as e:
