@@ -74,6 +74,6 @@ def delete_revenue(repair_id):
             return jsonify({'msg': 'Not authorized'}), 403
 
         del_service = db.delete_repair(repair_id)
-        return jsonify({del_service}), 200
+        return jsonify(del_service), 200
     except Exception as e:
-        return jsonify({'msg': str(e) })
+        return jsonify({'msg': str(e) }), 500

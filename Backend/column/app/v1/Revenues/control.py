@@ -26,9 +26,9 @@ class RevenueControl(DB):
         self._session.commit()
         return revenue
 
-    def delete_revenue(self, service_id: str)-> str:
+    def delete_revenue(self, revenue_id: str)-> str:
         """Delete revenue by revenue_id"""
-        revenue = self._session.query(Revenue).filter_by(service_id=service_id).first()
+        revenue = self._session.query(Revenue).filter_by(revenue_id=revenue_id).first()
         if not revenue:
             raise NoResultFound(f'Revenue not found')
 

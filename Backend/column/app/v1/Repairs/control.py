@@ -65,28 +65,16 @@ class RepairControl(DB):
             raise NoResultFound(f'Repair not found')
 
         date_time = repair.date_time
-        service_id = repair.service_id
 
         try:
             #update revenue database
             revenue= self._session.query(Revenue).filter_by(date_time=date_time).first()
-            if not revenue:
-                raise NoResultFound(f'Revenu not found')
-
-            #get service to get the price
-            service = self._session.query(Service).filter_by(service_id=service_id).first()
-            if service:
-                revenue.total_revenue -= service.price
-                revenue.total_appointments -= 1
-                if service.category == 'Repairs':
-                    revenue.total_repairs -= 1
-
-            self._session.add(revenue)
-            self._session.commit()
+            if revenue:
+                self._session.delete(revenue)
 
             self._session.delete(repair)
             self._session.commit()
-            return {"message": "Delete deleted successfully"}
+            return {"msg": "deleted successfully"}
         except Exception as e:
             self._session.rollback()
-            raise Exception('An error occured: {e}')
+            raise Exception(f'An error occured: {e}')

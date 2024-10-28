@@ -12,7 +12,10 @@ class Revenue(Base):
     total_revenue = Column(Float, nullable=True, default=0.00)
     total_appointments = Column(Integer, nullable=True, default=0)
     total_repairs = Column(Integer, nullable=True, default=0)
+    repair_id = Column(Integer, ForeignKey('Repair.repair_id'), nullable=False)
     date_time = Column(DateTime, nullable=False, default=datetime.now().date())
+
+    repair = relationship('Repair', foreign_keys=[repair_id])
 
 
     def to_dict(self):
