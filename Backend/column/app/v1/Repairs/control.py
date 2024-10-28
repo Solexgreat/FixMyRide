@@ -33,35 +33,27 @@ class RepairControl(DB):
             self._session.add(repair)
             self._session.commit()
 
-            revenue= Revenue(date_time=date_time)
-            self._session.add(revenue)
-            self._session.commit()
-
             revenue = self._session.query(Revenue).filter_by(date_time=date_time).first()
+            if not revenue:
+                revenue= Revenue(date_time=date_time)
+                self._session.add(revenue)
+                self._session.commit()
 
-            service = self._session.query(Service).get(service_id)
+            service = self._session.query(Service).filter_by(service_id=service_id).first()
             if service:
                 revenue.total_revenue += service.price
                 revenue.total_appointments += 1
-                if service.category == 'Repairs':
-                    revenue.total_repairs += 1
+                revenue.total_repairs += 1
 
-            data = {'total_repairs': revenue.total_repairs,
-                    'total_revenue': revenue.total_repairs,
-                    'total_appointments': revenue.total_appointments}
 
-            revenue = self._session.query(Revenue).get(date_time)
-
-             #Update the appointment field with kwargs value
-            for key, value in data.items():
-                setattr(revenue, key, value)
-
-            self._session.commit()
+                self._session.commit()
+            else:
+                raise ValueError(f'Service not available')
             return repair
 
         except Exception as e:
             self._session.rollback()
-            raise e
+            raise Exception(f'{e}')
 
     def delete_repair(self, repair_id: int):
         """
@@ -78,17 +70,16 @@ class RepairControl(DB):
         try:
             #update revenue database
             revenue= self._session.query(Revenue).filter_by(date_time=date_time).first()
+            if not revenue:
+                raise NoResultFound(f'Revenu not found')
 
             #get service to get the price
-            service = self._session.query(Service).get(service_id)
+            service = self._session.query(Service).filter_by(service_id=service_id).first()
             if service:
                 revenue.total_revenue -= service.price
                 revenue.total_appointments -= 1
                 if service.category == 'Repairs':
                     revenue.total_repairs -= 1
-            revenue = self._session.query(Revenue).filter_by(date_time=date_time).update(total_repairs= revenue.total_repairs ,
-                                                                                                total_revenue=revenue.total_repairs,
-                                                                                                total_appointments=revenue.total_appointments)
 
             self._session.add(revenue)
             self._session.commit()

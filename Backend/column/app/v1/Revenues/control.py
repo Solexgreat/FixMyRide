@@ -15,7 +15,7 @@ class RevenueControl(DB):
     def get_all_revenue(self) -> list:
         """Retrieve all revenue records from the database."""
         revenues = self._session.query(Revenue).all()
-        return [r.__dict__ for r in revenues]
+        return [r.to_dict() for r in revenues]
 
     def add_revenue(self, date_time: datetime, total_appointment: int,
                     total_repair: int, total_revenue: int) -> Revenue:

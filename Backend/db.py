@@ -48,3 +48,8 @@ class DB:
             connection.execute(
                 text(f"ALTER TABLE {table_name} ADD COLUMN {column_name} {column_type};")
             )
+
+    def drop_column(self, table_name, column_name):
+        """Removes a column from an existing table."""
+        with self._engine.connect() as connection:
+            connection.execute(text(f"ALTER TABLE {table_name} DROP COLUMN {column_name};"))

@@ -13,15 +13,18 @@ DB = RevenueControl()
 AUTH = AUTH()
 
 
-@revenue_bp.route('/renvenue', methods=['GET'], strict_slashes=False)
+@revenue_bp.route('/revenue', methods=['GET'], strict_slashes=False)
 @authenticate
 def get_revenue() -> str:
     """Return all the Revenue property
     """
-    user = request.user
-    if user.role != 'admin':
-        return jsonify({'msg': "Not authorized"}), 403
-    return jsonify(DB.get_all_revenue())
+    try:
+        user = request.user
+        if user.role != 'admin':
+            return jsonify({'msg': "Not authorized"}), 403
+        return jsonify(DB.get_all_revenue()), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @revenue_bp.route('/revenue', methods=['POST'], strict_slashes=False)
 def create_revenue() ->str:

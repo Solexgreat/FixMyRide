@@ -36,7 +36,7 @@ def create_repairs() -> str:
        Return: Jsonify(message) status 200
     """
 
-    #db_instance.add_column('revenue', 'date_time', 'DATETIME')
+    # db_instance.drop_column('revenue', 'date')
     data = request.get_json()
     user_id = request.user.user_id
     err_msg = None
