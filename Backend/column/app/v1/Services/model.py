@@ -13,6 +13,7 @@ class Service(Base):
     name = Column(String(255), nullable=False)
     price = Column(Float, nullable=False)
     description = Column(String(255), nullable=True)
+    image_url = Column(String(255), nullable=True)
     category = Column(String(255), nullable=False)
     seller_id = Column(Integer, ForeignKey('users.user_id'), nullable=False)
 
