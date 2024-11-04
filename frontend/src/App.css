@@ -2,5 +2,8 @@ body{
   margin: 0 auto;
   padding: 0;
   width: 100%;
-  font-family: Robo
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.5;
+  color: #333;
+  background-color: antiquewhite;
 }
