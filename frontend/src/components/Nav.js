@@ -1,20 +1,24 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 function Nav() {
+	const[menuOpen, setMenuOpen] = useState(false);
 
+	const toggleMenu = () => {
+		setMenuOpen(!menuOpen);
+	}
 	return (
-		<nav className='nav-bar'>
-			<div className="logo">
+		<nav className={'nav-bar'}>
+			<a href='/' className="logo">
 				<h1>FixMyRide</h1>
-			</div>
+			</a>
 			{/*mobile menu*/}
-			<div className="menu-bar">
+			<div className="menu-bar" onClick={toggleMenu}>
 				<div className="menu-bar bar"></div>
 				<div className="menu-bar bar"></div>
 				<div className="menu-bar bar"></div>
 				<div className="menu-bar bar"></div>
 			</div>
-			<ul className={`nav-item ${menuOpen ? visible: " "}`}>
+			<ul className={`nav-item ${menuOpen ? "visible" : " "}`}>
 				<li><a href='#Home'>Home</a></li>
 				<li><a href='#About'>About</a></li>
 				<li><a href='#Service'>Services</a></li>

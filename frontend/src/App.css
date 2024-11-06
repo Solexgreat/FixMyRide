@@ -7,3 +7,7 @@ body{
   color: #333;
   background-color: antiquewhite;
 }
+
+.container{
+  padding: 10 13%;
+}

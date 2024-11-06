@@ -1,0 +1,117 @@
+.container {
+  font-size: 16px;
+  padding: 1rem;
+}
+
+.menu-bar{
+  display: none;
+  cursor: pointer;
+}
+
+.menu-bar{
+	display: block;
+	margin-top: 5%;
+}
+
+.nav-bar{
+	/* display: flex; */
+	justify-content: space-between;
+	top: 0;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: rgb(6, 6, 127);
+  margin: 5px 0;
+}
+
+.nav-item{
+	display: none;
+}
+
+.registration-btn{
+	display: none;
+}
+
+.nav-item.visible{
+	display: flex;
+	flex-direction: column;
+	background: #333333;
+	z-index: 1000;
+	padding: 20px 0;
+}
+
+li{
+	list-style: none;
+}
+
+a{
+	padding: 0 10px;
+	color: rgb(6, 6, 127);
+	text-decoration: none;
+}
+
+@media (min-width: 768px) {
+	nav{
+		z-index: 1001;
+	}
+	.nav-bar{
+		display: flex;
+		justify-content: space-between;
+		padding: 0 10%;
+		top: 0;
+	}
+
+	.logo{
+		padding: 0;
+	}
+
+	.nav-item{
+		display: flex;
+		align-items: center;
+	}
+
+	/* .nav-item.visible{
+		display: flex;
+		flex-direction: column;
+		position: absolute;
+		top: 40px;
+		right: 0;
+		width: 100%;
+		background-color: #495E57;
+		align-items: center;
+		transition: all 0.3sec ease-in-out;
+	} */
+
+	li{
+		list-style: none;
+	}
+
+	a{
+		padding: 0 10px;
+		color: rgb(6, 6, 127);
+		text-decoration: none;
+	}
+
+	a h1{
+		color: black;
+	}
+
+	.registration-btn{
+		display: flex;
+		padding-top: 10px;
+	}
+
+	.registration-btn button{
+		padding: 10px;
+		margin: 6px;
+		background-color: rgb(6, 6, 127);
+		color: white;
+		border-radius: 16px;
+	}
+
+	.menu-bar{
+		display: none;
+	}
+}
