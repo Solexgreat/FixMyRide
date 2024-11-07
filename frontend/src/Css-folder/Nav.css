@@ -3,18 +3,16 @@
   padding: 1rem;
 }
 
-.menu-bar{
-  display: none;
-  cursor: pointer;
-}
 
 .menu-bar{
 	display: block;
 	margin-top: 5%;
+	cursor: pointer;
 }
 
 .nav-bar{
-	/* display: flex; */
+	display: flex;
+	padding: 10 13%;
 	justify-content: space-between;
 	top: 0;
 }
@@ -26,7 +24,12 @@
   margin: 5px 0;
 }
 
+
 .nav-item{
+	display: none;
+}
+
+.nav-links{
 	display: none;
 }
 
@@ -34,10 +37,10 @@
 	display: none;
 }
 
-.nav-item.visible{
+.nav-links.visible{
 	display: flex;
 	flex-direction: column;
-	background: #333333;
+	/* background: #333333; */
 	z-index: 1000;
 	padding: 20px 0;
 }
@@ -55,6 +58,7 @@ a{
 @media (min-width: 768px) {
 	nav{
 		z-index: 1001;
+		padding: 10 13%;
 	}
 	.nav-bar{
 		display: flex;
@@ -72,7 +76,7 @@ a{
 		align-items: center;
 	}
 
-	/* .nav-item.visible{
+ 	/* .nav-item.visible{
 		display: flex;
 		flex-direction: column;
 		position: absolute;
