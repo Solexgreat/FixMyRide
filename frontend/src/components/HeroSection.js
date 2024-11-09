@@ -1,4 +1,5 @@
 import React from 'react'
+// import ReactDOM from 'react-dom';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 
@@ -22,7 +23,7 @@ const slides = [
 
 	{
 		id: 3,
-		getImageSrc: () => require("../images/slide 3.jpg"),
+		getImageSrc: () => require("../image/slide 3.jpg"),
 		header: 'No Surprises-Trasparent Pricing',
 		text: 'View pricing upfront and manage payments effortlessly through the app',
 		btn: 'View Service & Pricing'
@@ -32,41 +33,42 @@ const slides = [
 
 function HeroSection() {
 
-
-
 	return (
 		<section>
 			{/* Mobile phone */}
 			<div className="heroSection phones">
-				<h1>Book an Appointment in Minutes </h1>
-				<h1> in Minutes!</h1>
-				<p>Easily schedule appointments with
-					trusted mechanics at your convenience
-				</p>
-				<button>
-					Book an Appointment
-				</button>
+				<Carousel>
+					<img src={ require("../image/slide 1.jpg")} alt="Hero_image" />
+					<h1>Book an Appointment in Minutes </h1>
+					<h1> in Minutes!</h1>
+					<p>Easily schedule appointments with
+						trusted mechanics at your convenience
+					</p>
+					<button>
+						Book an Appointment
+					</button>
+				</Carousel>
 			</div>
 			{/* Lager screen */}
 			<div className='carousel'>
-				{slides.map((slide, index) => 
-				<Carousel>
-					<div>
-						{slide.getImageSrc()}
+				<Carousel className='carousel' showThumbs={false} dynamicHeight={true} width={800} autoPlay infiniteLoop>
+					{slides.map((slide, index) =>
+					<div className='carousel heroSection'>
+						<img src={slide.getImageSrc()} alt="Hero_image"  width='436px' height='300' />
 						<div className='Hero-text'>
 							<h1>{slide.header}</h1>
-							<p>{slide.text}<p>
+							<p>{slide.text}</p>
 							<button>
 								Book an Appointment
 							</button>
 						</div>
-					</div>
+					</div> 
+					)}
 				</Carousel>
-				)}
 			</div>
-
 		</section>
 	)
 }
+
 
 export default HeroSection
