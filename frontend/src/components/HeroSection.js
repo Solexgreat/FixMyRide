@@ -51,10 +51,10 @@ function HeroSection() {
 			</div>
 			{/* Lager screen */}
 			<div className='carousel'>
-				<Carousel className='carousel' showThumbs={false} dynamicHeight={true} width={800} autoPlay infiniteLoop>
+				<Carousel className='carousell'  showThumbs={false}  autoPlay infiniteLoop>
 					{slides.map((slide, index) =>
 					<div className='carousel heroSection'>
-						<img src={slide.getImageSrc()} alt="Hero_image"  width='436px' height='300' />
+						<img src={slide.getImageSrc()} alt="Hero_image" />
 						<div className='Hero-text'>
 							<h1>{slide.header}</h1>
 							<p>{slide.text}</p>
@@ -62,7 +62,7 @@ function HeroSection() {
 								Book an Appointment
 							</button>
 						</div>
-					</div> 
+					</div>
 					)}
 				</Carousel>
 			</div>

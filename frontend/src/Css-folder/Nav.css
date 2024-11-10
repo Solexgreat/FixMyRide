@@ -88,31 +88,38 @@ a{
 		transition: all 0.3sec ease-in-out;
 	} */
 
+	ul{
+		margin-left: 30%;
+	}
+
 	li{
 		list-style: none;
 	}
 
 	a{
-		padding: 0 10px;
-		color: rgb(6, 6, 127);
+		padding: 0 20px;
+		color: #002B5B;
 		text-decoration: none;
+		font-weight: 600;
 	}
 
 	a h1{
-		color: black;
+		color: #333333;
 	}
 
 	.registration-btn{
 		display: flex;
 		padding-top: 10px;
+		margin-right: -10%;
 	}
 
 	.registration-btn button{
-		padding: 10px;
+		padding: 0px 20px;
 		margin: 6px;
-		background-color: rgb(6, 6, 127);
+		background-color: #002B5B;
 		color: white;
 		border-radius: 16px;
+		border: none;
 	}
 
 	.menu-bar{

@@ -20,17 +20,17 @@ function Nav() {
 			</div>
 
 			<ul className="nav-item">
-				<li><a href='#Home'>Home</a></li>
-				<li><a href='#About'>About</a></li>
-				<li><a href='#Service'>Services</a></li>
-				<li><a href='#Contact Us'>Contact Us</a></li>
+				<li><a href='#Home'>HOME</a></li>
+				<li><a href='#About'>ABOUT</a></li>
+				<li><a href='#Service'>SERVICES</a></li>
+				<li><a href='#Contact Us'>CONTACT</a></li>
 			</ul>
 
 			<ul className={`nav-links ${menuOpen ? "visible": " "}`}>
-				<li><a href='#Home'>Home</a></li>
-				<li><a href='#About'>About</a></li>
-				<li><a href='#Service'>Services</a></li>
-				<li><a href='#Contact Us'>Contact</a></li>
+				<li><a href='#Home'>HOME</a></li>
+				<li><a href='#About'>ABOUT</a></li>
+				<li><a href='#Service'>SERVICES</a></li>
+				<li><a href='#Contact Us'>CONTACT</a></li>
 				<li><a href='#Sing in'>Sing in</a></li>
 				<li><a href='#Sing us'>Sing us</a></li>
 			</ul>
