@@ -1,8 +1,11 @@
 import React from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+// import { Swiper, SwiperSlide } from 'swiper/react';
+// import 'swiper/css';
+// import 'swiper/css/navigation';
+// import 'swiper/css/pagination';
 // import 'swiper/swiper-bundle.min.css';
 
 
@@ -40,11 +43,21 @@ function ServiceSection() {
 	return (
 		<section className="popular-service">
 		<h2>Popular Services</h2>
-		<Swiper
+		 {/* <Swiper
 			spaceBetween={20}
-			slidesPerView={3.2} // Adjust for partial fourth card view
-			loop
+			slidesPerView={3}
+			loop={true}
+			navigation
+			pagination={{ clickable: true }}
 			autoplay={{ delay: 3000 }}
+			breakpoints={{
+				768: {
+					slidesPerView: 2,
+				},
+				1024: {
+					slidesPerView: 3,
+				},
+			}}
 			className="popular-service-carousel"
 		>
 			{popularServices.map(service => (
@@ -55,8 +68,25 @@ function ServiceSection() {
 						<p>{service.Description}</p>
 					</div>
 				</SwiperSlide>
-			))}
-		</Swiper>
+			))} */}
+		{/* </Swiper> */}
+		<div>
+			<Slider>
+				{popularServices.map((service) => (
+					<a href='#Service'>
+						<div className='Card'>
+							<div className='image'>
+								<img src= {service.getImageSrc()} alt="" width={200} height={200} / >
+							</div>
+							<div className='card-text'>
+								<h3>{service.Name}</h3>
+								<p>{service.Description}</p>
+							</div>
+						</div>
+					</a>
+				))}
+			</Slider>
+		</div>
 	</section>
 	)
 }

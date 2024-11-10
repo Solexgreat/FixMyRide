@@ -15,7 +15,7 @@ function App() {
       <HeroSection/>
       <ServiceSection/>
     </div>
-  );
+);
 }
 
 export default App;
