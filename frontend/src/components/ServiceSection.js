@@ -21,25 +21,68 @@ const popularServices = [
 		id: 2,
 		Name: "Brake Repair and Replacement",
 		Description: "Inspection, repair, and replacement of brake pads, rotors, and calipers to maintain safe braking.",
-		getImageSrc: () => require("../image/slide 2.jpg")
+		getImageSrc: () => require("../image/slide 2.jpg"),
+		a: 'Brake_Repair',
 	},
 
 	{
 		id: 3,
 		Name: "Battery Replacement",
 		Description: "Checking and replacing car batteries to ensure reliable engine starts and electrical performance",
-		getImageSrc: () => require("../image/slide 1.jpg")
+		getImageSrc: () => require("../image/slide 1.jpg"),
+		a: 'Battery Replacement'
 	},
 
 	{
+		id: 4,
 		Name: "Tire Rotation and Replacement",
 		Description: "Rotating tires to prevent uneven wear, and replacing tires when tread is worn down.",
-		getImageSrc: () => require("../image/slide 3.jpg")
+		getImageSrc: () => require("../image/slide 3.jpg"),
+		a: 'Battery Replacement'
 	}
 ]
 
+const NextArrow = ({ onClick }) => (
+    <div
+        className="slick-arrow slick-next"
+        onClick={onClick}
+        style={{
+            fontSize: '2rem', 
+            color: '#ff5733', // Change color here
+            right: '10px', 
+            zIndex: 1
+        }}
+    >
+        &#10095;
+    </div>
+);
+
+const PrevArrow = ({ onClick }) => (
+    <div
+        className="slick-arrow slick-prev"
+        onClick={onClick}
+        style={{
+            fontSize: '2rem',
+            color: '#ff5733', // Change color here
+            left: '10px',
+            zIndex: 1
+        }}
+    >
+        &#10094;
+    </div>
+);
+
 
 function ServiceSection() {
+
+	var settings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+		nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />
+  };
 	return (
 		<section className="popular-service">
 		<h2>Popular Services</h2>
@@ -70,13 +113,13 @@ function ServiceSection() {
 				</SwiperSlide>
 			))} */}
 		{/* </Swiper> */}
-		<div>
-			<Slider>
+		<div className='slider'>
+			<Slider {...settings}>
 				{popularServices.map((service) => (
-					<a href='#Service'>
+					<a href={`#${ service.a}`}>
 						<div className='Card'>
 							<div className='image'>
-								<img src= {service.getImageSrc()} alt="" width={200} height={200} / >
+								<img src= {service.getImageSrc()} alt="" / >
 							</div>
 							<div className='card-text'>
 								<h3>{service.Name}</h3>

@@ -4,8 +4,8 @@ body{
   width: 100%;
   font-family: 'Roboto', sans-serif;
   line-height: 1.5;
-  color: #F5F5F5;
-  background-color: antiquewhite;
+  color: #333333;
+  background-color: #F5F5F5;
 }
 
 .container{
