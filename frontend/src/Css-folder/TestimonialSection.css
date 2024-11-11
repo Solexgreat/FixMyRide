@@ -1,0 +1,54 @@
+@media (min-width: 768px) {
+	/* Testimonial section container */
+.testimonial-section {
+	text-align: center;
+	padding: 40px 20px;
+	background-color: #f7f7f7;
+}
+
+/* Header with arrows */
+.carousel-header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	font-size: 1.5rem;
+	margin-bottom: 20px;
+}
+
+.arrow {
+	cursor: pointer;
+	font-size: 2rem;
+	color: #333;
+}
+
+.testimonial-slide {
+	display: flex;
+	justify-content: center;
+}
+
+/* Review box with inner shadow */
+.review-box {
+	position: relative;
+	max-width: 600px;
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.1), 0px 4px 8px rgba(0, 0, 0, 0.2);
+	text-align: left;
+}
+
+.review-box p {
+	font-size: 1.1rem;
+	color: #333;
+	line-height: 1.6;
+	margin-bottom: 10px;
+}
+
+.review-box span {
+	display: block;
+	font-weight: bold;
+	color: #555;
+	margin-top: 10px;
+}
+}
