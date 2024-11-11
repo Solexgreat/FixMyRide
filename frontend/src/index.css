@@ -13,5 +13,13 @@ code {
 }
 
 .slick-slide > div {
-  margin: 10px;
+  margin: 20px;
+}
+
+.swiper-slide > div{
+  margin: 20px;
+}
+
+.swiper-wrapper{
+  padding: 20px, 0;
 }

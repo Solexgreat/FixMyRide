@@ -2,11 +2,11 @@ import React from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-// import 'swiper/swiper-bundle.min.css';
+// import { Swiper, SwiperSlide } from 'swiper/react';
+// import 'swiper/css';
+// import 'swiper/css/navigation';
+// import 'swiper/css/pagination';
+// // import 'swiper/swiper-bundle.min.css';
 
 
 const popularServices = [
@@ -48,7 +48,7 @@ const NextArrow = ({ onClick }) => (
         className="slick-arrow slick-next"
         onClick={onClick}
         style={{
-            fontSize: '2rem',
+            fontSize: '3rem',
             color: '#002B5B',
             right: '10px',
             zIndex: 1
@@ -81,7 +81,7 @@ function ServiceSection() {
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
-		arrows: false,
+		DefaultArrows: true,
 		nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
 		SwipeToSlide: true,
@@ -91,7 +91,7 @@ function ServiceSection() {
 	return (
 		<section className="popular-service">
 		<h2>Popular Services</h2>
-		 <Swiper
+		 {/* <Swiper
 			spaceBetween={20}
 			slidesPerView={3}
 			loop={true}
@@ -106,13 +106,12 @@ function ServiceSection() {
 			// 		slidesPerView: 3,
 			// 	},
 			// }}
-			className="popular-service"
 		>
 			{popularServices.map(service => (
-				<SwiperSlide key={service.id}>
-					<div className="Card" style={{ width: 454, height: 552 }}>
+				<SwiperSlide key={service.id} className='slider'>
+					<div className="Card">
 						<div className='image'>
-							<img src={service.getImageSrc()} alt={service.title} className="service-image" />
+							<img src={service.getImageSrc()} alt={service.title} />
 						</div>
 						<div className='card-text'>
 							<h3>{service.Name}</h3>
@@ -121,7 +120,7 @@ function ServiceSection() {
 					</div>
 				</SwiperSlide>
 			))}
-		</Swiper>
+		</Swiper> */}
 		<div className='slider'>
 			<Slider {...settings}>
 				{popularServices.map((service) => (

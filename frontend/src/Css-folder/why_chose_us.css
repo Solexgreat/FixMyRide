@@ -1,0 +1,6 @@
+.polygon{
+	width: 200px;
+	height: 200px;
+	background-color; rgba(0, 43, 91, 0.3);
+	clip-path: polygon(50% 0%, 0% 100%, 100% 100%)
+}

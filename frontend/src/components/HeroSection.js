@@ -34,7 +34,7 @@ const slides = [
 function HeroSection() {
 
 	return (
-		<section>
+		<section className='HeroSection'>
 			{/* Mobile phone */}
 			<div className="heroSection phones">
 				<Carousel>
@@ -51,10 +51,10 @@ function HeroSection() {
 			</div>
 			{/* Lager screen */}
 			<div className='carousel'>
-				<Carousel className='carousell'  showThumbs={false}  autoPlay infiniteLoop>
+				<Carousel className='carousel-inner' width="100%" showThumbs={false}  autoPlay infiniteLoop>
 					{slides.map((slide, index) =>
-					<div className='carousel heroSection'>
-						<img src={slide.getImageSrc()} alt="Hero_image" />
+					<div className='carousel slide'>
+						<img src={slide.getImageSrc()} alt="Hero_image"  width='1500px'/>
 						<div className='Hero-text'>
 							<h1>{slide.header}</h1>
 							<p>{slide.text}</p>
