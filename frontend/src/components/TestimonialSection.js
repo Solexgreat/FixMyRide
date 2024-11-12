@@ -1,11 +1,16 @@
 import React from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/swiper-bundle.css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const reviews= [
 	{
 		id: 1,
 		Name: "John D",
-		review: "I've been bringing my car here for over a year, and the service has been fantastic every single time. The mechanics are knowledgeable, honest, and always go the extra mile to explain what’s going on with my car. My vehicle has never run smoother! Highly recommend them to anyone looking for reliable and affordable repairs.
-
+		review: "I've been bringing my car here for over a year, and the service has been fantastic every single time. The mechanics are knowledgeable, honest, and always go the extra mile to explain what’s going on with my car. My vehicle has never run smoother! Highly recommend them to anyone looking for reliable and affordable repairs"
 	},
 	{
 		id: 2,
@@ -23,14 +28,19 @@ function TestimonialSection() {
 	return (
 			<section className="testimonial-section">
 					<div className="carousel-header">
-							<span className="arrow left-arrow">&lt;</span>
+							<span className="arrow left-arrow">
+    						<i className="fas fa-chevron-left"></i>
+							</span>
 							<h2>Testimonials</h2>
-							<span className="arrow right-arrow">&gt;</span>
+							<span className="arrow right-arrow">
+									<i className="fas fa-chevron-right"></i>
+							</span>
 					</div>
 					<Swiper
-							modules={[Navigation]}
+							// navigation={true}
+							modules={[Navigation, Autoplay]}
 							spaceBetween={30}
-							slidesPerView={1}
+							slidesPerView={2}
 							navigation={{
 									nextEl: '.right-arrow',
 									prevEl: '.left-arrow'

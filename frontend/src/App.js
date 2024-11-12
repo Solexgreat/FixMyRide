@@ -4,9 +4,11 @@ import './Css-folder/Nav.css';
 import './Css-folder/why_chose_us.css';
 import './Css-folder/HeroSection.css';
 import './Css-folder/popularService.css';
+import './Css-folder/TestimonialSection.css';
 import Nav from './components/Nav';
 import WhyChooseUs from './components/WhyChooseUs';
 import HeroSection from './components/HeroSection';
+import TestimonialSection from './components/TestimonialSection';
 import ServiceSection from './components/ServiceSection';
 
 
@@ -17,6 +19,7 @@ function App() {
       <HeroSection/>
       <ServiceSection/>
       <WhyChooseUs/>
+      <TestimonialSection/>
     </div>
 );
 }

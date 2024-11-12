@@ -1,6 +1,8 @@
 @media (min-width: 768px) {
 	/* Testimonial section container */
 .testimonial-section {
+	width: 75%;
+	margin: auto;
 	text-align: center;
 	padding: 40px 20px;
 	background-color: #f7f7f7;
@@ -18,13 +20,19 @@
 
 .arrow {
 	cursor: pointer;
-	font-size: 2rem;
+	font-size: 3rem;
 	color: #333;
+	font-weight: 100;
 }
 
 .testimonial-slide {
 	display: flex;
 	justify-content: center;
+}
+
+.carousel-header h2 {
+	margin-left: 35%;
+	margin-right: 35%;
 }
 
 /* Review box with inner shadow */
@@ -34,7 +42,7 @@
 	padding: 20px;
 	background-color: #fff;
 	border-radius: 10px;
-	box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.1), 0px 4px 8px rgba(0, 0, 0, 0.2);
+	box-shadow: inset 0px 8px 8px rgba(0, 0, 0, 0.1);
 	text-align: left;
 }
 
