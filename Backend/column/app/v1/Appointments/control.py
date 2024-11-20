@@ -11,6 +11,19 @@ from ..Revenues.model import Revenue
 from ..Services.model import Service
 
 
+def generate_time_slots(start, end):
+    slots = []
+    current_time = start
+    while current_time < end:
+        hours = current_time // 60
+        minutes = current_time % 60
+        slots.append(f"{hours:02}:{minutes:02}")
+        current_time += 30  # Increment by 30 minutes
+    return slots
+
+
+
+
 class AppointmentControl(DB):
     """Appointment control class that inherits from DB"""
 

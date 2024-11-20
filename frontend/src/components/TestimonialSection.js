@@ -1,6 +1,7 @@
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'swiper/css';
 import 'swiper/swiper-bundle.css';
 import 'swiper/css/navigation';
@@ -36,30 +37,60 @@ function TestimonialSection() {
 									<i className="fas fa-chevron-right"></i>
 							</span>
 					</div>
-					<Swiper
-							// navigation={true}
-							modules={[Navigation, Autoplay]}
-							spaceBetween={30}
-							slidesPerView={2}
-							navigation={{
-									nextEl: '.right-arrow',
-									prevEl: '.left-arrow'
-							}}
-							loop={true}
-							autoplay={{
-									delay: 2500,
-									disableOnInteraction: false,
-							}}
-					>
-							{reviews.map((review) => (
-									<SwiperSlide key={review.id} className="testimonial-slide">
-											<div className="review-box">
-													<p>{review.review}</p>
-													<span>- {review.Name}</span>
-											</div>
-									</SwiperSlide>
-							))}
-					</Swiper>
+					<div className='mobile-swiper'>
+						<Swiper
+								// navigation={true}
+								modules={[Navigation, Autoplay]}
+								spaceBetween={30}
+								slidesPerView={1}
+								// width={350}
+								navigation={{
+										nextEl: '.right-arrow',
+										prevEl: '.left-arrow'
+								}}
+								loop={true}
+								autoplay={{
+										delay: 2500,
+										disableOnInteraction: false,
+								}}
+						>
+								{reviews.map((review) => (
+										<SwiperSlide key={review.id} className="testimonial-slide">
+												<div className="review-box">
+														<p>{review.review}</p>
+														<span>- {review.Name}</span>
+												</div>
+										</SwiperSlide>
+								))}
+						</Swiper>
+					</div>
+					<div className='desktop-swiper'>
+						<Swiper
+								// navigation={true}
+								modules={[Navigation, Autoplay]}
+								spaceBetween={30}
+								slidesPerView={2}
+								// width={400}
+								navigation={{
+										nextEl: '.right-arrow',
+										prevEl: '.left-arrow'
+								}}
+								loop={true}
+								autoplay={{
+										delay: 2500,
+										disableOnInteraction: false,
+								}}
+						>
+								{reviews.map((review) => (
+										<SwiperSlide key={review.id} className="testimonial-slide">
+												<div className="review-box">
+														<p>{review.review}</p>
+														<span>- {review.Name}</span>
+												</div>
+										</SwiperSlide>
+								))}
+						</Swiper>
+					</div>
 			</section>
 	);
 }

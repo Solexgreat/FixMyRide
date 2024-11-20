@@ -1,31 +1,40 @@
+.title{
+	display: flex;
+	width: 100%;
+	align-items: center;
+	margin:3rem 0;
+}
+
+.title h2{
+	margin:3rem auto;
+}
+
+
 @media (min-width: 768px) {
-	.polygon{
-		width: 200px;
-		height: 200px;
-		background-color: rgba(0, 43, 91, 0.3);
-		clip-path: polygon(50% 0%, 100% 15%, 100% 85%, 50% 70%, 0% 85%, 0% 15%)
-	}
 
 	.why-choose-us {
-		padding: 40px;
-		background-color: #f9f9f9;
+		padding: 2% 40px;
+		height: 800px;
+		margin-bottom: -150px;
 		text-align: center;
+		background-color: rgba(0, 43, 91, 0.3); /* Dark blue, semi-transparent */
+		clip-path: polygon(50% 0%, 100% 15%, 100% 85%, 50% 70%, 0% 85%, 0% 15%);
+		position: relative;
+	}
+
+	.why-choose-us h2{
+		margin-bottom: 7%;
 	}
 
 	.cards-container {
 		display: flex;
 		gap: 20px;
 		width: 100%;
-		min-height: 500px; /* Set minimum height or adjust as needed */
+		min-height: 600px; /* Set minimum height or adjust as needed */
 		justify-content: center;
-		margin-top: 20px;
-		background-color: rgba(0, 43, 91, 0.3); /* Dark blue, semi-transparent */
-		clip-path: polygon(50% 0%, 100% 15%, 100% 85%, 50% 70%, 0% 85%, 0% 15%);
-		padding: 8% 20px; /* Add padding for spacing around cards */
-		position: relative;
 	}
 
-	.card {
+	.why-card {
 		background-color: white;
 		border-radius: 8px;
 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -35,8 +44,18 @@
 		text-align: center;
 		transition: transform 0.3s;
 	}
-	.card:hover {
+	.why-card:hover {
 		transform: translateY(-10px);
+	}
+
+	.title{
+		display: flex;
+		width: 100%;
+		align-items: center;
+	}
+
+	.title h2{
+		margin: auto;
 	}
 
 	.icon {
@@ -46,14 +65,37 @@
 	}
 
 	h3 {
-		font-size: 20px;
+		font-size: 1.5rem;
 		margin: 10px 0;
 		color: #333;
 	}
 
 	p {
-		font-size: 16px;
+		font-size: 0.7rem;
 		color: #666;
 	}
+}
+
+@media (max-width: 768px) {
+
+	.why-card{
+		text-align: center;
+		padding: 1rem 1.2rem;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+
+	.why-card h3{
+		font-size: 1.1rem;
+	}
+
+	.icon {
+		font-size: 40px;
+		color: #000000; /* Adjust icon color as needed */
+		margin-bottom: 15px;
+	}
+}
+
+@media (max-width: 479px) {
+	
 }
 

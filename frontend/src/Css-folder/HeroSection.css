@@ -1,48 +1,106 @@
-.container {
-  font-size: 16px;
-  padding: 1rem;
+
+.HeroSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  /* background-color: #002B5B; */
+
+}
+
+.Hero-text button {
+  padding: 0.5rem 0.9rem;
+  color: #FFFFFF;
+  background-color: #002B5B;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+/* media query for screen < 479 */
+@media (max-width: 479px) {
+  .heroSection-carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 45vh;
+    position: relative;
+  }
+
+  .smallScreen{
+   display: none;
+  }
+
+  .carousel-inner{
+    position: relative;
+    width: 100%;
+  }
+
+  .heroSection-carousel img{
+    height: 45vh;
+  }
+
+  .Hero-text {
+    display: block;
+    text-align: left;
+    /* align-items: flex-end; */
+    width: 100%;
+    height: 100%;
+    top: 0;
+    position: absolute;
+    background: rgba(217, 217, 217, 0.48);
+    padding: 1rem 1.7rem;
+  }
+
+  .Hero-text h1 {
+    font-size: 1.4rem;
+    color: #002B5B;
+  }
+
+  .Hero-text p {
+    font-size: 1.1rem;
+  }
+
+  .Hero-text button {
+    font-size: 0.8rem;
+  }
+
 }
 
 
 @media (min-width: 768px) {
+  .HeroSection{
+    /* height: 80vh; */
+    padding-top: 1rem;
+  }
 
-  .heroSection.phones{
+  .smallScreen{
     display: none;
   }
 
-  .HeroSection{
-    width: 100vw;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    padding: 0;
-    background-color: rgba(0, 43, 91, 0.3);
-    display: flex;
-
-  }
-
-  .carousel {
+  .heroSectionp-carousel {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  width: 100vw;
   height: 80vh;
   overflow: hidden;
 }
 
-.carousel.slide img {
-  width: 100%;
-  height: 80vh;
-  object-fit: cover;
-}
+/* .carousel-inner {
+  padding-top: 13rem;
+} */
 
 .carousel-slide {
-  position: relative;
   width: 100%;
 }
-
-
 
 .Hero-text {
   position: absolute;
@@ -52,30 +110,95 @@
   color: #002B5B;
   text-align: left;
   background: rgba(217, 217, 217, 0.48); /* Semi-transparent background for readability */
-  padding: 40px 20px;
-  max-width: 30%;
+  padding: 2rem 1.3rem;
+  max-width: 40%;
   border-radius: 5px;
 }
 
 .Hero-text h1 {
-  font-size: 30px;
+  font-size: 2rem;
   margin-bottom: 10px;
 }
 
 .Hero-text p {
   font-size: 16px;
   margin-bottom: 15px;
+  color: black;
 }
 
 .Hero-text button {
-    padding: 10px 15px;
-    color: #FFFFFF;
-    background-color: #002B5B;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 8px;
-    margin-bottom: 15px;
+  padding: 10px 15px;
+  color: #FFFFFF;
+  background-color: #002B5B;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 8px;
+  margin-bottom: 15px;
 }
+
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+  .HeroSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 1rem;
+    background-color:#FFFFFF;
+  }
+
+  .smallScreen{
+   display: none;
+  }
+
+  .heroSection.carouse{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+
+  .Hero-text {
+    display: block;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    position: absolute;
+    text-align: center;
+    background: rgba(217, 217, 217, 0.48);
+    padding: 2rem 1rem;
+  }
+
+  .Hero-text button {
+    padding: 0.7rem 1.1rem;
+    font-size: 16px;
+  }
+
+  .carouse-inner{
+    width: 100%;
+    position: relative;
+    padding-top: 6rem;
+  }
+
+  .carousel-slide{
+    position: relative;
+    width: 100%;
+  }
+
+  .Hero-text h1{
+    margin: 0.3rem 0;
+    font-size: 3rem;
+    color: #002B5B;
+  }
+
+  .Hero-text p{
+    font-size: 2rem;
+    font-weight: 500;
+  }
 
 }

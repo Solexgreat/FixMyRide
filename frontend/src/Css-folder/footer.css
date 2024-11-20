@@ -1,0 +1,127 @@
+.footer-sector {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: space-evenly;
+	gap: 5rem;
+	background-color: #031c38;
+	padding: 40px 20px;
+	color: white;
+}
+
+.FixMyRide {
+	text-align: start;
+}
+
+.FixMyRide h2 {
+	font-size: 36px;
+	color: white;
+	position: relative;
+	margin-bottom: 4px;
+}
+
+.FixMyRide p {
+	width: 400px;
+	color: white;
+	font-size: 14px;
+	text-align: start;
+	line-height: 1.6;
+}
+
+/* Reflection effect */
+.FixMyRide h2::after {
+	content: 'FixMyRide'; /* Ensure the reflected text matches the title */
+	color: white;
+	position: absolute;
+	top: -25%; /* Position reflection directly below */
+	left: 0;
+	right: 0;
+	opacity: 0.3;
+	font-style: italic;
+	transform: scaleY(-0.5); /* Flip text vertically */
+	transform-origin: bottom;
+	/* background: linear-gradient(to top, rgba(255, 255, 255, 0.3), transparent); */
+}
+
+
+.footer-nav {
+	display: flex;
+	gap: 5rem;
+}
+
+.footer-nav .Sitemap, .footer-nav .Support {
+	width: 100px;
+	text-align: left;
+}
+
+.footer-nav h3 {
+		color: white;
+		font-size: 18px;
+		margin-bottom: 15px;
+		text-align: center;
+}
+
+.footer-nav ul {
+	padding: 0;
+
+}
+
+.footer-nav ul li {
+	list-style: none;
+	margin-bottom: 4px;
+}
+
+.footer-nav ul li a {
+		text-decoration: none;
+		font-weight: 400;
+		color: white;
+		transition: color 0.3s;
+}
+
+/* Hover effect */
+.footer-nav ul li a:hover {
+		color: #002B5B; /* Optional accent color on hover */
+}
+
+@media (max-width: 768px) {
+	.footer-sector {
+		display: flex;
+		flex-wrap: wrap;
+		/* justify-content: center; */
+		gap: 3rem;
+		background-color: #031c38;
+		padding: 10px 1%;
+		color: white;
+	}
+
+	.FixMyRide h2{
+		font-size: 1.3rem;
+	}
+
+	.FixMyRide p {
+		width: 200px;
+		color: white;
+		font-size: 12px;
+		text-align: start;
+		line-height: 1.6;
+	}
+
+	.footer-nav {
+		display: flex;
+		gap: 3rem;
+	}
+
+
+	.footer-nav h3 {
+		font-size: 15px;
+	}
+
+	.footer-nav ul li a{
+		font-size: 0.8rem;
+		text-align: center;
+	}
+
+	.footer-nav ul li{
+		margin-left: 0.4rem;
+	}
+}

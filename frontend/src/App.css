@@ -1,13 +1,18 @@
-body{
-  margin: 0 auto;
+html, body {
+  margin: 0;
   padding: 0;
+  height: 100%;
   width: 100%;
   font-family: 'Roboto', sans-serif;
+  font-size: 16px;
   line-height: 1.5;
   color: #333333;
   background-color: #F5F5F5;
+  box-sizing: border-box;
 }
 
-.container{
-  /* padding: 10 13%; */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }

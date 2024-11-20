@@ -91,36 +91,19 @@ function ServiceSection() {
 	return (
 		<section className="popular-service">
 		<h2>Popular Services</h2>
-		 {/* <Swiper
-			spaceBetween={20}
-			slidesPerView={3}
-			loop={true}
-			navigation
-			pagination={{ clickable: true }}
-			// autoplay={{ delay: 3000 }}
-			// breakpoints={{
-			// 	768: {
-			// 		slidesPerView: 2,
-			// 	},
-			// 	1024: {
-			// 		slidesPerView: 3,
-			// 	},
-			// }}
-		>
+		 <div className='phone-slider'>
 			{popularServices.map(service => (
-				<SwiperSlide key={service.id} className='slider'>
-					<div className="Card">
-						<div className='image'>
-							<img src={service.getImageSrc()} alt={service.title} />
-						</div>
-						<div className='card-text'>
-							<h3>{service.Name}</h3>
-							<p>{service.Description}</p>
-						</div>
+				<div className="Card">
+					<div className='image'>
+						<img src={service.getImageSrc()} alt={service.title} />
 					</div>
-				</SwiperSlide>
+					<div className='card-text'>
+						<h3>{service.Name}</h3>
+						<p>{service.Description}</p>
+					</div>
+				</div>
 			))}
-		</Swiper> */}
+		</div>
 		<div className='slider'>
 			<Slider {...settings}>
 				{popularServices.map((service) => (

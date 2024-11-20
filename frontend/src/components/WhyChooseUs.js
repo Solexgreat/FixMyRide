@@ -26,10 +26,12 @@ const why_chose_us = [
 function WhyChooseUs() {
 	return (
 		<section className="why-choose-us">
-			<h2>Why Choose Us</h2>
+			<div className='title'>
+				<h2>Why Choose Us</h2>
+			</div>
 			<div className="cards-container">
 				{why_chose_us.map((item) => (
-					<div key={item.id} className="card">
+					<div key={item.id} className="why-card">
 						<Icon icon={item.icon} className="icon" />
 						<h3>{item.title}</h3>
 						<p>{item.description}</p>

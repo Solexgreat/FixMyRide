@@ -10,6 +10,7 @@ import WhyChooseUs from './components/WhyChooseUs';
 import HeroSection from './components/HeroSection';
 import TestimonialSection from './components/TestimonialSection';
 import ServiceSection from './components/ServiceSection';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <ServiceSection/>
       <WhyChooseUs/>
       <TestimonialSection/>
+      <Footer/>
     </div>
 );
 }
