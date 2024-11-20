@@ -155,3 +155,35 @@ class AppointmentControl(DB):
         except Exception as e:
             self._session.rollback()
             raise Exception(f'An error occured:{e} ')
+
+    def generate_time_slots(self, start: int, end: int):
+
+        slots = []
+        current_time = start
+        while current_time < end:
+            hours = current_time // 60
+            minutes = current_time % 60
+            slots.append(f"{hours:02}:{minutes:02}")
+            current_time += 30  # Increment by 30 minutes
+        return slots
+
+    def available_time(self, date: datetime):
+
+        all_slots = self.generate_time_slots(540, 1020)
+
+        start_of_day = datetime.combine(date, datetime.min.time())
+        end_of_day = datetime.combine(date, datetime.max.time())
+
+        booked_appointments =(
+            self._session.query(Appointment.date_time)
+            .filter(
+                Appointment.date_time >= start_of_day,
+                Appointment.date_time <= end_of_day,
+            )
+            )
+
+        booked_slots = {
+            appointment.date_time.strftime("%H:%M") for appointment in booked_appointments
+        }
+
+        available_slots = [slot for slot in all_slots if slot not in booked_slots]
