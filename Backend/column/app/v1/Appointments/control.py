@@ -171,19 +171,25 @@ class AppointmentControl(DB):
 
         all_slots = self.generate_time_slots(540, 1020)
 
-        start_of_day = datetime.combine(date, datetime.min.time())
-        end_of_day = datetime.combine(date, datetime.max.time())
+        try:
 
-        booked_appointments =(
-            self._session.query(Appointment.date_time)
-            .filter(
-                Appointment.date_time >= start_of_day,
-                Appointment.date_time <= end_of_day,
-            )
-            )
+            start_of_day = datetime.combine(date, datetime.min.time())
+            end_of_day = datetime.combine(date, datetime.max.time())
 
-        booked_slots = {
-            appointment.date_time.strftime("%H:%M") for appointment in booked_appointments
-        }
+            booked_appointments =(
+                self._session.query(Appointment.date_time)
+                .filter(
+                    Appointment.date_time >= start_of_day,
+                    Appointment.date_time <= end_of_day,
+                )
+                )
 
-        available_slots = [slot for slot in all_slots if slot not in booked_slots]
+            booked_slots = {
+                appointment.date_time.strftime("%H:%M") for appointment in booked_appointments
+            }
+
+            available_slots = [slot for slot in all_slots if slot not in booked_slots]
+
+            return available_slots
+        except Exception as e:
+            return (e)
