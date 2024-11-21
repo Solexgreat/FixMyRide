@@ -152,7 +152,7 @@ def available_slots():
         GEt available slots
     """
 
-    data= request.get_json()
+    data= request.args
     date = data.get('date')
     try:
         available_slots = db.available_time(date)
@@ -173,7 +173,7 @@ def available_mechanics():
     date = data.get('date')
     time = data.get('time')
     try:
-        available_mechanics = db.availablea_mechanice(date, time)
+        available_mechanics = db.available_mechanice(date, time)
         if available_slots :
             return jsonify(available_mechanics), 201
 
