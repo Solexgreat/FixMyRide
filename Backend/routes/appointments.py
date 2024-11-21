@@ -161,3 +161,20 @@ def available_slots():
 
     except Exception as e:
         return jsonify({'msg': str(e)}), 500
+
+@appointment_bp.route('/available_mechanics', methods=['GET'], strict_slashes=False)
+@authenticate
+def available_mechanics():
+    """
+        GEt available mechanics
+    """
+
+    data= request.get_json()
+    date = data.get('date')
+    try:
+        available_slots = db.available_time(date)
+        if available_slots :
+            return jsonify (available_slots), 201
+
+    except Exception as e:
+        return jsonify({'msg': str(e)}), 500   

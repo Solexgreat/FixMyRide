@@ -1,6 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function Appointments() {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+
+
+    useEffect(() => {
+        fetch('http://localhost:3000//available-times')
+            .then(response => response.json())
+            .then(data => setTimeSlots(data))
+            .catch(error => console.error('Error fetching time slots:', error));
+    }, []);
 
   return (
     <section>

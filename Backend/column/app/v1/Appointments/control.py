@@ -11,17 +11,6 @@ from ..Revenues.model import Revenue
 from ..Services.model import Service
 
 
-def generate_time_slots(start, end):
-    slots = []
-    current_time = start
-    while current_time < end:
-        hours = current_time // 60
-        minutes = current_time % 60
-        slots.append(f"{hours:02}:{minutes:02}")
-        current_time += 30  # Increment by 30 minutes
-    return slots
-
-
 
 
 class AppointmentControl(DB):
@@ -193,3 +182,36 @@ class AppointmentControl(DB):
             return available_slots
         except Exception as e:
             return (e)
+
+    def availablea_mechanic(self, date: datetime, time: datetime):
+        """
+        """
+        try:
+            if time != '09:00' or time != '09:30':
+                min_time = time - '01:00'
+            #combine the date and timeto datetime object
+            booking_datetime = datetime.combine(date, datetime.strptime(time, "%H:%M").time())
+
+            #Query all distinct mechanics id
+            all_mechanics = self._session.query(Appointment.mechanic_id).distinct().all()
+            all_mechanics = [mechanic[0] for mechanic in all_mechanics]
+            if not all_mechanics:
+                raise NoResultFound('No mechanics found')
+
+            #Query booked mechanics for the given time
+            booked_mechanics = (self._session.query(
+                Appointment.mechanics_id)
+                .filter(Appointment.date_time==booking_datetime)
+                .all()
+            )
+
+            booked_mechanics = [mechanics[0] for mechanics in booked_mechanics]
+
+            #filter booked mechanics
+            available_mechanics = [m for m in all_mechanics if m not in booked_mechanics]
+            if not all_mechanics:
+                raise NoResultFound('No mechanics found')
+
+            return available_mechanics 
+        except Exception as e:
+            return(e)
