@@ -9,6 +9,10 @@ from datetime import datetime, timedelta
 from .....db import DB
 from ..Revenues.model import Revenue
 from ..Services.model import Service
+from ..users.control import UserControl
+
+user_db = UserControl()
+
 
 
 
@@ -234,6 +238,19 @@ class AppointmentControl(DB):
             available_mechanics = [m for m in all_mechanics if m not in booked_mechanics]
             if not available_mechanics:
                 raise NoResultFound("No available mechanics at this time")
+
+            mechanic_names = []
+            for mechanic_id in available_mechanics:
+                try:
+                    user_data = user_db.get_user_by_id(mechanic_id)  # Assuming this returns a dictionary
+                    mechanic_names.append(user_data['name'])
+                except NoResultFound:
+                    # Skip if mechanic ID is not found
+                    continue
+                except Exception as e:
+                    raise Exception(f"Error retrieving mechanic details: {str(e)}")
+
+            return mechanic_names
 
             return available_mechanics
         except Exception as e:

@@ -75,6 +75,40 @@ class UserControl(DB):
             return e
         return user_id
 
+    def get_user_by_id(self, user_id: int) -> dict:
+
+        """
+            Retrieve a user by their ID and return their details.
+            Args:
+                user_id (int): The ID of the user to retrieve.
+
+            Returns:
+                dict: A dictionary containing user details (name, username, email).
+
+            Raises:
+                NoResultFound: If no user with the given ID exists.
+                Exception: For any other unexpected errors.
+        """
+        try:
+            # Fetch user by ID
+            user = self._session.query(User).filter_by(user_id=user_id).first()
+            if not user:
+                raise NoResultFound(f"User with ID {user_id} not found.")
+
+            # Construct response
+            user_data = {
+                'username': user.user_name,
+                'email': user.email
+            }
+            return user_data
+
+        except NoResultFound as e:
+            # Raise specific error if user not found
+            raise e
+        except Exception as e:
+            # Log or handle generic errors
+            raise Exception(f"An unexpected error occurred: {str(e)}")
+
     def update_user(self, **kwargs: dict) -> None:
         """Update a user's attributes"""
 

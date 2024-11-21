@@ -1,19 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 function Appointments() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [date, setDate] = useState("");
+    const [time, setTime] = useState("");
     const [availableMechanics, setAvailableMechanics] = useState([]);
+    const [availableSlots, setAvailableSlots] = useState([]);
     const [error, setError] = useState(null);
 
+    useEffect(() => {
+        if (date){
+            fetchAvailableTime()
+        }
+    }, [date])
 
     useEffect(() => {
-        fetch('http://localhost:3000//available-times')
-            .then(response => response.json())
-            .then(data => setTimeSlots(data))
-            .catch(error => console.error('Error fetching time slots:', error));
-    }, []);
+        if (date && time){
+            fetchAvailableMechanics()
+        }
+    }, [time])
 
     const fetchAvailableTime = async () => {
         try{
@@ -55,20 +62,34 @@ function Appointments() {
         }
       };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    }
+
 
   return (
     <section>
-        <form>
+        <form onSubmit={handleSubmit}>
             <fieldset>
                 <div className={'customerDetails'}>
                     <label htmlFor='Name' >Name</label>
-                    <input id='Name' type='text' required />
+                    <input id='Name'
+                    type='text'
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}  required />
 
                     <label htmlFor='email' >Email</label>
-                    <input id='email' type='text' required />
+                    <input id='email'
+                    type='text'
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required />
 
                     <label htmlFor='phoneNumber' >Phone</label>
-                    <input id='email' type='text' required />
+                    <input id='email'
+                    type='text'
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    required />
                 </div>
 
                 <div className='category-services'>
@@ -88,14 +109,7 @@ function Appointments() {
                 </div>
 
                 <div className='time-date'>
-                    <label htmlFor='time'>Appointment time</label>
-                    <select id='time'>
-                        <option>
-                            {}
-                        </option>
-                    </select>
-
-                    <label htmlFor='date'>
+                <label htmlFor='date'>
                         Select date:
                         <input
                         id='date'
@@ -104,21 +118,31 @@ function Appointments() {
                          />
                     </label>
 
+                    <label htmlFor='time'>select Time</label>
+                    <select id='time'
+                    onChange={(e) => setTimeout(e.target.value)}
+                    required
+                    >
+                        <option value="">
+                            -- Select-Time --
+                        </option>
+                            {availableSlots.map((slot, index) =>(
+                                <option key={index} value={slot}>
+                                    {slot}
+                                </option>
+                            ))}
+                    </select>
                 </div>
 
                 <div className='available-mechanics'>
                     <label htmlFor='select-mechanics'></label>
-                    <select id='select-mechanics' type=''>
-                            {availableMechanics.length > 0 ? (
-                                {
-                                    availableMechanics.map((mechanics) => (
-                                        <option>
-                                        {mechanics.name}
-                                        </option>
-                                    ))
-                                }
-                            )
-                            }
+                    <select id='select-mechanics' required>
+                        <option value="">-- Select mechanics --</option>
+                            {availableMechanics.map((mechanics) => (
+                                <option key= {mechanics.user_id} value={mechanics.user_name}>
+                                    {mechanics.user_name}
+                                </option>
+                            ))}
                     </select>
                 </div>
 
