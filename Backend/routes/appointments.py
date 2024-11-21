@@ -169,12 +169,13 @@ def available_mechanics():
         GEt available mechanics
     """
 
-    data= request.get_json()
+    data= request.args
     date = data.get('date')
+    time = data.get('time')
     try:
-        available_slots = db.available_time(date)
+        available_mechanics = db.availablea_mechanice(date, time)
         if available_slots :
-            return jsonify (available_slots), 201
+            return jsonify(available_mechanics), 201
 
     except Exception as e:
-        return jsonify({'msg': str(e)}), 500   
+        return jsonify({'msg': str(e)}), 500

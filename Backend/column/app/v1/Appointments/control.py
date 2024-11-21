@@ -156,12 +156,12 @@ class AppointmentControl(DB):
             current_time += 30  # Increment by 30 minutes
         return slots
 
-    def available_time(self, date: datetime):
+    def available_time(self, date_str: str):
 
         all_slots = self.generate_time_slots(540, 1020)
 
         try:
-
+            date = datetime.strptime(date_str, "%a, %d %b %Y")
             start_of_day = datetime.combine(date, datetime.min.time())
             end_of_day = datetime.combine(date, datetime.max.time())
 
@@ -174,7 +174,7 @@ class AppointmentControl(DB):
                 )
 
             booked_slots = {
-                appointment.date_time.strftime("%H:%M") for appointment in booked_appointments
+                appointment.date_time.strptime("%H:%M") for appointment in booked_appointments
             }
 
             available_slots = [slot for slot in all_slots if slot not in booked_slots]
@@ -183,14 +183,27 @@ class AppointmentControl(DB):
         except Exception as e:
             return (e)
 
-    def availablea_mechanic(self, date: datetime, time: datetime):
+    def available_mechanic(self, date_str: str, time: str):
         """
+            Finds mechanics who are available at a specific date and time,
+            ignoring mechanics with appointments within an hour before the requested time,
+            except for appointments at 09:00 or 09:30.
+
+            Args:
+                date: The date (datetime.date) for the booking.
+                time: The time (HH:MM) for the booking.
+
+            Returns:
+                A list of available mechanic IDs.
         """
         try:
-            if time != '09:00' or time != '09:30':
-                min_time = time - '01:00'
+
             #combine the date and timeto datetime object
+            date = datetime.strptime(date_str, "%a, %d %b %Y")
             booking_datetime = datetime.combine(date, datetime.strptime(time, "%H:%M").time())
+
+             # Check for appointments one hour before the requested time
+            one_hour_before = booking_datetime - timedelta(hours=1)
 
             #Query all distinct mechanics id
             all_mechanics = self._session.query(Appointment.mechanic_id).distinct().all()
@@ -199,9 +212,19 @@ class AppointmentControl(DB):
                 raise NoResultFound('No mechanics found')
 
             #Query booked mechanics for the given time
-            booked_mechanics = (self._session.query(
-                Appointment.mechanics_id)
-                .filter(Appointment.date_time==booking_datetime)
+           # Query booked mechanics at the requested time
+            booked_mechanics = (
+                self._session.query(Appointment.mechanic_id)
+                .filter(
+                    (Appointment.date_time == booking_datetime)  # Appointment exactly at requested time
+                    | (Appointment.date_time == one_hour_before)  # Appointment an hour before
+                )
+                .filter(
+                    ~(
+                        (Appointment.date_time.time() == datetime.strptime("09:00", "%H:%M").time())
+                        | (Appointment.date_time.time() == datetime.strptime("09:30", "%H:%M").time())
+                    )  # Exclude 09:00 and 09:30 exceptions
+                )
                 .all()
             )
 
@@ -209,9 +232,9 @@ class AppointmentControl(DB):
 
             #filter booked mechanics
             available_mechanics = [m for m in all_mechanics if m not in booked_mechanics]
-            if not all_mechanics:
-                raise NoResultFound('No mechanics found')
+            if not available_mechanics:
+                raise NoResultFound("No available mechanics at this time")
 
-            return available_mechanics 
+            return available_mechanics
         except Exception as e:
-            return(e)
+            return str(e)
