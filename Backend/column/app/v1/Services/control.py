@@ -38,9 +38,8 @@ class ServiceControl(DB):
         try:
             services = self._session.query(Service).filter(Service.category==category).all
             services_dict = [s.to_dict() for s in services]
-            service_name = {service('name') for service in services_dict if 'name' in service}
 
-            return list(service_name)
+            return services_dict
         except Exception as e:
             raise Exception(f"Error retrieving categories: {str(e)}")
 

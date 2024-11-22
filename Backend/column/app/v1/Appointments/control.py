@@ -60,7 +60,7 @@ class AppointmentControl(DB):
         except Exception as e:
             raise (f'{e}')
 
-    def add_appointment(self, date_time: datetime, customer_id: int, service_id: int, model: str, status: str) -> Appointment:
+    def add_appointment(self, date_time: datetime, customer_id: int, service_id: int, status: str) -> Appointment:
         """Add an appointment and update revenue"""
 
         if date_time is None:
@@ -69,7 +69,7 @@ class AppointmentControl(DB):
         try:
             # Create a new appointment
             appointment = Appointment(date_time=date_time, customer_id=customer_id,
-                                      service_id=service_id, model=model, status=status)
+                                      service_id=service_id, status=status)
             self._session.add(appointment)
             self._session.commit()
 

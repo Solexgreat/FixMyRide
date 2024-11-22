@@ -32,8 +32,8 @@ def Create_appointment() -> str:
         error_msg = 'wrong format'
     if not error_msg and data.get('service_id') == "":
         error_msg = 'service_id is missing'
-    if not error_msg and data.get('model') == "":
-        error_msg = 'enter car model'
+    # if not error_msg and data.get('model') == "":
+    #     error_msg = 'enter car model'
 
     if error_msg is None:
         try:
@@ -44,7 +44,7 @@ def Create_appointment() -> str:
             status = data.get('status')
             appointment = db.add_appointment(date_time,
                                 customer_id,
-                                service_id, model, status)
+                                service_id, status)
             return jsonify({"message": "sucessfully created", 'appointment_id': f'{appointment.appointment_id}'}), 201
         except Exception as e:
             return jsonify({'msg': 'Internal error', 'error': str(e)}), 500

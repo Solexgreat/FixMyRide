@@ -7,6 +7,7 @@ function Appointments() {
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
+    const [selectedServiceId, setSelectedServiceId] = useState("");
     const [availableMechanics, setAvailableMechanics] = useState([]);
     const [availableSlots, setAvailableSlots] = useState([]);
     const [services, setServices] = useState([]);
@@ -161,13 +162,15 @@ function Appointments() {
                     </select>
 
                     <label htmlFor='Service-Type'>Service Type </label>
-                    <select id='Service-Type'>
+                    <select id='Service-Type'
+                    value={selectedServiceId}
+                    onChange={(e) => setSelectedServiceId(e.target.value)}>
                         <option value="">
                             -- Select services --
                         </option>
-                        {services.map((service, index) => (
-                            <option key={index} value={service}>
-                                {service}
+                        {services.map((service) => (
+                            <option key={service.service_id} value={service.service_id}>
+                                {service.name}
                             </option>
                         ))}
                     </select>
