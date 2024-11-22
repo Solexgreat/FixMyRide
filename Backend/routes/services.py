@@ -15,20 +15,44 @@ db = ServiceControl()
 AUTH = AUTH()
 
 
-@service_bp.route('/service', methods=['GET'], strict_slashes=False)
+@service_bp.route('/services', methods=['GET'], strict_slashes=False)
 @authenticate
 def get_service() -> str:
     """Return all service
     """
     try:
-        user = request.user
-        if user.role != 'admin':
-            return jsonify({'msg': "Not authorized"}), 403
+        # user = request.user
+        # if user.role != 'admin':
+        #     return jsonify({'msg': "Not authorized"}), 403
 
-        return jsonify(db.get_service()), 200
+        services = db.get_service()
+        return jsonify({'services': services}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@service_bp.route('/categories', methods=['GET'], strict_slashes=False)
+@authenticate
+def get_categories()-> list:
+    """
+        Return all categories
+    """
+    try:
+        categories = db.get_all_category()
+        return jsonify({'categories': categories}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@service_bp.route('/service_name', methods=['GET'], strict_slashes=False)
+@authenticate
+def get_service_name()-> list:
+    """
+        Return all categories
+    """
+    try:
+        servcies = db.get_category_service()
+        return jsonify({'services': servcies}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @service_bp.route('/create_service', methods=['POST'], strict_slashes=False)
 @authenticate

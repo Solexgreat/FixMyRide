@@ -8,6 +8,8 @@ function Appointments() {
     const [time, setTime] = useState("");
     const [availableMechanics, setAvailableMechanics] = useState([]);
     const [availableSlots, setAvailableSlots] = useState([]);
+    const [services, setServices] = useState([]);
+    const [categories, setCategories] = useState([]);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -18,6 +20,16 @@ function Appointments() {
 
     useEffect(() => {
         if (date && time){
+            fetchAvailableMechanics()
+        }
+    }, [time])
+
+    useEffect(() => {
+        fetchCategories
+    }, [])
+
+    useEffect(() => {
+        if (categories){
             fetchAvailableMechanics()
         }
     }, [time])
@@ -34,11 +46,11 @@ function Appointments() {
             }
 
             const data = await response.json();
-            setAvailableSlot(data.available_slot);
+            setAvailableSlots(data.available_slot);
             setError(null);
         } catch (err) {
             setError(err.message);
-            setAvailableSlot([])
+            setAvailableSlots([])
         }
     }
 
@@ -61,6 +73,46 @@ function Appointments() {
           setAvailableMechanics([]); // Clear results if there's an error
         }
       };
+
+    const fetchServices = async () => {
+        try {
+            const response = await fetch(
+                `http://localhost:3000/services/service`
+            );
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || "Failed to fetch data");
+              }
+
+            const data = await response.json();
+            setServices(data.services);
+            setError(null); // Clear previous errors
+        } catch (err) {
+            setError(err.message);
+            setServices([]);
+        }
+    }
+
+    const fetchCategories = async () => {
+        try {
+            const response = await fetch(
+                `http://localhost:3000/services/categories`
+            );
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || "Failed to fetch data");
+              }
+
+            const data = await response.json();
+            setServices(data.categories);
+            setError(null); // Clear previous errors
+        } catch (err) {
+            setError(err.message);
+            setServices([]);
+        }
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();

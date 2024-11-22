@@ -18,6 +18,33 @@ class ServiceControl(DB):
         services = self._session.query(Service).all()
         return [s.to_dict() for s in services]
 
+    def get_all_category(self)-> dict:
+        """
+            Return all categories as dictionaries
+        """
+        try:
+            services = self._session.query(Service).all()
+            services_dict = [s.to_dict() for s in services]
+            categories = {service['category'] for service in services_dict if 'category' in service}
+
+            return list(categories)
+        except Exception as e:
+            raise Exception(f"Error retrieving categories: {str(e)}")
+
+    def get_category_service(self, category: str)-> dict:
+        """
+            Return all categories as dictionaries
+        """
+        try:
+            services = self._session.query(Service).filter(Service.category==category).all
+            services_dict = [s.to_dict() for s in services]
+            service_name = {service('name') for service in services_dict if 'name' in service}
+
+            return list(service_name)
+        except Exception as e:
+            raise Exception(f"Error retrieving categories: {str(e)}")
+
+
     def get_service_id(self, **kwargs) -> int:
         """Get the service ID based on provided criteria"""
         try:
