@@ -6,6 +6,7 @@ function Appointments() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("");
     const [availableMechanics, setAvailableMechanics] = useState([]);
     const [availableSlots, setAvailableSlots] = useState([]);
     const [services, setServices] = useState([]);
@@ -29,10 +30,10 @@ function Appointments() {
     }, [])
 
     useEffect(() => {
-        if (categories){
-            fetchAvailableMechanics()
+        if (setSelectedCategory){
+            fetchServices()
         }
-    }, [time])
+    }, [setSelectedCategory])
 
     const fetchAvailableTime = async () => {
         try{
@@ -74,10 +75,10 @@ function Appointments() {
         }
       };
 
-    const fetchServices = async () => {
+    const fetchServices = async (categories) => {
         try {
             const response = await fetch(
-                `http://localhost:3000/services/service`
+                `http://localhost:3000/services/service_name`
             );
 
             if (!response.ok) {
@@ -146,17 +147,29 @@ function Appointments() {
 
                 <div className='category-services'>
                     <label htmlFor='category'> Category </label>
-                    <select id='category'>
-                        <option>
-                            {}
+                    <select id='category'
+                     value={selectedCategory}
+                     onChange={(e) => setSelectedCategory(e.target.value)}>
+                        <option value="">
+                            -- Category --
                         </option>
+                        {categories.map((category, index) =>(
+                            <option key={index} value={category}>
+                                {category}
+                            </option>
+                        ))}
                     </select>
 
                     <label htmlFor='Service-Type'>Service Type </label>
                     <select id='Service-Type'>
-                        <option>
-                            {}
+                        <option value="">
+                            -- Select services --
                         </option>
+                        {services.map((service, index) => (
+                            <option key={index} value={service}>
+                                {service}
+                            </option>
+                        ))}
                     </select>
                 </div>
 
