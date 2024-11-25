@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import '../Css-folder/Appointment.css'
 
 
@@ -16,7 +16,7 @@ function Appointments() {
     const [categories, setCategories] = useState([]);
     const [error, setError] = useState(null);
 
-    // Fetch available slots
+
   const fetchAvailableTime = useCallback(async () => {
     try {
       const response = await fetch(
@@ -37,7 +37,6 @@ function Appointments() {
     }
   }, [date]);
 
-  // Fetch available mechanics
   const fetchAvailableMechanics = useCallback(async () => {
     try {
       const response = await fetch(
@@ -58,7 +57,7 @@ function Appointments() {
     }
   }, [date, time]);
 
-  // Fetch categories
+
   const fetchCategories = useCallback(async () => {
     try {
       const response = await fetch(`http://localhost:3000/services/categories`);
@@ -77,7 +76,7 @@ function Appointments() {
     }
   }, []);
 
-  // Fetch services based on selected category
+
   const fetchServices = useCallback(async () => {
     try {
       const response = await fetch(`http://localhost:3000/services/service_name`);
@@ -102,7 +101,7 @@ function Appointments() {
 
   useEffect(() => {
     if (date && time) fetchAvailableMechanics();
-  }, [time, fetchAvailableMechanics]);
+  }, [time,date, fetchAvailableMechanics]);
 
   useEffect(() => {
     fetchCategories();
@@ -140,6 +139,7 @@ function Appointments() {
       }
 
       const result = await response.json();
+      console.log('Appointment created successfully:', result);
       alert('Appointment successfully created!');
     } catch (error) {
       alert(`Error: ${error.message}`);
@@ -153,25 +153,31 @@ function Appointments() {
         <form onSubmit={handleSubmit} className='form-field'>
             <fieldset>
                 <div className={'customerDetails'}>
-                    <label htmlFor='Name' >Name</label>
-                    <input id='Name'
-                    type='text'
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}  required />
+                    <div className='customerDetails-row'>
+                        <label htmlFor='Name' >Name</label>
+                        <input id='Name'
+                        type='text'
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}  required />
+                    </div>
 
-                    <label htmlFor='email' >Email</label>
-                    <input id='email'
-                    type='text'
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required />
+                    <div className='customerDetails-row' >
+                        <label htmlFor='email' >Email</label>
+                        <input id='email'
+                        type='text'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required />
+                    </div>
 
-                    <label htmlFor='phoneNumber' >Phone</label>
-                    <input id='email'
-                    type='text'
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    required />
+                    <div className='customerDetails-row' >
+                        <label htmlFor='phoneNumber' >Phone</label>
+                        <input id='email'
+                        type='text'
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        required />
+                    </div>
                 </div>
 
                 <div className='category-services'>

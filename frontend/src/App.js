@@ -18,8 +18,8 @@ function App() {
   return (
     <div className='container'>
       <Nav/>
-      <HeroSection/>
       <Main/>
+      <HeroSection/>
       <ServiceSection/>
       <WhyChooseUs/>
       <TestimonialSection/>

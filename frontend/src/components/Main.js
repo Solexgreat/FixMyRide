@@ -16,7 +16,7 @@ function Main() {
     <main>
         <Routes>
             <Route path="/" element={<HeroSection/>} />
-            <Route path="/appointments" element={<Appointments/>} />
+            <Route path="/appointments" element={<Appointments />} />
         </Routes>
     </main>
   )

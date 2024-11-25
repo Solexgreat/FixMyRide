@@ -8,10 +8,13 @@
 .customerDetails{
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    padding: 1rem;
+    box-shadow: inset -5 0 10 rbga(0, 0, 0, 0.1);
     align-items: center;
+    border: 1px solid;
+    border-radius: 8px;
 }
 
-#Name{
-    
-}
+/* .customerDetails-row{
+
+} */
