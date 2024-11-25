@@ -1,6 +1,8 @@
 import React from 'react'
 import HeroSection from './HeroSection';
 import Appointments from './Appointments';
+import { Routes, Route } from 'react-router-dom';
+
 
 
 // /appointments/available_slots
@@ -14,7 +16,7 @@ function Main() {
     <main>
         <Routes>
             <Route path="/" element={<HeroSection/>} />
-            <Route path="/" element={<Appointments/>} />
+            <Route path="/appointments" element={<Appointments/>} />
         </Routes>
     </main>
   )

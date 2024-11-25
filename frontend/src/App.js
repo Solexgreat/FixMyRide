@@ -11,6 +11,7 @@ import HeroSection from './components/HeroSection';
 import TestimonialSection from './components/TestimonialSection';
 import ServiceSection from './components/ServiceSection';
 import Footer from './components/Footer';
+import Main from './components/Main';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
     <div className='container'>
       <Nav/>
       <HeroSection/>
+      <Main/>
       <ServiceSection/>
       <WhyChooseUs/>
       <TestimonialSection/>

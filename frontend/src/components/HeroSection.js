@@ -2,6 +2,7 @@ import React from 'react'
 // import ReactDOM from 'react-dom';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
+import { Link } from 'react-router-dom';
 
 
 const slides = [
@@ -71,9 +72,9 @@ function HeroSection() {
 						<div className='Hero-text'>
 							<h1>{slide.header}</h1>
 							<p>{slide.text}</p>
-							<button>
+							<Link to='/appointments'><button aria-label='On Click'>
 								{slide.btn}
-							</button>
+							</button></Link>
 						</div>
 					</div>
 					)}

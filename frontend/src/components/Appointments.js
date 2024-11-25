@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import '../Css-folder/Appointment.css'
+
 
 function Appointments() {
     const [name, setName] = useState('');
@@ -14,116 +16,141 @@ function Appointments() {
     const [categories, setCategories] = useState([]);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        if (date){
-            fetchAvailableTime()
-        }
-    }, [date])
+    // Fetch available slots
+  const fetchAvailableTime = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/appointments/available-slots?date=${date}`
+      );
 
-    useEffect(() => {
-        if (date && time){
-            fetchAvailableMechanics()
-        }
-    }, [time])
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to fetch data');
+      }
 
-    useEffect(() => {
-        fetchCategories
-    }, [])
-
-    useEffect(() => {
-        if (setSelectedCategory){
-            fetchServices()
-        }
-    }, [setSelectedCategory])
-
-    const fetchAvailableTime = async () => {
-        try{
-            const response = await fetch(
-                `http://localhost:3000/appointments/available-slots?date=${date}`
-            );
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || "failed to fetch data")
-            }
-
-            const data = await response.json();
-            setAvailableSlots(data.available_slot);
-            setError(null);
-        } catch (err) {
-            setError(err.message);
-            setAvailableSlots([])
-        }
+      const data = await response.json();
+      setAvailableSlots(data.available_slot);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+      setAvailableSlots([]);
     }
+  }, [date]);
 
-    const fetchAvailableMechanics = async () => {
-        try {
-          const response = await fetch(
-            `http://localhost:3000/appointments/available-mechanics?date=${date}&time=${time}`
-          );
+  // Fetch available mechanics
+  const fetchAvailableMechanics = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/appointments/available-mechanics?date=${date}&time=${time}`
+      );
 
-          if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || "Failed to fetch data");
-          }
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to fetch data');
+      }
 
-          const data = await response.json();
-          setAvailableMechanics(data.available_mechanics);
-          setError(null); // Clear previous errors
-        } catch (err) {
-          setError(err.message);
-          setAvailableMechanics([]); // Clear results if there's an error
-        }
-      };
-
-    const fetchServices = async (categories) => {
-        try {
-            const response = await fetch(
-                `http://localhost:3000/services/service_name`
-            );
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || "Failed to fetch data");
-              }
-
-            const data = await response.json();
-            setServices(data.services);
-            setError(null); // Clear previous errors
-        } catch (err) {
-            setError(err.message);
-            setServices([]);
-        }
+      const data = await response.json();
+      setAvailableMechanics(data.available_mechanics);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+      setAvailableMechanics([]);
     }
+  }, [date, time]);
 
-    const fetchCategories = async () => {
-        try {
-            const response = await fetch(
-                `http://localhost:3000/services/categories`
-            );
+  // Fetch categories
+  const fetchCategories = useCallback(async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/services/categories`);
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || "Failed to fetch data");
-              }
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to fetch data');
+      }
 
-            const data = await response.json();
-            setServices(data.categories);
-            setError(null); // Clear previous errors
-        } catch (err) {
-            setError(err.message);
-            setServices([]);
+      const data = await response.json();
+      setCategories(data.categories);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+      setCategories([]);
+    }
+  }, []);
+
+  // Fetch services based on selected category
+  const fetchServices = useCallback(async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/services/service_name`);
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to fetch data');
+      }
+
+      const data = await response.json();
+      setServices(data.services);
+      setError(null);
+    } catch (err) {
+      setError(err.message);
+      setServices([]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (date) fetchAvailableTime();
+  }, [date, fetchAvailableTime]);
+
+  useEffect(() => {
+    if (date && time) fetchAvailableMechanics();
+  }, [time, fetchAvailableMechanics]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
+
+  useEffect(() => {
+    if (selectedCategory) fetchServices();
+  }, [selectedCategory, fetchServices]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const appointmentData = {
+      date,
+      time,
+      service_id: selectedServiceId,
+      status: 'pending',
+    };
+
+    try {
+      const response = await fetch(
+        'http://localhost:3000/appointments/appointments',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(appointmentData),
         }
-    }
+      );
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to create appointment');
+      }
+
+      const result = await response.json();
+      alert('Appointment successfully created!');
+    } catch (error) {
+      alert(`Error: ${error.message}`);
     }
+  };
 
 
   return (
     <section>
-        <form onSubmit={handleSubmit}>
+        {error && <p className="error-message">{error}</p>}
+        <form onSubmit={handleSubmit} className='form-field'>
             <fieldset>
                 <div className={'customerDetails'}>
                     <label htmlFor='Name' >Name</label>
@@ -142,6 +169,7 @@ function Appointments() {
                     <label htmlFor='phoneNumber' >Phone</label>
                     <input id='email'
                     type='text'
+                    value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     required />
                 </div>
@@ -183,12 +211,14 @@ function Appointments() {
                         id='date'
                         type='date'
                         value={date}
+                        onChange={(e) => setDate(e.target.value)}
                          />
                     </label>
 
                     <label htmlFor='time'>select Time</label>
                     <select id='time'
-                    onChange={(e) => setTimeout(e.target.value)}
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
                     required
                     >
                         <option value="">
