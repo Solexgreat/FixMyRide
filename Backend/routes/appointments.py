@@ -21,33 +21,22 @@ def Create_appointment() -> str:
        json obj with status 201
     """
     data = request.get_json()
-    error_msg = None
     user_id = request.user.user_id
 
-    # login_status = check_login_status()
-    # if login_status is False:
-    #     return render_template('sign-in.html')
-
-    if not data:
-        error_msg = 'wrong format'
-    if not error_msg and data.get('service_id') == "":
-        error_msg = 'service_id is missing'
-    # if not error_msg and data.get('model') == "":
-    #     error_msg = 'enter car model'
-
-    if error_msg is None:
-        try:
-            date_time = None
-            model = data.get('model')
-            customer_id = user_id
-            service_id = data.get('service_id')
-            status = data.get('status')
-            appointment = db.add_appointment(date_time,
-                                customer_id,
-                                service_id, status)
-            return jsonify({"message": "sucessfully created", 'appointment_id': f'{appointment.appointment_id}'}), 201
-        except Exception as e:
-            return jsonify({'msg': 'Internal error', 'error': str(e)}), 500
+    try:
+    # db_instance.drop_column('appointments', 'model')
+    # db_instance.add_column('appointments', 'date', 'TEXT')
+        date = data.get('date')
+        time = data.get('time')
+        customer_id = data.get('customer_id')
+        service_id = data.get('service_id')
+        status = data.get('status')
+        appointment = db.add_appointment(date, time,
+                            customer_id,
+                            service_id, status)
+        return jsonify({"message": "sucessfully created", 'appointment_id': f'{appointment.appointment_id}'}), 201
+    except Exception as e:
+        return jsonify({'msg': 'Internal error', 'error': str(e)}), 500
 
 @appointment_bp.route('/appointment/history', methods=['GET'], strict_slashes=False)
 @authenticate

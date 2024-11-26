@@ -60,26 +60,24 @@ class AppointmentControl(DB):
         except Exception as e:
             raise (f'{e}')
 
-    def add_appointment(self, date_time: datetime, customer_id: int, service_id: int, status: str) -> Appointment:
+    def add_appointment(self, date: str, time: str, customer_id: int, service_id: int, status: str) -> Appointment:
         """Add an appointment and update revenue"""
 
-        if date_time is None:
-            date_time = datetime.now()
-
         try:
+            # Combine date and time into a datetime object
+            date_time = datetime.strptime(f"{date} {time}", "%Y-%m-%d %H:%M:%S")
             # Create a new appointment
             appointment = Appointment(date_time=date_time, customer_id=customer_id,
                                       service_id=service_id, status=status)
             self._session.add(appointment)
             self._session.commit()
 
-            print("Created Appointment ID:", appointment.appointment_id)
+            # print("Created Appointment ID:", appointment.appointment_id)
+            return appointment
 
         except Exception as e:
             self._session.rollback()
-            print("Exception occurred:", e, type(e))
             raise Exception(f'{e}')
-        return appointment
 
     def update_appointment(self, appointment_id: str, **kwargs: dict):
         """

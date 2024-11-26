@@ -148,111 +148,120 @@ function Appointments() {
 
 
   return (
-    <section>
-        {error && <p className="error-message">{error}</p>}
-        <form onSubmit={handleSubmit} className='form-field'>
-            <fieldset>
-                <div className={'customerDetails'}>
-                    <div className='customerDetails-row'>
-                        <label htmlFor='Name' >Name</label>
-                        <input id='Name'
-                        type='text'
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}  required />
+    <header className='appointments'>
+      <section>
+          {/* {error && <p className="error-message">{error}</p>} */}
+          <form onSubmit={handleSubmit} className='form-field'>
+              <fieldset>
+                  <div className={'customerDetails'}>
+                      <div className='customerDetails-row'>
+                          <label htmlFor='Name' >Name</label>
+                          <input id='Name'
+                          type='text'
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}  required />
+                      </div>
+
+                      <div className='customerDetails-row' >
+                          <label htmlFor='email' >Email</label>
+                          <input id='email'
+                          type='text'
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          required />
+                      </div>
+
+                      <div className='customerDetails-row' >
+                          <label htmlFor='phoneNumber' >Phone</label>
+                          <input id='email'
+                          type='text'
+                          value={phoneNumber}
+                          onChange={(e) => setPhoneNumber(e.target.value)}
+                          required />
+                      </div>
+                  </div>
+
+                  <div className='category-services'>
+                    <div className='category-services-row'>
+                      <label htmlFor='category'> Category </label>
+                      <select id='category'
+                      value={selectedCategory}
+                      onChange={(e) => setSelectedCategory(e.target.value)}>
+                          <option value="">
+                              -- Category --
+                          </option>
+                          {categories.map((category, index) =>(
+                              <option key={index} value={category}>
+                                  {category}
+                              </option>
+                          ))}
+                      </select>
+                    </div>
+                    <div className='category-services-row'>
+                      <label htmlFor='Service-Type'>Service Type </label>
+                      <select id='Service-Type'
+                      value={selectedServiceId}
+                      onChange={(e) => setSelectedServiceId(e.target.value)}>
+                          <option value="">
+                              -- Select services --
+                          </option>
+                          {services.map((service) => (
+                              <option key={service.service_id} value={service.service_id}>
+                                  {service.name}
+                              </option>
+                          ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className='time-date' cla>
+                    <div className='time-date-row'>
+                      <label htmlFor='date'>
+                          Select date
+                       </label>
+                          <input
+                          id='date'
+                          type='date'
+                          value={date}
+                          onChange={(e) => setDate(e.target.value)}
+                          />
                     </div>
 
-                    <div className='customerDetails-row' >
-                        <label htmlFor='email' >Email</label>
-                        <input id='email'
-                        type='text'
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required />
+                    <div className='time-date-row'>
+                      <label htmlFor='time'>Select Time</label>
+                      <select id='time'
+                      value={time}
+                      onChange={(e) => setTime(e.target.value)}
+                      required
+                      >
+                          <option value="">
+                              -- Select-Time --
+                          </option>
+                              {availableSlots.map((slot, index) =>(
+                                  <option key={index} value={slot}>
+                                      {slot}
+                                  </option>
+                              ))}
+                      </select>
                     </div>
+                  </div>
 
-                    <div className='customerDetails-row' >
-                        <label htmlFor='phoneNumber' >Phone</label>
-                        <input id='email'
-                        type='text'
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                        required />
-                    </div>
-                </div>
+                  <div className='available-mechanics'>
+                      <label htmlFor='select-mechanics'></label>
+                      <select id='select-mechanics' required>
+                          <option value="">-- Select mechanics --</option>
+                              {availableMechanics.map((mechanics) => (
+                                  <option key= {mechanics.user_id} value={mechanics.user_name}>
+                                      {mechanics.user_name}
+                                  </option>
+                              ))}
+                      </select>
+                  </div>
 
-                <div className='category-services'>
-                    <label htmlFor='category'> Category </label>
-                    <select id='category'
-                     value={selectedCategory}
-                     onChange={(e) => setSelectedCategory(e.target.value)}>
-                        <option value="">
-                            -- Category --
-                        </option>
-                        {categories.map((category, index) =>(
-                            <option key={index} value={category}>
-                                {category}
-                            </option>
-                        ))}
-                    </select>
-
-                    <label htmlFor='Service-Type'>Service Type </label>
-                    <select id='Service-Type'
-                    value={selectedServiceId}
-                    onChange={(e) => setSelectedServiceId(e.target.value)}>
-                        <option value="">
-                            -- Select services --
-                        </option>
-                        {services.map((service) => (
-                            <option key={service.service_id} value={service.service_id}>
-                                {service.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-                <div className='time-date'>
-                <label htmlFor='date'>
-                        Select date:
-                        <input
-                        id='date'
-                        type='date'
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                         />
-                    </label>
-
-                    <label htmlFor='time'>select Time</label>
-                    <select id='time'
-                    value={time}
-                    onChange={(e) => setTime(e.target.value)}
-                    required
-                    >
-                        <option value="">
-                            -- Select-Time --
-                        </option>
-                            {availableSlots.map((slot, index) =>(
-                                <option key={index} value={slot}>
-                                    {slot}
-                                </option>
-                            ))}
-                    </select>
-                </div>
-
-                <div className='available-mechanics'>
-                    <label htmlFor='select-mechanics'></label>
-                    <select id='select-mechanics' required>
-                        <option value="">-- Select mechanics --</option>
-                            {availableMechanics.map((mechanics) => (
-                                <option key= {mechanics.user_id} value={mechanics.user_name}>
-                                    {mechanics.user_name}
-                                </option>
-                            ))}
-                    </select>
-                </div>
-
-            </fieldset>
-        </form>
-    </section>
+              </fieldset>
+          </form>
+      </section>
+    </header>
   )
 }
 
