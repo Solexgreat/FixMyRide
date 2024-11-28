@@ -187,11 +187,11 @@ function Appointments() {
                       <select id='category'
                       value={selectedCategory}
                       onChange={(e) => setSelectedCategory(e.target.value)}>
-                          <option value="">
+                          <option className="option" value="">
                               -- Category --
                           </option>
                           {categories.map((category, index) =>(
-                              <option key={index} value={category}>
+                              <option className="option" key={index} value={category}>
                                   {category}
                               </option>
                           ))}
@@ -202,11 +202,11 @@ function Appointments() {
                       <select id='Service-Type'
                       value={selectedServiceId}
                       onChange={(e) => setSelectedServiceId(e.target.value)}>
-                          <option value="">
+                          <option className="option" value="">
                               -- Select services --
                           </option>
                           {services.map((service) => (
-                              <option key={service.service_id} value={service.service_id}>
+                              <option className="option" key={service.service_id} value={service.service_id}>
                                   {service.name}
                               </option>
                           ))}
@@ -234,7 +234,7 @@ function Appointments() {
                       onChange={(e) => setTime(e.target.value)}
                       required
                       >
-                          <option value="">
+                          <option className="option"  value="">
                               -- Select-Time --
                           </option>
                               {availableSlots.map((slot, index) =>(
@@ -249,9 +249,9 @@ function Appointments() {
                   <div className='available-mechanics'>
                       <label htmlFor='select-mechanics'></label>
                       <select id='select-mechanics' required>
-                          <option value="">-- Select mechanics --</option>
+                          <option className="option"  value="">-- Select mechanics --</option>
                               {availableMechanics.map((mechanics) => (
-                                  <option key= {mechanics.user_id} value={mechanics.user_name}>
+                                  <option className="option" key= {mechanics.user_id} value={mechanics.user_name}>
                                       {mechanics.user_name}
                                   </option>
                               ))}

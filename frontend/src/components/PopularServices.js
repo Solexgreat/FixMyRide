@@ -9,7 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 // // import 'swiper/swiper-bundle.min.css';
 
 
-const popularServices = [
+const popularServicesDetails = [
 	{
 		id: 1,
 		Name: "Oil Change",
@@ -74,25 +74,25 @@ const PrevArrow = ({ onClick }) => (
 );
 
 
-function ServiceSection() {
+function PopularServices() {
 
 	var settings = {
     infinite: true,
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
-		DefaultArrows: true,
-		nextArrow: <NextArrow />,
+	DefaultArrows: true,
+	nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-		SwipeToSlide: true,
-		draggable: true,
-		TouchMove: true,
+	SwipeToSlide: true,
+	draggable: true,
+	TouchMove: true,
   };
 	return (
 		<section className="popular-service">
 		<h2>Popular Services</h2>
 		 <div className='phone-slider'>
-			{popularServices.map(service => (
+			{popularServicesDetails.map(service => (
 				<div className="Card">
 					<div className='image'>
 						<img src={service.getImageSrc()} alt={service.title} />
@@ -106,7 +106,7 @@ function ServiceSection() {
 		</div>
 		<div className='slider'>
 			<Slider {...settings}>
-				{popularServices.map((service) => (
+				{popularServicesDetails.map((service) => (
 					<a href={`#${ service.a}`}>
 						<div className='Card'>
 							<div className='image'>
@@ -125,4 +125,4 @@ function ServiceSection() {
 	)
 }
 
-export default ServiceSection
+export default PopularServices;

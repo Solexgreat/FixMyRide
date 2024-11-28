@@ -66,21 +66,21 @@ function HeroSection() {
 								</button>
 							</div>
 					</div>
-					<Carousel className='carousel-inner' width="100%" showThumbs={false}  autoPlay infiniteLoop showIndicators={false}>
-						{slides.map((slide, index) =>
-						<div className='carousel-slide'>
-							<img src={slide.getImageSrc()} alt="Hero_image"  height='600px'/>
-							<div className='Hero-text'>
-								<h1>{slide.header}</h1>
-								<p>{slide.text}</p>
-								<Link to='/appointments'><button aria-label='On Click'>
-									{slide.btn}
-								</button></Link>
-							</div>
-						</div>
-						)}
-					</Carousel>
 				</div>
+				<Carousel className='carousel-inner'  showThumbs={false} width='100%'  autoPlay infiniteLoop showIndicators={false}>
+					{slides.map((slide, index) =>
+					<div className='carousel-slide'>
+						<img src={slide.getImageSrc()} alt="Hero_image" style={{height: '600px', }}  />
+						<div className='Hero-text'>
+							<h1>{slide.header}</h1>
+							<p>{slide.text}</p>
+							<Link to='/appointments'><button aria-label='On Click'>
+								{slide.btn}
+							</button></Link>
+						</div>
+					</div>
+					)}
+				</Carousel>
 			</section>
 		</header>
 	)

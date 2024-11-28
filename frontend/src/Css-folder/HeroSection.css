@@ -5,11 +5,9 @@
   align-items: center;
   padding: 0;
   margin: 0;
-  width: 100%;
+  width: 100vw;
   position: relative;
   overflow: hidden;
-  /* background-color: #002B5B; */
-
 }
 
 .Hero-text button {
@@ -26,12 +24,13 @@
 /* media query for screen < 479 */
 @media (max-width: 479px) {
   .heroSection-carousel {
-    display: flex;
+    /* display: flex;
     justify-content: center;
     align-items: center;
     width: 100vw;
     height: 45vh;
     position: relative;
+    background-color: #1b5b00; */
   }
 
   .smallScreen{
@@ -40,12 +39,21 @@
 
   .carousel-inner{
     position: relative;
-    width: 100%;
+    width: 200%;
+    object-fit: fill;
   }
 
-  .heroSection-carousel img{
-    height: 45vh;
+  .carousel-inner .carousel-slide{
+    width: 100vw;
+    background-color: black;
+    padding: 20rem;
   }
+
+  .carousel-inner .carousel-slide img{
+    width: 100vw;
+    background-color: black;
+  }
+
 
   .Hero-text {
     display: block;

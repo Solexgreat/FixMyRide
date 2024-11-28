@@ -8,7 +8,7 @@ import './Css-folder/TestimonialSection.css';
 import Nav from './components/Nav';
 import WhyChooseUs from './components/WhyChooseUs';
 import TestimonialSection from './components/TestimonialSection';
-import ServiceSection from './components/ServiceSection';
+import PopularServices from './components/PopularServices';
 import Footer from './components/Footer';
 // import Main from './components/Main';
 import {Routes,  Route, useLocation } from 'react-router-dom';
@@ -37,16 +37,15 @@ function Layout() {
       on the appointments page*/}
       {!isAppointmentsPage && (
         <>
-          <header>Site Header</header>
           <HeroSection />
-          <ServiceSection/>
+          <PopularServices/>
           <WhyChooseUs/>
           <TestimonialSection/>
         </>
       )}
 
       <Routes>
-        <Route path='/' element={<HeroSection/>}></Route>
+        {/* <Route path='/' element={<HeroSection/>}></Route> */}
         <Route path='/appointments' element={<Appointments/>}></Route>
       </Routes>
     </div>
